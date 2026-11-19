@@ -53,9 +53,10 @@
       gap: 4px;
       touch-action: manipulation;
     }
+    .btn-save-new { background: #16a34a; color: #fff; }
     .btn-print { background: #2563eb; color: #fff; }
-    .btn-csv { background: #16a34a; color: #fff; }
     .btn-clear { background: #dc2626; color: #fff; }
+    .btn-excel { background: #0f766e; color: #fff; }
 
     /* Navigation Tabs */
     .nav-tabs {
@@ -72,7 +73,7 @@
       font-weight: 700;
       color: var(--muted);
       cursor: pointer;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       text-align: center;
       touch-action: manipulation;
     }
@@ -117,7 +118,7 @@
     .checkbox-group label { display: flex; align-items: center; gap: 5px; font-weight: 700; color: var(--text); cursor: pointer; margin: 0; font-size: 0.9rem; }
     .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; }
 
-    /* Quick Adder Bar (No '+' key needed on mobile numpad) */
+    /* Quick Adder Bar */
     .adder-bar {
       background: #eff6ff;
       border: 1px solid #bfdbfe;
@@ -164,7 +165,7 @@
       font-weight: 700;
     }
 
-    /* Desktop / Print Standard Table */
+    /* Tables */
     table.form-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
     table.form-table th, table.form-table td {
       border: 1px solid #94a3b8;
@@ -194,7 +195,6 @@
     .diff-zero { color: var(--success); }
     .diff-nonzero { color: var(--danger); background: #fef2f2; }
 
-    /* Mobile Responsive Card-Table Transformation (< 768px) */
     @media screen and (max-width: 768px) {
       table.mobile-cards thead { display: none; }
       table.mobile-cards, table.mobile-cards tbody { display: block; width: 100%; }
@@ -208,49 +208,24 @@
         padding: 9px;
         margin-bottom: 8px;
       }
-      table.mobile-cards tr.sum-row {
-        background: #eff6ff;
-        border-color: #93c5fd;
-      }
-      table.mobile-cards tr.sub-only-row {
-        grid-template-columns: 1fr 1fr;
-        background: #f8fafc;
-      }
-      table.mobile-cards td {
-        border: none !important;
-        padding: 2px !important;
-        text-align: left;
-        background: transparent !important;
-      }
+      table.mobile-cards tr.sum-row { background: #eff6ff; border-color: #93c5fd; }
+      table.mobile-cards tr.sub-only-row { grid-template-columns: 1fr 1fr; background: #f8fafc; }
+      table.mobile-cards td { border: none !important; padding: 2px !important; text-align: left; background: transparent !important; }
       table.mobile-cards td.col-name {
-        grid-column: 1 / -1;
-        font-size: 0.95rem;
-        color: #0f172a;
-        border-bottom: 1px dashed #e2e8f0 !important;
-        padding-bottom: 5px !important;
-        margin-bottom: 2px;
+        grid-column: 1 / -1; font-size: 0.95rem; color: #0f172a;
+        border-bottom: 1px dashed #e2e8f0 !important; padding-bottom: 5px !important; margin-bottom: 2px;
       }
       table.mobile-cards td.col-num::before,
       table.mobile-cards td.col-diff::before,
       table.mobile-cards td.col-doc::before {
-        content: attr(data-label);
-        display: block;
-        font-size: 0.72rem;
-        font-weight: 700;
-        color: var(--muted);
-        margin-bottom: 2px;
+        content: attr(data-label); display: block; font-size: 0.72rem; font-weight: 700; color: var(--muted); margin-bottom: 2px;
       }
       table.mobile-cards td.col-diff {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        border-radius: 8px;
-        padding: 4px !important;
+        display: flex; flex-direction: column; justify-content: center; align-items: center;
+        border-radius: 8px; padding: 4px !important;
       }
       table.mobile-cards td.col-diff.diff-nonzero { background: #fef2f2 !important; }
       table.mobile-cards td.col-diff.diff-zero { background: #f0fdf4 !important; }
-
       table.mobile-cards td.col-doc { grid-column: span 1; }
       table.mobile-cards.hide-docs td.col-doc { display: none; }
       table.mobile-cards.hide-docs tr.sub-only-row { display: none; }
@@ -261,103 +236,72 @@
     }
 
     /* Pen Counting Controls */
-    .pen-row-tabs {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 5px;
-      margin-bottom: 10px;
-    }
+    .pen-row-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-bottom: 10px; }
     .pen-row-btn {
-      padding: 9px 2px;
-      border: 1px solid var(--border);
-      background: #f8fafc;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.82rem;
-      cursor: pointer;
-      text-align: center;
+      padding: 9px 2px; border: 1px solid var(--border); background: #f8fafc;
+      border-radius: 8px; font-weight: 700; font-size: 0.82rem; cursor: pointer; text-align: center;
     }
     .pen-row-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
     .pen-row-sum-badge { display: block; font-size: 0.72rem; font-weight: 600; opacity: 0.9; }
 
-    /* Mobile Pen List (1 row at a time - super thumb friendly) */
     .mobile-pen-item {
-      display: grid;
-      grid-template-columns: 56px 1fr auto auto auto;
-      gap: 6px;
-      align-items: center;
-      padding: 6px 8px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      margin-bottom: 6px;
-      background: #fff;
+      display: grid; grid-template-columns: 56px 1fr auto auto auto; gap: 6px; align-items: center;
+      padding: 6px 8px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 6px; background: #fff;
     }
     .mobile-pen-no { font-weight: 800; font-size: 0.95rem; color: #334155; }
     .mobile-pen-input {
-      width: 100%;
-      padding: 9px 6px;
-      font-size: 1.15rem;
-      font-weight: 800;
-      text-align: center;
-      border: 2px solid #cbd5e1;
-      border-radius: 8px;
-      background: #f8fafc;
+      width: 100%; padding: 9px 6px; font-size: 1.15rem; font-weight: 800; text-align: center;
+      border: 2px solid #cbd5e1; border-radius: 8px; background: #f8fafc;
     }
     .mobile-pen-input:focus { border-color: var(--primary); background: #fff; outline: none; }
     .q-tap {
-      padding: 10px 10px;
-      border: 1px solid var(--border);
-      background: #f1f5f9;
-      border-radius: 8px;
-      font-weight: 800;
-      font-size: 0.88rem;
-      cursor: pointer;
-      touch-action: manipulation;
+      padding: 10px; border: 1px solid var(--border); background: #f1f5f9;
+      border-radius: 8px; font-weight: 800; font-size: 0.88rem; cursor: pointer; touch-action: manipulation;
     }
     .q-tap:active { background: #cbd5e1; }
     .q-tap.plus { background: #eff6ff; color: var(--primary); border-color: #bfdbfe; }
 
-    /* Full 4-col Pen Table */
     table.grid-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
     table.grid-table th, table.grid-table td { border: 1px solid #94a3b8; padding: 3px; text-align: center; }
     table.grid-table th { background: #e2e8f0; padding: 6px 4px; }
     table.grid-table td.pen-no { background: #f1f5f9; font-weight: 700; width: 32px; color: #475569; }
     table.grid-table input.pen-input {
-      width: 100%;
-      border: none;
-      padding: 7px 2px;
-      text-align: center;
-      font-size: 0.95rem;
-      font-weight: 700;
-      background: transparent;
+      width: 100%; border: none; padding: 7px 2px; text-align: center; font-size: 0.95rem; font-weight: 700; background: transparent;
     }
     table.grid-table input.pen-input:focus { background: #eff6ff; outline: 2px solid var(--primary); }
     table.grid-table tr.total-foot td { background: #dbeafe; font-weight: 700; font-size: 0.95rem; padding: 7px 4px; color: var(--primary); }
 
     .note-box { width: 100%; margin-top: 8px; padding: 9px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; }
 
-    /* Signatures */
-    .sig-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 8px; }
-    .sig-box { border: 1px solid var(--border); border-radius: 8px; padding: 8px; text-align: center; background: #f8fafc; }
-    .sig-box label { display: block; font-weight: 700; font-size: 0.82rem; margin-bottom: 5px; }
-    .sig-box input { width: 100%; padding: 7px; border: 1px solid var(--border); border-radius: 6px; text-align: center; font-size: 0.85rem; }
-
-    /* Logs */
-    .log-list { max-height: 400px; overflow-y: auto; }
+    /* Saved Reports & Logs */
+    .saved-card-item {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 8px;
+      background: #f8fafc;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .saved-card-item.editing { border: 2px solid var(--primary); background: #eff6ff; }
+    .export-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 8px; margin-bottom: 12px; }
+    .log-list { max-height: 360px; overflow-y: auto; }
     table.log-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
     table.log-table th, table.log-table td { border-bottom: 1px solid var(--border); padding: 8px 6px; text-align: left; }
     table.log-table th { background: #f8fafc; position: sticky; top: 0; }
 
-    /* Tab Visibility */
     .tab-pane { display: none; }
     .tab-pane.active { display: block; }
 
-    /* Print Styling (Official A4 Form) */
+    /* Print Styling (Official A4 Form without Signatures) */
     .print-only-header { display: none; }
     @media print {
       @page { size: A4 portrait; margin: 7mm; }
       body { background: #fff; padding: 0; font-size: 10px; color: #000; }
-      .top-bar, .nav-tabs, .no-print, #tabLogs, #mobilePenContainer, .adder-bar, .doc-toggle-bar, .pen-row-tabs { display: none !important; }
+      .top-bar, .nav-tabs, .no-print, #tabSaved, #tabLogs, #mobilePenContainer, .adder-bar, .doc-toggle-bar, .pen-row-tabs { display: none !important; }
       .tab-pane { display: block !important; }
       #fullPenTableWrap { display: block !important; }
       .card { border: none; box-shadow: none; padding: 0; margin: 0 0 6px 0; }
@@ -372,7 +316,6 @@
         gap: 6px;
         align-items: start;
       }
-      /* Reset mobile card styles back to table for print */
       table.mobile-cards, table.mobile-cards thead, table.mobile-cards tbody, table.mobile-cards tr, table.mobile-cards td {
         display: revert !important;
         border: 1px solid #000 !important;
@@ -397,11 +340,6 @@
       .field label { display: inline; font-weight: 700; color: #000; margin-right: 4px; }
       .field input { border: none; border-bottom: 1px dotted #000; border-radius: 0; padding: 1px 4px; width: auto; font-size: 10px; }
       .note-box { border: none; border-bottom: 1px dotted #000; border-radius: 0; padding: 2px 0; font-size: 9.5px; }
-
-      .sig-grid { grid-template-columns: repeat(5, 1fr); gap: 0; border: 1px solid #000; margin-top: 8px; }
-      .sig-box { border: none; border-right: 1px solid #000; border-radius: 0; background: #fff; padding: 18px 4px 6px 4px; }
-      .sig-box:last-child { border-right: none; }
-      .sig-box input { border: none; border-bottom: 1px dotted #000; border-radius: 0; font-size: 9px; }
     }
   </style>
 </head>
@@ -415,19 +353,18 @@
       <span class="save-badge" id="saveStatus">● พร้อมใช้งาน</span>
     </div>
     <div class="top-actions">
+      <button class="btn btn-save-new" onclick="saveAndNewReport()">💾 บันทึก & สร้างใบใหม่</button>
       <button class="btn btn-print" onclick="window.print()">🖨️ พิมพ์ A4</button>
-      <button class="btn btn-csv" onclick="exportFullCSV()">⬇️ ใบรายงาน CSV</button>
-      <button class="btn btn-csv" onclick="exportLogsCSV()">🕒 Log CSV</button>
-      <button class="btn btn-clear" onclick="resetAll()">🗑️ ใบใหม่</button>
+      <button class="btn btn-clear" onclick="clearCurrentDraft()">🗑️ ล้างใบนี้</button>
     </div>
   </div>
 
   <!-- Mobile-First 4 Tabs -->
   <div class="nav-tabs no-print">
-    <button class="nav-tab active" onclick="switchTab('pigs', this)">🐷 1. สุกร</button>
-    <button class="nav-tab" onclick="switchTab('pens', this)">🔢 2. คอก A-D</button>
-    <button class="nav-tab" onclick="switchTab('feed', this)">🌾 3. อาหาร</button>
-    <button class="nav-tab" onclick="switchTab('logs', this)">🕒 4. เซ็น & Log (<span id="logCountBadge">0</span>)</button>
+    <button class="nav-tab active" id="navBtn_pigs" onclick="switchTab('pigs', this)">🐷 1. สุกร</button>
+    <button class="nav-tab" id="navBtn_pens" onclick="switchTab('pens', this)">🔢 2. คอก A-D</button>
+    <button class="nav-tab" id="navBtn_feed" onclick="switchTab('feed', this)">🌾 3. อาหาร</button>
+    <button class="nav-tab" id="navBtn_logs" onclick="switchTab('logs', this)">📁 4. คลัง & Excel (<span id="savedCountBadge">0</span>)</button>
   </div>
 
   <!-- Official Print Header -->
@@ -438,7 +375,10 @@
 
   <!-- Header Information Card -->
   <div class="card tab-pane active" id="tabHeader">
-    <div class="section-title screen-only-title">ข้อมูลทั่วไปของใบตรวจนับ</div>
+    <div class="section-title screen-only-title">
+      <span>ข้อมูลทั่วไปของใบตรวจนับ</span>
+      <span id="editingBadge" style="font-size:0.78rem; color:#15803d;"></span>
+    </div>
     <div class="header-grid">
       <div class="field">
         <label>วันที่:</label>
@@ -446,7 +386,7 @@
       </div>
       <div class="field">
         <label>ชื่อเล้า:</label>
-        <input type="text" id="hdr_barnName" placeholder="ระบุชื่อเล้า" onchange="updateHeader('barnName', this.value)" />
+        <input type="text" id="hdr_barnName" placeholder="ระบุชื่อเล้า (เช่น เล้าคลอด 1)" onchange="updateHeader('barnName', this.value)" />
       </div>
       <div class="field">
         <label>ส่งเสริมสุกรพันธุ์:</label>
@@ -469,18 +409,14 @@
 
   <!-- Main 2-Column Wrapper for Print -->
   <div class="print-2col">
-    <!-- LEFT COLUMN: Pig Summary + Feed Summary -->
     <div>
       <!-- 1. สรุปการตรวจนับสุกรคงเหลือ -->
       <div class="card tab-pane active" id="tabPigs">
-        <div class="section-title">
-          <span>สรุปการตรวจนับสุกรคงเหลือ</span>
-        </div>
+        <div class="section-title"><span>สรุปการตรวจนับสุกรคงเหลือ</span></div>
 
-        <!-- Helper: Quick Adder for mobile numpad -->
         <div class="adder-bar no-print">
-          <div class="adder-label" id="pigAdderTarget">🧮 ตัวช่วยบวกเพิ่ม: แตะช่องตัวเลขที่ต้องการ แล้วพิมพ์เลขมาบวกเพิ่มได้</div>
-          <input type="text" inputmode="numeric" class="adder-input" id="pigAdderVal" placeholder="กรอกจำนวนที่จะบวกเพิ่ม" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+          <div class="adder-label" id="pigAdderTarget">🧮 ตัวช่วยบวกเพิ่ม: แตะช่องตัวเลขที่ต้องการ แล้วพิมพ์เลขมาบวกเพิ่ม</div>
+          <input type="text" inputmode="numeric" class="adder-input" id="pigAdderVal" placeholder="จำนวนที่จะบวกเพิ่ม" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
           <button type="button" class="adder-btn" onclick="applyAdder('pig')">➕ บวกเข้าช่อง</button>
         </div>
 
@@ -509,13 +445,10 @@
 
       <!-- 3. การตรวจนับอาหารคงเหลือ -->
       <div class="card tab-pane" id="tabFeed">
-        <div class="section-title">
-          <span>การตรวจนับอาหารคงเหลือ</span>
-        </div>
+        <div class="section-title"><span>การตรวจนับอาหารคงเหลือ</span></div>
 
-        <!-- Helper: Quick Adder for feed bags/kg -->
         <div class="adder-bar no-print">
-          <div class="adder-label" id="feedAdderTarget">🧮 ตัวช่วยบวกเพิ่ม (เช่น นับหลายกอง): แตะช่องอาหาร แล้วพิมพ์เลขมาบวก</div>
+          <div class="adder-label" id="feedAdderTarget">🧮 ตัวช่วยบวกเพิ่ม (นับหลายกอง): แตะช่องอาหาร แล้วพิมพ์เลขมาบวก</div>
           <input type="text" inputmode="decimal" class="adder-input" id="feedAdderVal" placeholder="จำนวนที่จะบวกเพิ่ม" oninput="this.value=sanitizeDecimal(this.value)" />
           <button type="button" class="adder-btn" onclick="applyAdder('feed')">➕ บวกเข้าช่อง</button>
         </div>
@@ -546,9 +479,7 @@
 
     <!-- RIGHT COLUMN: แม่พันธุ์เล้าเตรียมทดแทน / ลูกเล้าคลอด (A-D 1-30) -->
     <div class="card tab-pane" id="tabPens">
-      <div class="section-title">
-        <span>แม่พันธุ์เล้าเตรียมทดแทน / ลูกเล้าคลอด</span>
-      </div>
+      <div class="section-title"><span>แม่พันธุ์เล้าเตรียมทดแทน / ลูกเล้าคลอด</span></div>
 
       <div class="no-print" style="background:#eff6ff; border:1px solid #bfdbfe; padding:8px 10px; border-radius:10px; margin-bottom:10px;">
         <div style="font-size:0.8rem; font-weight:700; margin-bottom:4px; color:#1e40af;">🔗 ดึงยอดรวม A, B, C, D ไปใส่ช่อง "ตรวจนับได้" ที่:</div>
@@ -559,7 +490,6 @@
         </select>
       </div>
 
-      <!-- Mobile Row Switcher -->
       <div class="pen-row-tabs no-print">
         <button class="pen-row-btn active" onclick="switchPenView('A', this)">แถว A <span class="pen-row-sum-badge" id="badgeSumA">0</span></button>
         <button class="pen-row-btn" onclick="switchPenView('B', this)">แถว B <span class="pen-row-sum-badge" id="badgeSumB">0</span></button>
@@ -568,10 +498,8 @@
         <button class="pen-row-btn" onclick="switchPenView('ALL', this)">ดู 4 แถว <span class="pen-row-sum-badge">รวม</span></button>
       </div>
 
-      <!-- Mobile Single-Row Container -->
       <div id="mobilePenContainer" class="no-print"></div>
 
-      <!-- Full 4-Col Table (Always used for Print A4 & 'ดู 4 แถว') -->
       <div id="fullPenTableWrap" style="display:none;">
         <table class="grid-table">
           <thead>
@@ -596,38 +524,29 @@
     </div>
   </div>
 
-  <!-- Footer Signatures -->
-  <div class="card tab-pane" id="tabSigs">
-    <div class="section-title screen-only-title">ลงชื่อผู้เกี่ยวข้อง</div>
-    <div class="sig-grid">
-      <div class="sig-box">
-        <label>เกษตรกร</label>
-        <input type="text" id="sig_farmer" placeholder="ลงชื่อ / ว/ด/ป" onchange="updateSig('farmer', this.value)" />
-      </div>
-      <div class="sig-box">
-        <label>ผู้ตรวจนับ</label>
-        <input type="text" id="sig_counter" placeholder="ลงชื่อ / ว/ด/ป" onchange="updateSig('counter', this.value)" />
-      </div>
-      <div class="sig-box">
-        <label>สัตวบาล</label>
-        <input type="text" id="sig_vet" placeholder="ลงชื่อ / ว/ด/ป" onchange="updateSig('vet', this.value)" />
-      </div>
-      <div class="sig-box">
-        <label>บัญชี</label>
-        <input type="text" id="sig_account" placeholder="ลงชื่อ / ว/ด/ป" onchange="updateSig('account', this.value)" />
-      </div>
-      <div class="sig-box">
-        <label>ผู้จัดการฟาร์ม</label>
-        <input type="text" id="sig_manager" placeholder="ลงชื่อ / ว/ด/ป" onchange="updateSig('manager', this.value)" />
-      </div>
+  <!-- Tab 4A: Saved Reports & Excel Export -->
+  <div class="card tab-pane" id="tabSaved">
+    <div class="section-title">
+      <span>📊 ส่งออกข้อมูลเข้า Excel (รวมทุกใบที่บันทึก + ใบปัจจุบัน)</span>
     </div>
+    <div class="export-grid">
+      <button class="btn btn-excel" style="padding:11px; justify-content:center;" onclick="exportExcelDB('stock')">⬇️ 1. DB_Stock (สรุปสุกร & อาหาร)</button>
+      <button class="btn btn-excel" style="padding:11px; justify-content:center;" onclick="exportExcelDB('pens')">⬇️ 2. DB_Pens (รายคอก A-D 1-30)</button>
+      <button class="btn btn-excel" style="padding:11px; justify-content:center; background:#0369a1;" onclick="exportExcelDB('logs')">⬇️ 3. DB_Logs (เวลาที่คีย์ทั้งหมด)</button>
+    </div>
+
+    <div class="section-title" style="margin-top:8px;">
+      <span>📁 คลังใบรายงานที่บันทึกไว้ (<span id="savedListCount">0</span> ใบ)</span>
+      <button class="btn btn-clear" style="font-size:0.75rem; padding:5px 9px;" onclick="clearAllSavedReports()">ล้างคลังทั้งหมด</button>
+    </div>
+    <div id="savedReportsList"></div>
   </div>
 
-  <!-- Tab 4: Timestamp Logs -->
+  <!-- Tab 4B: Timestamp Logs of Current Sheet -->
   <div class="card tab-pane" id="tabLogs">
     <div class="section-title">
-      <span>🕒 ประวัติเวลาที่คีย์ข้อมูล (Log)</span>
-      <button class="btn" style="background:#f1f5f9; color:#334155;" onclick="clearLogsOnly()">ล้างเฉพาะ Log</button>
+      <span>🕒 ประวัติเวลาที่คีย์ในใบปัจจุบัน (<span id="logCountBadge">0</span>)</span>
+      <button class="btn" style="background:#f1f5f9; color:#334155;" onclick="clearLogsOnly()">ล้าง Log ใบนี้</button>
     </div>
     <div class="log-list">
       <table class="log-table">
@@ -645,7 +564,8 @@
 </div>
 
 <script>
-  const STORAGE_KEY = 'cpf_pig_stock_mobile_v2';
+  const CURRENT_KEY = 'cpf_pig_stock_current_v3';
+  const SAVED_KEY = 'cpf_pig_stock_saved_v3';
 
   const DEFAULT_PIG_ROWS = [
     { key: 'pigletA', label: 'ลูกสุกร แถว A', causeFixed: 'คลอด', docFixed: 'รายงานคลอด', group: 'piglet' },
@@ -669,7 +589,7 @@
 
   const DEFAULT_FEED_DOCS = ['ใบเบิกวัตถุดิบฯ', 'ใบโอนย้าย', 'ใบโอนสินค้า', ''];
 
-  function createInitialState() {
+  function createInitialState(keepHeader = null) {
     const today = new Date().toISOString().slice(0, 10);
     const pigData = {};
     DEFAULT_PIG_ROWS.forEach(r => {
@@ -681,37 +601,151 @@
       code: '', report: '', counted: '', causeType: '', docName: doc, docNo: '', docDate: ''
     }));
     return {
-      header: { date: today, barnName: '', typeF: true, typeM: false, typeRI: false, promote: '', farm: '' },
+      reportId: null,
+      savedAt: null,
+      header: {
+        date: keepHeader ? keepHeader.date : today,
+        barnName: '',
+        typeF: true,
+        typeM: false,
+        typeRI: false,
+        promote: keepHeader ? keepHeader.promote : '',
+        farm: keepHeader ? keepHeader.farm : ''
+      },
       syncTarget: 'piglet',
       grid: { A: Array(30).fill(''), B: Array(30).fill(''), C: Array(30).fill(''), D: Array(30).fill('') },
       pigData,
       pigNote: '',
       feedData,
       feedNote: '',
-      sigs: { farmer: '', counter: '', vet: '', account: '', manager: '' },
       logs: []
     };
   }
 
-  let state = loadState();
+  let state = loadCurrent();
+  let savedReports = loadSavedReports();
   let currentPenCol = 'A';
   let lastFocusedPig = null;
   let lastFocusedFeed = null;
 
-  function loadState() {
+  function loadCurrent() {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      const raw = localStorage.getItem(CURRENT_KEY);
       if (!raw) return createInitialState();
       return Object.assign(createInitialState(), JSON.parse(raw));
-    } catch {
-      return createInitialState();
-    }
+    } catch { return createInitialState(); }
   }
 
-  function saveState(msg = 'บันทึกแล้ว') {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    const badge = document.getElementById('saveStatus');
-    badge.textContent = `● ${msg} (${new Date().toTimeString().slice(0, 8)})`;
+  function loadSavedReports() {
+    try {
+      return JSON.parse(localStorage.getItem(SAVED_KEY) || '[]');
+    } catch { return []; }
+  }
+
+  function saveState(msg = 'บันทึกอัตโนมัติ') {
+    localStorage.setItem(CURRENT_KEY, JSON.stringify(state));
+    document.getElementById('saveStatus').textContent = `● ${msg} (${new Date().toTimeString().slice(0, 8)})`;
+  }
+
+  function persistSavedReports() {
+    localStorage.setItem(SAVED_KEY, JSON.stringify(savedReports));
+    renderSavedReports();
+  }
+
+  function makeReportId(h) {
+    const dt = (h.date || new Date().toISOString().slice(0,10)).replace(/-/g, '');
+    const t = new Date().toTimeString().slice(0,8).replace(/:/g, '');
+    const barn = (h.barnName || 'ไม่มีชื่อเล้า').trim().replace(/\s+/g, '_');
+    return `${dt}-${t}-${barn}`;
+  }
+
+  function hasAnyData(s) {
+    if (s.header.barnName.trim() !== '') return true;
+    if (Object.values(s.pigData).some(p => p.pigpro !== '' || p.counted !== '')) return true;
+    if (s.feedData.some(f => f.code !== '' || f.report !== '' || f.counted !== '')) return true;
+    if (['A','B','C','D'].some(c => s.grid[c].some(v => v !== ''))) return true;
+    return false;
+  }
+
+  // --- Save & Create New Report ---
+  function saveAndNewReport() {
+    if (!hasAnyData(state)) {
+      alert('ใบปัจจุบันยังไม่มีข้อมูลให้บันทึกครับ');
+      return;
+    }
+    if (!state.header.barnName.trim()) {
+      const name = prompt('กรุณาระบุ "ชื่อเล้า" ก่อนบันทึกใบนี้:', 'เล้า 1');
+      if (name === null) return;
+      state.header.barnName = name.trim() || 'เล้าทั่วไป';
+    }
+
+    const nowStr = formatNowThai();
+    const snapshot = JSON.parse(JSON.stringify(state));
+    if (!snapshot.reportId) {
+      snapshot.reportId = makeReportId(snapshot.header);
+    }
+    snapshot.savedAt = nowStr;
+
+    const existingIdx = savedReports.findIndex(r => r.reportId === snapshot.reportId);
+    if (existingIdx >= 0) {
+      savedReports[existingIdx] = snapshot;
+    } else {
+      savedReports.unshift(snapshot);
+    }
+    persistSavedReports();
+
+    // สร้างใบใหม่โดยจำ วันที่, ฟาร์ม, ส่งเสริม เดิมไว้
+    const keep = { date: state.header.date, farm: state.header.farm, promote: state.header.promote };
+    state = createInitialState(keep);
+    initRender();
+    saveState('บันทึกใบเดิม & สร้างใบใหม่แล้ว');
+
+    // พากลับไปแท็บ 1 พร้อมกรอกเล้าถัดไป
+    switchTab('pigs', document.getElementById('navBtn_pigs'));
+    alert(`✅ บันทึก "${snapshot.header.barnName}" เรียบร้อย!\nพร้อมสำหรับกรอกใบใหม่ได้เลยครับ`);
+  }
+
+  function loadReportForEdit(reportId) {
+    const target = savedReports.find(r => r.reportId === reportId);
+    if (!target) return;
+    if (hasAnyData(state) && state.reportId !== reportId) {
+      if (!confirm('ใบที่กำลังเปิดอยู่มีข้อมูลที่ยังไม่กด "บันทึก & สร้างใบใหม่" ต้องการเปิดใบที่เลือกทับเลยไหม?')) return;
+    }
+    state = JSON.parse(JSON.stringify(target));
+    initRender();
+    saveState(`เปิดแก้ไข: ${state.header.barnName}`);
+    switchTab('pigs', document.getElementById('navBtn_pigs'));
+  }
+
+  function deleteSavedReport(reportId) {
+    if (!confirm('ต้องการลบใบงานนี้ออกจากคลังใช่ไหม?')) return;
+    savedReports = savedReports.filter(r => r.reportId !== reportId);
+    if (state.reportId === reportId) state.reportId = null;
+    persistSavedReports();
+    renderHeader();
+  }
+
+  function clearAllSavedReports() {
+    if (savedReports.length === 0) return;
+    if (!confirm('ยืนยันล้างใบงานที่บันทึกไว้ในคลังทั้งหมด? (แนะนำให้โหลด Export Excel DB เก็บไว้ก่อน)')) return;
+    savedReports = [];
+    state.reportId = null;
+    persistSavedReports();
+    renderHeader();
+  }
+
+  function clearCurrentDraft() {
+    if (!confirm('ล้างข้อมูลในใบปัจจุบันเพื่อกรอกใหม่? (ข้อมูลในคลังที่บันทึกไว้แล้วไม่หาย)')) return;
+    const keep = { date: state.header.date, farm: state.header.farm, promote: state.header.promote };
+    state = createInitialState(keep);
+    initRender();
+    saveState('ล้างใบปัจจุบันแล้ว');
+  }
+
+  // --- Helpers ---
+  function formatNowThai() {
+    const now = new Date();
+    return `${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()} ${now.toTimeString().slice(0,8)}`;
   }
 
   function addLog(section, value) {
@@ -722,15 +756,10 @@
     renderLogs();
   }
 
-  function sanitizeInt(val) {
-    return String(val ?? '').replace(/[^0-9]/g, '');
-  }
+  function sanitizeInt(val) { return String(val ?? '').replace(/[^0-9]/g, ''); }
+  function sanitizeDecimal(val) { return String(val ?? '').replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'); }
 
-  function sanitizeDecimal(val) {
-    return String(val ?? '').replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-  }
-
-  // --- Render Header ---
+  // --- Render Functions ---
   function renderHeader() {
     document.getElementById('hdr_date').value = state.header.date || '';
     document.getElementById('hdr_barnName').value = state.header.barnName || '';
@@ -742,17 +771,12 @@
     document.getElementById('syncTarget').value = state.syncTarget || 'piglet';
     document.getElementById('pigNote').value = state.pigNote || '';
     document.getElementById('feedNote').value = state.feedNote || '';
-    Object.keys(state.sigs).forEach(k => {
-      const el = document.getElementById('sig_' + k);
-      if (el) el.value = state.sigs[k] || '';
-    });
+    document.getElementById('editingBadge').textContent = state.reportId ? `✏️ กำลังแก้ไขใบ: ${state.reportId}` : '🆕 ใบงานใหม่';
   }
 
-  // --- Render Pig Table ---
   function renderPigTable() {
     const tbody = document.getElementById('pigTbody');
     tbody.innerHTML = '';
-
     DEFAULT_PIG_ROWS.forEach(row => {
       const tr = document.createElement('tr');
       if (row.isSum) {
@@ -769,9 +793,7 @@
         const isSyncedRow =
           (state.syncTarget === 'piglet' && ['pigletA','pigletB','pigletC','pigletD'].includes(row.key)) ||
           (state.syncTarget === 'sow' && ['sow1','sow2','sow3','sow4'].includes(row.key));
-
         if (row.subOnly) tr.className = 'sub-only-row';
-
         tr.innerHTML = `
           <td class="left col-name">${row.subOnly ? '<span class="no-print" style="font-size:0.8rem;color:#64748b;">' + row.label + '</span>' : row.label}</td>
           <td class="col-num" data-label="รายงาน PigPro">
@@ -829,7 +851,6 @@
     });
   }
 
-  // --- Render Feed Table ---
   function renderFeedTable() {
     const tbody = document.getElementById('feedTbody');
     tbody.innerHTML = '';
@@ -882,7 +903,6 @@
     });
   }
 
-  // --- Render Pens (Mobile Single-Row + Full 4-Col Table) ---
   function renderMobilePenList() {
     const wrap = document.getElementById('mobilePenContainer');
     if (currentPenCol === 'ALL') {
@@ -960,6 +980,58 @@
     }
   }
 
+  function renderSavedReports() {
+    document.getElementById('savedCountBadge').textContent = savedReports.length;
+    document.getElementById('savedListCount').textContent = savedReports.length;
+    const list = document.getElementById('savedReportsList');
+    list.innerHTML = '';
+
+    if (savedReports.length === 0) {
+      list.innerHTML = '<div style="text-align:center;color:#64748b;padding:16px;background:#f8fafc;border-radius:8px;">ยังไม่มีใบงานในคลัง (กดปุ่มสีเขียว "💾 บันทึก & สร้างใบใหม่" ด้านบนเพื่อเก็บใบงาน)</div>';
+      return;
+    }
+
+    savedReports.forEach(r => {
+      const pigletSum = ['pigletA','pigletB','pigletC','pigletD'].reduce((a,k) => a + (Number(r.pigData[k]?.counted)||0), 0);
+      const sowSum = ['sow1','sow2','sow3','sow4','sowFarrow'].reduce((a,k) => a + (Number(r.pigData[k]?.counted)||0), 0);
+      const isEditing = state.reportId === r.reportId;
+
+      const div = document.createElement('div');
+      div.className = 'saved-card-item' + (isEditing ? ' editing' : '');
+      div.innerHTML = `
+        <div>
+          <div style="font-weight:700;font-size:0.95rem;">🏠 ${escapeHtml(r.header.barnName || 'ไม่ระบุเล้า')} <span style="font-size:0.75rem;color:#64748b;">(${r.header.date})</span></div>
+          <div style="font-size:0.8rem;color:#475569;">ลูกสุกร: <b>${pigletSum}</b> | แม่พันธุ์: <b>${sowSum}</b> | บันทึกเมื่อ: ${r.savedAt || '-'}</div>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <button class="btn" style="background:#2563eb;color:#fff;" onclick="loadReportForEdit('${r.reportId}')">📂 เปิด/แก้ไข</button>
+          <button class="btn" style="background:#fee2e2;color:#b91c1c;" onclick="deleteSavedReport('${r.reportId}')">🗑️</button>
+        </div>
+      `;
+      list.appendChild(div);
+    });
+  }
+
+  function renderLogs() {
+    document.getElementById('logCountBadge').textContent = state.logs.length;
+    const tbody = document.getElementById('logTbody');
+    tbody.innerHTML = '';
+    if (state.logs.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:#64748b;padding:20px;">ยังไม่มีประวัติการคีย์ในใบนี้</td></tr>';
+      return;
+    }
+    state.logs.forEach(l => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="white-space:nowrap;color:#64748b;">${l.time}</td>
+        <td><strong>${escapeHtml(l.section)}</strong></td>
+        <td style="font-weight:700;color:var(--primary);">${escapeHtml(l.value)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // --- Event Handlers ---
   function switchPenView(col, btn) {
     currentPenCol = col;
     document.querySelectorAll('.pen-row-btn').forEach(b => b.classList.remove('active'));
@@ -967,27 +1039,18 @@
     renderMobilePenList();
   }
 
-  // --- Input Handlers (Live & Commit) ---
   function onPigLiveInput(rowKey, field, el) {
     const clean = sanitizeInt(el.value);
     if (el.value !== clean) el.value = clean;
     state.pigData[rowKey][field] = clean;
     recalcPigDiffAndSums();
   }
-
   function onPigCommit(rowKey, field, el, label) {
-    const val = el.value;
-    if (el.dataset.prev !== val && val !== '') {
-      addLog(label, val);
-    }
-    el.dataset.prev = val;
+    if (el.dataset.prev !== el.value && el.value !== '') addLog(label, el.value);
+    el.dataset.prev = el.value;
     saveState();
   }
-
-  function onPigText(rowKey, field, val) {
-    state.pigData[rowKey][field] = val;
-    saveState();
-  }
+  function onPigText(rowKey, field, val) { state.pigData[rowKey][field] = val; saveState(); }
 
   function onFeedLiveInput(idx, field, el) {
     const clean = sanitizeDecimal(el.value);
@@ -995,74 +1058,55 @@
     state.feedData[idx][field] = clean;
     recalcFeedDiffs();
   }
-
   function onFeedCommit(idx, field, el) {
-    const val = el.value;
-    if (el.dataset.prev !== val && val !== '') {
+    if (el.dataset.prev !== el.value && el.value !== '') {
       const code = state.feedData[idx].code || `แถว ${idx+1}`;
-      addLog(`อาหาร เบอร์ ${code} (${field === 'report' ? 'รายงาน' : 'นับได้'})`, val);
+      addLog(`อาหาร เบอร์ ${code} (${field === 'report' ? 'รายงาน' : 'นับได้'})`, el.value);
     }
-    el.dataset.prev = val;
+    el.dataset.prev = el.value;
     saveState();
   }
-
-  function onFeedText(idx, field, val) {
-    state.feedData[idx][field] = val;
-    saveState();
-  }
+  function onFeedText(idx, field, val) { state.feedData[idx][field] = val; saveState(); }
 
   function onPenLiveInput(col, idx, el) {
     const clean = sanitizeInt(el.value);
     if (el.value !== clean) el.value = clean;
     state.grid[col][idx] = clean;
-    // Sync mirror input
     const mEl = document.getElementById(`mpen_${col}_${idx}`);
     const fEl = document.getElementById(`fpen_${col}_${idx}`);
     if (mEl && mEl !== el) mEl.value = clean;
     if (fEl && fEl !== el) fEl.value = clean;
     updatePenSumsAndSync();
   }
-
   function onPenCommit(col, idx, el) {
-    const val = el.value;
-    if (el.dataset.prev !== val && val !== '') {
-      addLog(`คอก ${col}${idx + 1}`, val);
-    }
-    el.dataset.prev = val;
+    if (el.dataset.prev !== el.value && el.value !== '') addLog(`คอก ${col}${idx + 1}`, el.value);
+    el.dataset.prev = el.value;
     const mEl = document.getElementById(`mpen_${col}_${idx}`);
     const fEl = document.getElementById(`fpen_${col}_${idx}`);
-    if (mEl) mEl.dataset.prev = val;
-    if (fEl) fEl.dataset.prev = val;
+    if (mEl) mEl.dataset.prev = el.value;
+    if (fEl) fEl.dataset.prev = el.value;
     saveState();
   }
-
   function stepPen(col, idx, delta) {
     const cur = Number(state.grid[col][idx] || 0);
     const next = Math.max(0, cur + delta);
     const nextStr = next === 0 && state.grid[col][idx] === '' ? '' : String(next);
     state.grid[col][idx] = nextStr;
-
     const mEl = document.getElementById(`mpen_${col}_${idx}`);
     const fEl = document.getElementById(`fpen_${col}_${idx}`);
     if (mEl) { mEl.value = nextStr; mEl.dataset.prev = nextStr; }
     if (fEl) { fEl.value = nextStr; fEl.dataset.prev = nextStr; }
-
     updatePenSumsAndSync();
     addLog(`คอก ${col}${idx + 1}`, next);
     saveState();
   }
-
   function onPenEnter(e, col, idx, prefix) {
     if (e.key === 'Enter') {
       e.preventDefault();
-      if (idx < 29) {
-        const nextEl = document.getElementById(`${prefix}_${col}_${idx + 1}`);
-        if (nextEl) nextEl.focus();
-      }
+      if (idx < 29) document.getElementById(`${prefix}_${col}_${idx + 1}`)?.focus();
     }
   }
 
-  // --- Quick Adder (For adding stacks without '+' key) ---
   function setAdderTarget(type, key, field, label) {
     if (type === 'pig') {
       lastFocusedPig = { key, field, label };
@@ -1080,8 +1124,7 @@
       const addVal = Number(addInput.value);
       if (!addVal) return;
       const { key, field, label } = lastFocusedPig;
-      const cur = Number(state.pigData[key][field] || 0);
-      const next = String(cur + addVal);
+      const next = String(Number(state.pigData[key][field] || 0) + addVal);
       state.pigData[key][field] = next;
       const targetEl = document.getElementById(`pig_in_${key}_${field}`);
       if (targetEl) { targetEl.value = next; targetEl.dataset.prev = next; }
@@ -1096,8 +1139,7 @@
       const addVal = Number(addInput.value);
       if (!addVal) return;
       const { idx, field, label } = lastFocusedFeed;
-      const cur = Number(state.feedData[idx][field] || 0);
-      const next = String(Math.round((cur + addVal) * 10000) / 10000);
+      const next = String(Math.round((Number(state.feedData[idx][field] || 0) + addVal) * 10000) / 10000);
       state.feedData[idx][field] = next;
       const targetEl = document.getElementById(`feed_in_${idx}_${field}`);
       if (targetEl) { targetEl.value = next; targetEl.dataset.prev = next; }
@@ -1109,11 +1151,7 @@
     }
   }
 
-  function toggleDocCols(tableId, show) {
-    document.getElementById(tableId).classList.toggle('hide-docs', !show);
-  }
-
-  // --- Header & Settings ---
+  function toggleDocCols(tableId, show) { document.getElementById(tableId).classList.toggle('hide-docs', !show); }
   function updateHeader(field, val) { state.header[field] = val; saveState(); }
   function updateBarnType(field, checked) {
     state.header[field] = checked;
@@ -1124,21 +1162,13 @@
     renderPigTable();
     saveState();
   }
-  function changeSyncTarget(val) {
-    state.syncTarget = val;
-    updatePenSumsAndSync();
-    renderPigTable();
-    saveState();
-  }
+  function changeSyncTarget(val) { state.syncTarget = val; updatePenSumsAndSync(); renderPigTable(); saveState(); }
   function updateNote(key, val) { state[key] = val; saveState(); }
-  function updateSig(key, val) { state.sigs[key] = val; saveState(); }
 
-  // --- Tabs ---
   function switchTab(tab, btn) {
     document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-
     if (tab === 'pigs') {
       document.getElementById('tabHeader').classList.add('active');
       document.getElementById('tabPigs').classList.add('active');
@@ -1147,47 +1177,33 @@
     } else if (tab === 'feed') {
       document.getElementById('tabFeed').classList.add('active');
     } else if (tab === 'logs') {
-      document.getElementById('tabSigs').classList.add('active');
+      document.getElementById('tabSaved').classList.add('active');
       document.getElementById('tabLogs').classList.add('active');
     }
   }
 
-  // --- Logs & Export ---
-  function renderLogs() {
-    document.getElementById('logCountBadge').textContent = state.logs.length;
-    const tbody = document.getElementById('logTbody');
-    tbody.innerHTML = '';
-    if (state.logs.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:#64748b;padding:20px;">ยังไม่มีประวัติการคีย์</td></tr>';
-      return;
-    }
-    state.logs.forEach(l => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td style="white-space:nowrap;color:#64748b;">${l.time}</td>
-        <td><strong>${escapeHtml(l.section)}</strong></td>
-        <td style="font-weight:700;color:var(--primary);">${escapeHtml(l.value)}</td>
-      `;
-      tbody.appendChild(tr);
-    });
-  }
-
   function clearLogsOnly() {
-    if (!confirm('ล้างเฉพาะประวัติ Log เวลาใช่หรือไม่?')) return;
+    if (!confirm('ล้าง Log เวลาของใบปัจจุบันใช่หรือไม่?')) return;
     state.logs = [];
     renderLogs();
     saveState('ล้าง Log แล้ว');
   }
 
-  function resetAll() {
-    if (!confirm('ยืนยันเริ่มใบตรวจนับใหม่ทั้งหมด? (ข้อมูลใบปัจจุบันจะถูกล้าง)')) return;
-    state = createInitialState();
-    initRender();
-    saveState('เริ่มใบใหม่แล้ว');
+  // --- Excel Database Export (Includes all Saved Reports + Active Draft) ---
+  function getAllReportsForExport() {
+    const list = [...savedReports];
+    if (hasAnyData(state)) {
+      const liveCopy = JSON.parse(JSON.stringify(state));
+      if (!liveCopy.reportId) liveCopy.reportId = makeReportId(liveCopy.header) + '-ร่าง';
+      if (!liveCopy.savedAt) liveCopy.savedAt = formatNowThai();
+      const idx = list.findIndex(r => r.reportId === liveCopy.reportId);
+      if (idx >= 0) list[idx] = liveCopy;
+      else list.unshift(liveCopy);
+    }
+    return list;
   }
 
   function csvCell(v) { return `"${String(v ?? '').replace(/"/g, '""')}"`; }
-
   function downloadCSV(rows, filename) {
     const content = '\uFEFF' + rows.map(r => r.map(csvCell).join(',')).join('\r\n');
     const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
@@ -1198,56 +1214,69 @@
     document.body.removeChild(a); URL.revokeObjectURL(url);
   }
 
-  function exportFullCSV() {
-    const h = state.header;
-    const types = [h.typeF?'เล้าคลอด(F)':'', h.typeM?'เล้าพักผสม(M)':'', h.typeRI?'เล้าเตรียมทดแทน(R/I)':''].filter(Boolean).join(' ');
-    const rows = [
-      ['รายงานการตรวจนับสินค้าระหว่างผลิตสุกรพันธุ์'],
-      ['วันที่', h.date, 'ชื่อเล้า', h.barnName, 'ประเภท', types, 'ฟาร์ม', h.farm, 'ส่งเสริม', h.promote],
-      [],
-      ['--- สรุปการตรวจนับสุกรคงเหลือ ---'],
-      ['ชนิด', 'รายงาน PigPro', 'ตรวจนับได้', 'ผลต่าง', 'สาเหตุผลต่าง', 'ชื่อเอกสาร', 'เลขที่เอกสาร', 'วัน เดือน ปี']
-    ];
-    DEFAULT_PIG_ROWS.forEach(r => {
-      if (r.isSum) {
-        const grp = DEFAULT_PIG_ROWS.filter(x => x.group === r.isSum);
-        const sumP = grp.reduce((a, x) => a + (Number(state.pigData[x.key].pigpro)||0), 0);
-        const sumC = grp.reduce((a, x) => a + (Number(state.pigData[x.key].counted)||0), 0);
-        rows.push([r.label, sumP, sumC, sumC - sumP]);
-      } else {
-        const d = state.pigData[r.key];
-        const diff = (d.pigpro !== '' || d.counted !== '') ? ((Number(d.counted)||0) - (Number(d.pigpro)||0)) : '';
-        rows.push([r.label, d.pigpro, d.counted, diff, d.cause, d.docName, d.docNo, d.docDate]);
-      }
-    });
-    rows.push(['หมายเหตุ (สุกร)', state.pigNote], [], ['--- การตรวจนับอาหารคงเหลือ ---']);
-    rows.push(['เบอร์', 'รายงาน', 'นับได้', 'ผลต่าง', 'สาเหตุผลต่าง', 'ชื่อเอกสาร', 'เลขที่เอกสาร', 'วัน เดือน ปี']);
-    state.feedData.forEach(f => {
-      const diff = (f.report !== '' || f.counted !== '') ? ((Number(f.counted)||0) - (Number(f.report)||0)) : '';
-      rows.push([f.code, f.report, f.counted, diff, f.causeType, f.docName, f.docNo, f.docDate]);
-    });
-    rows.push(['หมายเหตุ (อาหาร)', state.feedNote], [], ['--- ตารางนับรายคอก (1-30) ---']);
-    rows.push(['คอกที่', 'แถว A', 'แถว B', 'แถว C', 'แถว D']);
-    for (let i = 0; i < 30; i++) rows.push([i + 1, state.grid.A[i], state.grid.B[i], state.grid.C[i], state.grid.D[i]]);
-    rows.push(['รวม',
-      document.getElementById('sumPenA').textContent,
-      document.getElementById('sumPenB').textContent,
-      document.getElementById('sumPenC').textContent,
-      document.getElementById('sumPenD').textContent
-    ]);
-    downloadCSV(rows, `pig-stock-${h.barnName || 'report'}-${h.date}.csv`);
+  function exportExcelDB(type) {
+    const reports = getAllReportsForExport();
+    if (reports.length === 0) return alert('ยังไม่มีข้อมูลสำหรับส่งออกครับ');
+    const dateStamp = new Date().toISOString().slice(0, 10);
+
+    if (type === 'stock') {
+      const rows = [[
+        'Report_ID', 'วันที่', 'ฟาร์ม', 'ส่งเสริม', 'ชื่อเล้า', 'ประเภทเล้า',
+        'หมวด', 'รายการ', 'รายงาน_PigPro', 'ตรวจนับได้', 'ผลต่าง',
+        'สาเหตุผลต่าง', 'ชื่อเอกสาร', 'เลขที่เอกสาร', 'วันที่เอกสาร', 'หมายเหตุ', 'เวลาบันทึก'
+      ]];
+      reports.forEach(rep => {
+        const h = rep.header;
+        const bTypes = [h.typeF?'F':'', h.typeM?'M':'', h.typeRI?'R/I':''].filter(Boolean).join('/');
+        // สุกร (ไม่เอาแถว Sum เพราะ Excel จะ SUMIFS เอง ป้องกันบวกซ้ำ)
+        DEFAULT_PIG_ROWS.filter(r => !r.isSum).forEach(r => {
+          const d = rep.pigData[r.key] || {};
+          const pro = d.pigpro === '' ? '' : Number(d.pigpro);
+          const cnt = d.counted === '' ? '' : Number(d.counted);
+          const diff = (pro !== '' || cnt !== '') ? ((Number(cnt)||0) - (Number(pro)||0)) : '';
+          if (r.subOnly && !d.docNo && !d.docDate) return; // ข้ามแถวเอกสารเสริมที่ว่าง
+          rows.push([
+            rep.reportId, h.date, h.farm, h.promote, h.barnName, bTypes,
+            'สุกร', r.label, pro, cnt, diff, d.cause, d.docName, d.docNo, d.docDate, rep.pigNote, rep.savedAt
+          ]);
+        });
+        // อาหาร
+        rep.feedData.forEach((f, i) => {
+          if (!f.code && f.report === '' && f.counted === '' && !f.docNo) return;
+          const rVal = f.report === '' ? '' : Number(f.report);
+          const cVal = f.counted === '' ? '' : Number(f.counted);
+          const diff = (rVal !== '' || cVal !== '') ? Math.round(((Number(cVal)||0) - (Number(rVal)||0))*10000)/10000 : '';
+          rows.push([
+            rep.reportId, h.date, h.farm, h.promote, h.barnName, bTypes,
+            'อาหาร', f.code || `อาหาร_${i+1}`, rVal, cVal, diff, f.causeType, f.docName, f.docNo, f.docDate, rep.feedNote, rep.savedAt
+          ]);
+        });
+      });
+      downloadCSV(rows, `DB_Stock_${dateStamp}.csv`);
+    } else if (type === 'pens') {
+      const rows = [['Report_ID', 'วันที่', 'ฟาร์ม', 'ชื่อเล้า', 'แถว', 'คอกที่', 'จำนวนตัว', 'Key_Lookup']];
+      reports.forEach(rep => {
+        const h = rep.header;
+        ['A','B','C','D'].forEach(col => {
+          for (let i = 0; i < 30; i++) {
+            const val = rep.grid[col][i] === '' ? 0 : Number(rep.grid[col][i]);
+            rows.push([rep.reportId, h.date, h.farm, h.barnName, col, i + 1, val, `${rep.reportId}-${col}${i+1}`]);
+          }
+        });
+      });
+      downloadCSV(rows, `DB_Pens_${dateStamp}.csv`);
+    } else if (type === 'logs') {
+      const rows = [['Report_ID', 'ชื่อเล้า', 'วัน-เวลาที่คีย์', 'จุดที่คีย์', 'จำนวน']];
+      reports.forEach(rep => {
+        [...(rep.logs || [])].reverse().forEach(l => {
+          rows.push([rep.reportId, rep.header.barnName, l.time, l.section, l.value]);
+        });
+      });
+      downloadCSV(rows, `DB_Logs_${dateStamp}.csv`);
+    }
   }
 
-  function exportLogsCSV() {
-    if (state.logs.length === 0) return alert('ยังไม่มีข้อมูล Log');
-    const rows = [['วัน-เวลา', 'จุดที่คีย์', 'จำนวน']];
-    [...state.logs].reverse().forEach(l => rows.push([l.time, l.section, l.value]));
-    downloadCSV(rows, `pig-stock-logs-${state.header.date}.csv`);
-  }
-
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-  }
+  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 
   function initRender() {
     renderHeader();
@@ -1256,6 +1285,7 @@
     renderFullPenTable();
     renderMobilePenList();
     updatePenSumsAndSync();
+    renderSavedReports();
     renderLogs();
   }
 
