@@ -18,75 +18,76 @@
     }
 
     * { box-sizing: border-box; font-family: "Sarabun", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { margin: 0; padding: 10px; background: var(--bg); color: var(--text); font-size: 14px; }
+    body { margin: 0; padding: 8px; background: var(--bg); color: var(--text); font-size: 14px; padding-bottom: 40px; }
     .app-container { max-width: 1150px; margin: 0 auto; }
 
-    /* Top Action Bar */
+    /* Top Bar */
     .top-bar {
       background: #0f172a;
       color: #fff;
-      padding: 12px 14px;
+      padding: 10px 12px;
       border-radius: 12px;
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       position: sticky;
-      top: 6px;
-      z-index: 50;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      top: 4px;
+      z-index: 60;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.18);
     }
-    .top-title { font-weight: 700; font-size: 1rem; }
-    .save-badge { font-size: 0.78rem; color: #86efac; margin-left: 8px; }
+    .top-title { font-weight: 700; font-size: 0.95rem; }
+    .save-badge { font-size: 0.75rem; color: #86efac; display: block; }
     .top-actions { display: flex; flex-wrap: wrap; gap: 6px; }
     .btn {
-      padding: 7px 12px;
+      padding: 8px 11px;
       border: none;
       border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.82rem;
+      font-weight: 700;
+      font-size: 0.8rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 4px;
+      touch-action: manipulation;
     }
     .btn-print { background: #2563eb; color: #fff; }
     .btn-csv { background: #16a34a; color: #fff; }
     .btn-clear { background: #dc2626; color: #fff; }
 
-    /* Navigation Tabs (Mobile friendly) */
+    /* Navigation Tabs */
     .nav-tabs {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 6px;
       margin-bottom: 10px;
     }
     .nav-tab {
-      padding: 9px 14px;
+      padding: 10px 4px;
       background: #fff;
       border: 1px solid var(--border);
       border-radius: 10px;
       font-weight: 700;
       color: var(--muted);
       cursor: pointer;
-      white-space: nowrap;
-      font-size: 0.88rem;
+      font-size: 0.8rem;
+      text-align: center;
+      touch-action: manipulation;
     }
     .nav-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
     .card {
       background: var(--card);
       border-radius: 12px;
-      padding: 14px;
+      padding: 12px;
       border: 1px solid var(--border);
-      margin-bottom: 12px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      margin-bottom: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
     .section-title {
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 700;
       margin: 0 0 10px 0;
       color: var(--primary);
@@ -100,23 +101,71 @@
     /* Header Form Grid */
     .header-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 8px;
     }
-    .field label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
+    .field label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--muted); margin-bottom: 3px; }
     .field input[type="text"], .field input[type="date"], select {
       width: 100%;
-      padding: 8px 10px;
+      padding: 9px 10px;
       border: 1px solid var(--border);
       border-radius: 8px;
-      font-size: 0.92rem;
+      font-size: 0.95rem;
+      background: #fff;
     }
-    .checkbox-group { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding-top: 6px; }
-    .checkbox-group label { display: flex; align-items: center; gap: 5px; font-weight: 600; color: var(--text); cursor: pointer; margin: 0; }
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding-top: 4px; }
+    .checkbox-group label { display: flex; align-items: center; gap: 5px; font-weight: 700; color: var(--text); cursor: pointer; margin: 0; font-size: 0.9rem; }
+    .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; }
 
-    /* Tables */
-    .table-scroll { overflow-x: auto; }
-    table.form-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; min-width: 720px; }
+    /* Quick Adder Bar (No '+' key needed on mobile numpad) */
+    .adder-bar {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 8px 10px;
+      margin-bottom: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+    .adder-label { font-size: 0.78rem; font-weight: 700; color: #1e40af; flex: 1 1 100%; }
+    .adder-input {
+      flex: 1;
+      min-width: 100px;
+      padding: 8px 10px;
+      border: 2px solid #93c5fd;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: center;
+    }
+    .adder-btn {
+      padding: 9px 14px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+
+    .doc-toggle-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    /* Desktop / Print Standard Table */
+    table.form-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
     table.form-table th, table.form-table td {
       border: 1px solid #94a3b8;
       padding: 4px 5px;
@@ -124,69 +173,159 @@
       vertical-align: middle;
     }
     table.form-table th { background: #e2e8f0; font-weight: 700; font-size: 0.8rem; }
-    table.form-table td.left { text-align: left; font-weight: 600; padding-left: 8px; }
-    table.form-table tr.sum-row { background: #f8fafc; font-weight: 700; }
-    table.form-table tr.sum-row td { background: #eff6ff; color: var(--primary); font-size: 0.9rem; }
+    table.form-table td.left { text-align: left; font-weight: 700; padding-left: 8px; }
+    table.form-table tr.sum-row td { background: #eff6ff; color: var(--primary); font-weight: 700; font-size: 0.92rem; }
 
     .cell-input {
       width: 100%;
-      border: 1px solid transparent;
+      border: 1px solid #e2e8f0;
       background: #f8fafc;
-      padding: 5px 4px;
+      padding: 7px 4px;
       text-align: center;
-      border-radius: 4px;
-      font-size: 0.88rem;
-      font-weight: 600;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 700;
     }
-    .cell-input:focus { outline: none; border-color: var(--primary); background: #fff; }
-    .cell-input.text-left { text-align: left; font-weight: 400; }
-    .diff-cell { font-weight: 700; font-family: monospace; font-size: 0.95rem; }
+    .cell-input:focus { outline: none; border-color: var(--primary); background: #fff; box-shadow: 0 0 0 2px #bfdbfe; }
+    .cell-input.text-left { text-align: left; font-weight: 400; font-size: 0.88rem; }
+    .cell-input.doc-input { font-weight: 500; font-size: 0.85rem; }
+
+    .diff-cell { font-weight: 700; font-family: monospace; font-size: 1rem; }
     .diff-zero { color: var(--success); }
     .diff-nonzero { color: var(--danger); background: #fef2f2; }
 
-    /* Pen Grid A-D 1-30 */
-    .sync-bar {
-      background: var(--primary-light);
-      border: 1px solid #bfdbfe;
-      padding: 10px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      justify-content: space-between;
+    /* Mobile Responsive Card-Table Transformation (< 768px) */
+    @media screen and (max-width: 768px) {
+      table.mobile-cards thead { display: none; }
+      table.mobile-cards, table.mobile-cards tbody { display: block; width: 100%; }
+      table.mobile-cards tr {
+        display: grid;
+        grid-template-columns: 1fr 1fr 0.7fr;
+        gap: 6px;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 9px;
+        margin-bottom: 8px;
+      }
+      table.mobile-cards tr.sum-row {
+        background: #eff6ff;
+        border-color: #93c5fd;
+      }
+      table.mobile-cards tr.sub-only-row {
+        grid-template-columns: 1fr 1fr;
+        background: #f8fafc;
+      }
+      table.mobile-cards td {
+        border: none !important;
+        padding: 2px !important;
+        text-align: left;
+        background: transparent !important;
+      }
+      table.mobile-cards td.col-name {
+        grid-column: 1 / -1;
+        font-size: 0.95rem;
+        color: #0f172a;
+        border-bottom: 1px dashed #e2e8f0 !important;
+        padding-bottom: 5px !important;
+        margin-bottom: 2px;
+      }
+      table.mobile-cards td.col-num::before,
+      table.mobile-cards td.col-diff::before,
+      table.mobile-cards td.col-doc::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--muted);
+        margin-bottom: 2px;
+      }
+      table.mobile-cards td.col-diff {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 8px;
+        padding: 4px !important;
+      }
+      table.mobile-cards td.col-diff.diff-nonzero { background: #fef2f2 !important; }
+      table.mobile-cards td.col-diff.diff-zero { background: #f0fdf4 !important; }
+
+      table.mobile-cards td.col-doc { grid-column: span 1; }
+      table.mobile-cards.hide-docs td.col-doc { display: none; }
+      table.mobile-cards.hide-docs tr.sub-only-row { display: none; }
+      table.mobile-cards td.col-empty-mobile { display: none; }
+      table.mobile-cards tr.sum-row td.col-name { grid-column: 1 / -1; }
+      table.mobile-cards tr.sum-row td.col-num,
+      table.mobile-cards tr.sum-row td.col-diff { text-align: center; font-size: 1rem; }
     }
-    .quick-calc-bar {
-      display: flex;
-      flex-wrap: wrap;
+
+    /* Pen Counting Controls */
+    .pen-row-tabs {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 5px;
+      margin-bottom: 10px;
+    }
+    .pen-row-btn {
+      padding: 9px 2px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      text-align: center;
+    }
+    .pen-row-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .pen-row-sum-badge { display: block; font-size: 0.72rem; font-weight: 600; opacity: 0.9; }
+
+    /* Mobile Pen List (1 row at a time - super thumb friendly) */
+    .mobile-pen-item {
+      display: grid;
+      grid-template-columns: 56px 1fr auto auto auto;
       gap: 6px;
       align-items: center;
-      background: #f8fafc;
-      padding: 8px 10px;
+      padding: 6px 8px;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-    .q-btn {
-      padding: 6px 10px;
-      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 6px;
       background: #fff;
-      border-radius: 6px;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 0.85rem;
     }
-    .q-btn:active { background: #e2e8f0; }
+    .mobile-pen-no { font-weight: 800; font-size: 0.95rem; color: #334155; }
+    .mobile-pen-input {
+      width: 100%;
+      padding: 9px 6px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      text-align: center;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+    .mobile-pen-input:focus { border-color: var(--primary); background: #fff; outline: none; }
+    .q-tap {
+      padding: 10px 10px;
+      border: 1px solid var(--border);
+      background: #f1f5f9;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .q-tap:active { background: #cbd5e1; }
+    .q-tap.plus { background: #eff6ff; color: var(--primary); border-color: #bfdbfe; }
 
+    /* Full 4-col Pen Table */
     table.grid-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
     table.grid-table th, table.grid-table td { border: 1px solid #94a3b8; padding: 3px; text-align: center; }
     table.grid-table th { background: #e2e8f0; padding: 6px 4px; }
-    table.grid-table td.pen-no { background: #f1f5f9; font-weight: 700; width: 34px; color: #475569; }
+    table.grid-table td.pen-no { background: #f1f5f9; font-weight: 700; width: 32px; color: #475569; }
     table.grid-table input.pen-input {
       width: 100%;
       border: none;
-      padding: 6px 2px;
+      padding: 7px 2px;
       text-align: center;
       font-size: 0.95rem;
       font-weight: 700;
@@ -195,33 +334,32 @@
     table.grid-table input.pen-input:focus { background: #eff6ff; outline: 2px solid var(--primary); }
     table.grid-table tr.total-foot td { background: #dbeafe; font-weight: 700; font-size: 0.95rem; padding: 7px 4px; color: var(--primary); }
 
-    .note-box { width: 100%; margin-top: 8px; padding: 8px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.88rem; }
+    .note-box { width: 100%; margin-top: 8px; padding: 9px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; }
 
     /* Signatures */
-    .sig-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
-    .sig-box { border: 1px solid var(--border); border-radius: 8px; padding: 10px; text-align: center; background: #f8fafc; }
-    .sig-box label { display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 6px; }
-    .sig-box input { width: 100%; padding: 5px; border: 1px solid var(--border); border-radius: 6px; text-align: center; font-size: 0.85rem; margin-bottom: 4px; }
+    .sig-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 8px; }
+    .sig-box { border: 1px solid var(--border); border-radius: 8px; padding: 8px; text-align: center; background: #f8fafc; }
+    .sig-box label { display: block; font-weight: 700; font-size: 0.82rem; margin-bottom: 5px; }
+    .sig-box input { width: 100%; padding: 7px; border: 1px solid var(--border); border-radius: 6px; text-align: center; font-size: 0.85rem; }
 
-    /* Log Table */
-    .log-list { max-height: 450px; overflow-y: auto; }
-    table.log-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    /* Logs */
+    .log-list { max-height: 400px; overflow-y: auto; }
+    table.log-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
     table.log-table th, table.log-table td { border-bottom: 1px solid var(--border); padding: 8px 6px; text-align: left; }
     table.log-table th { background: #f8fafc; position: sticky; top: 0; }
 
-    /* Layout visibility */
+    /* Tab Visibility */
     .tab-pane { display: none; }
     .tab-pane.active { display: block; }
-    .view-all .tab-pane { display: block; }
-    .view-all #tabLogs { display: none; }
 
-    /* Print Styling (Mimics the exact CPF A4 Form) */
+    /* Print Styling (Official A4 Form) */
     .print-only-header { display: none; }
     @media print {
       @page { size: A4 portrait; margin: 7mm; }
       body { background: #fff; padding: 0; font-size: 10px; color: #000; }
-      .top-bar, .nav-tabs, .no-print, #tabLogs, .sync-bar, .quick-calc-bar { display: none !important; }
+      .top-bar, .nav-tabs, .no-print, #tabLogs, #mobilePenContainer, .adder-bar, .doc-toggle-bar, .pen-row-tabs { display: none !important; }
       .tab-pane { display: block !important; }
+      #fullPenTableWrap { display: block !important; }
       .card { border: none; box-shadow: none; padding: 0; margin: 0 0 6px 0; }
       .print-only-header { display: block; margin-bottom: 6px; }
       .print-only-header h2 { margin: 0; font-size: 14px; }
@@ -234,10 +372,18 @@
         gap: 6px;
         align-items: start;
       }
-      .table-scroll { overflow: visible; }
-      table.form-table { min-width: 0; font-size: 9px; }
-      table.form-table th, table.form-table td { border: 1px solid #000; padding: 2px 3px; }
-      table.form-table th { background: #f3f4f6 !important; -webkit-print-color-adjust: exact; }
+      /* Reset mobile card styles back to table for print */
+      table.mobile-cards, table.mobile-cards thead, table.mobile-cards tbody, table.mobile-cards tr, table.mobile-cards td {
+        display: revert !important;
+        border: 1px solid #000 !important;
+        padding: 2px 3px !important;
+        margin: 0 !important;
+        background: transparent !important;
+      }
+      table.mobile-cards td::before { display: none !important; }
+      table.mobile-cards.hide-docs td.col-doc, table.mobile-cards.hide-docs tr.sub-only-row { display: revert !important; }
+      table.form-table { font-size: 9px; }
+      table.form-table th { background: #f3f4f6 !important; -webkit-print-color-adjust: exact; border: 1px solid #000; font-size: 8.5px; }
       table.form-table tr.sum-row td { background: #f3f4f6 !important; color: #000; }
       .cell-input, select { border: none; background: transparent; padding: 1px; font-size: 9px; color: #000; appearance: none; }
       .diff-nonzero { background: transparent !important; color: #000; }
@@ -261,28 +407,27 @@
 </head>
 <body>
 
-<div class="app-container" id="appRoot">
+<div class="app-container">
   <!-- Top Bar -->
   <div class="top-bar no-print">
     <div>
-      <span class="top-title">🐷 ระบบตรวจนับสต๊อกสุกรพันธุ์ & อาหาร</span>
+      <span class="top-title">🐷 ตรวจนับสต๊อกสุกร & อาหาร</span>
       <span class="save-badge" id="saveStatus">● พร้อมใช้งาน</span>
     </div>
     <div class="top-actions">
-      <button class="btn btn-print" onclick="window.print()">🖨️ พิมพ์ฟอร์ม A4</button>
-      <button class="btn btn-csv" onclick="exportFullCSV()">⬇️ โหลดใบรายงาน (CSV)</button>
-      <button class="btn btn-csv" onclick="exportLogsCSV()">🕒 โหลด Log เวลา (CSV)</button>
-      <button class="btn btn-clear" onclick="resetAll()">🗑️ เริ่มใบใหม่</button>
+      <button class="btn btn-print" onclick="window.print()">🖨️ พิมพ์ A4</button>
+      <button class="btn btn-csv" onclick="exportFullCSV()">⬇️ ใบรายงาน CSV</button>
+      <button class="btn btn-csv" onclick="exportLogsCSV()">🕒 Log CSV</button>
+      <button class="btn btn-clear" onclick="resetAll()">🗑️ ใบใหม่</button>
     </div>
   </div>
 
-  <!-- Navigation Tabs -->
+  <!-- Mobile-First 4 Tabs -->
   <div class="nav-tabs no-print">
-    <button class="nav-tab active" onclick="switchTab('tabAll', this)">📋 มุมมองทั้งหมด</button>
-    <button class="nav-tab" onclick="switchTab('tabPigs', this)">1. หัวฟอร์ม & สรุปสุกร</button>
-    <button class="nav-tab" onclick="switchTab('tabPens', this)">2. นับคอก A-D (1–30)</button>
-    <button class="nav-tab" onclick="switchTab('tabFeed', this)">3. อาหารคงเหลือ</button>
-    <button class="nav-tab" onclick="switchTab('tabLogs', this)">🕒 Log เวลาที่คีย์ (<span id="logCountBadge">0</span>)</button>
+    <button class="nav-tab active" onclick="switchTab('pigs', this)">🐷 1. สุกร</button>
+    <button class="nav-tab" onclick="switchTab('pens', this)">🔢 2. คอก A-D</button>
+    <button class="nav-tab" onclick="switchTab('feed', this)">🌾 3. อาหาร</button>
+    <button class="nav-tab" onclick="switchTab('logs', this)">🕒 4. เซ็น & Log (<span id="logCountBadge">0</span>)</button>
   </div>
 
   <!-- Official Print Header -->
@@ -322,7 +467,7 @@
     </div>
   </div>
 
-  <!-- Main 2-Column Wrapper (Matches PDF Left + Right Layout) -->
+  <!-- Main 2-Column Wrapper for Print -->
   <div class="print-2col">
     <!-- LEFT COLUMN: Pig Summary + Feed Summary -->
     <div>
@@ -330,126 +475,150 @@
       <div class="card tab-pane active" id="tabPigs">
         <div class="section-title">
           <span>สรุปการตรวจนับสุกรคงเหลือ</span>
-          <span class="no-print" style="font-size:0.78rem; color:var(--muted); font-weight:400;">💡 พิมพ์สูตรบวกเลขได้ เช่น <code>12*2+3</code></span>
         </div>
-        <div class="table-scroll">
-          <table class="form-table" id="pigSummaryTable">
-            <thead>
-              <tr>
-                <th style="width:18%;">ชนิด</th>
-                <th style="width:9%;">รายงาน<br>PigPro</th>
-                <th style="width:9%;">ตรวจ<br>นับได้</th>
-                <th style="width:8%;">ผลต่าง</th>
-                <th style="width:11%;">สาเหตุ<br>ผลต่าง</th>
-                <th style="width:16%;">รายการ<br>ชื่อเอกสาร</th>
-                <th style="width:14%;">เลขที่เอกสาร</th>
-                <th style="width:15%;">วัน เดือน ปี</th>
-              </tr>
-            </thead>
-            <tbody id="pigTbody"></tbody>
-          </table>
+
+        <!-- Helper: Quick Adder for mobile numpad -->
+        <div class="adder-bar no-print">
+          <div class="adder-label" id="pigAdderTarget">🧮 ตัวช่วยบวกเพิ่ม: แตะช่องตัวเลขที่ต้องการ แล้วพิมพ์เลขมาบวกเพิ่มได้</div>
+          <input type="text" inputmode="numeric" class="adder-input" id="pigAdderVal" placeholder="กรอกจำนวนที่จะบวกเพิ่ม" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+          <button type="button" class="adder-btn" onclick="applyAdder('pig')">➕ บวกเข้าช่อง</button>
         </div>
+
+        <div class="doc-toggle-bar no-print">
+          <span>📄 แสดงช่อง สาเหตุ / เอกสาร / เลขที่ / วันที่</span>
+          <input type="checkbox" id="togglePigDocs" style="width:20px;height:20px;" onchange="toggleDocCols('pigSummaryTable', this.checked)" />
+        </div>
+
+        <table class="form-table mobile-cards hide-docs" id="pigSummaryTable">
+          <thead>
+            <tr>
+              <th style="width:18%;">ชนิด</th>
+              <th style="width:9%;">รายงาน<br>PigPro</th>
+              <th style="width:9%;">ตรวจ<br>นับได้</th>
+              <th style="width:8%;">ผลต่าง</th>
+              <th style="width:11%;">สาเหตุ<br>ผลต่าง</th>
+              <th style="width:16%;">รายการ<br>ชื่อเอกสาร</th>
+              <th style="width:14%;">เลขที่เอกสาร</th>
+              <th style="width:15%;">วัน เดือน ปี</th>
+            </tr>
+          </thead>
+          <tbody id="pigTbody"></tbody>
+        </table>
         <input type="text" class="note-box" id="pigNote" placeholder="หมายเหตุ (สุกร): ระบุเพิ่มเติม..." onchange="updateNote('pigNote', this.value)" />
       </div>
 
       <!-- 3. การตรวจนับอาหารคงเหลือ -->
-      <div class="card tab-pane active" id="tabFeed">
+      <div class="card tab-pane" id="tabFeed">
         <div class="section-title">
           <span>การตรวจนับอาหารคงเหลือ</span>
-          <span class="no-print" style="font-size:0.78rem; color:var(--muted); font-weight:400;">💡 ช่องนับได้ พิมพ์สูตรได้ เช่น <code>25*4+10</code></span>
         </div>
-        <div class="table-scroll">
-          <table class="form-table">
-            <thead>
-              <tr>
-                <th style="width:10%;">เบอร์</th>
-                <th style="width:10%;">รายงาน</th>
-                <th style="width:11%;">นับได้</th>
-                <th style="width:9%;">ผลต่าง</th>
-                <th style="width:13%;">สาเหตุผลต่าง<br>(รับเข้า / ใช้ไป)</th>
-                <th style="width:17%;">รายการ<br>ชื่อเอกสาร</th>
-                <th style="width:15%;">เลขที่เอกสาร</th>
-                <th style="width:15%;">วัน เดือน ปี</th>
-              </tr>
-            </thead>
-            <tbody id="feedTbody"></tbody>
-          </table>
+
+        <!-- Helper: Quick Adder for feed bags/kg -->
+        <div class="adder-bar no-print">
+          <div class="adder-label" id="feedAdderTarget">🧮 ตัวช่วยบวกเพิ่ม (เช่น นับหลายกอง): แตะช่องอาหาร แล้วพิมพ์เลขมาบวก</div>
+          <input type="text" inputmode="decimal" class="adder-input" id="feedAdderVal" placeholder="จำนวนที่จะบวกเพิ่ม" oninput="this.value=sanitizeDecimal(this.value)" />
+          <button type="button" class="adder-btn" onclick="applyAdder('feed')">➕ บวกเข้าช่อง</button>
         </div>
+
+        <div class="doc-toggle-bar no-print">
+          <span>📄 แสดงช่อง สาเหตุ / เอกสาร / เลขที่ / วันที่</span>
+          <input type="checkbox" id="toggleFeedDocs" style="width:20px;height:20px;" onchange="toggleDocCols('feedTable', this.checked)" />
+        </div>
+
+        <table class="form-table mobile-cards hide-docs" id="feedTable">
+          <thead>
+            <tr>
+              <th style="width:10%;">เบอร์</th>
+              <th style="width:10%;">รายงาน</th>
+              <th style="width:11%;">นับได้</th>
+              <th style="width:9%;">ผลต่าง</th>
+              <th style="width:13%;">สาเหตุผลต่าง<br>(รับเข้า / ใช้ไป)</th>
+              <th style="width:17%;">รายการ<br>ชื่อเอกสาร</th>
+              <th style="width:15%;">เลขที่เอกสาร</th>
+              <th style="width:15%;">วัน เดือน ปี</th>
+            </tr>
+          </thead>
+          <tbody id="feedTbody"></tbody>
+        </table>
         <input type="text" class="note-box" id="feedNote" placeholder="หมายเหตุ (อาหาร): ระบุเพิ่มเติม..." onchange="updateNote('feedNote', this.value)" />
       </div>
     </div>
 
     <!-- RIGHT COLUMN: แม่พันธุ์เล้าเตรียมทดแทน / ลูกเล้าคลอด (A-D 1-30) -->
-    <div class="card tab-pane active" id="tabPens">
+    <div class="card tab-pane" id="tabPens">
       <div class="section-title">
         <span>แม่พันธุ์เล้าเตรียมทดแทน / ลูกเล้าคลอด</span>
       </div>
 
-      <div class="sync-bar no-print">
-        <div style="font-size:0.82rem; font-weight:600;">
-          🔗 ดึงยอดรวม A, B, C, D ไปใส่ช่อง "ตรวจนับได้" อัตโนมัติที่:
-        </div>
-        <select id="syncTarget" onchange="changeSyncTarget(this.value)" style="width:auto; font-weight:600;">
+      <div class="no-print" style="background:#eff6ff; border:1px solid #bfdbfe; padding:8px 10px; border-radius:10px; margin-bottom:10px;">
+        <div style="font-size:0.8rem; font-weight:700; margin-bottom:4px; color:#1e40af;">🔗 ดึงยอดรวม A, B, C, D ไปใส่ช่อง "ตรวจนับได้" ที่:</div>
+        <select id="syncTarget" onchange="changeSyncTarget(this.value)" style="font-weight:700;">
           <option value="piglet">ลูกสุกร แถว A, B, C, D</option>
           <option value="sow">แม่ซองยืน แถว 1, 2, 3, 4</option>
           <option value="none">ไม่ดึงอัตโนมัติ (กรอกเอง)</option>
         </select>
       </div>
 
-      <div class="quick-calc-bar no-print">
-        <span style="font-size:0.8rem; font-weight:700; color:var(--muted);">ตัวช่วยช่องที่กำลังเลือก:</span>
-        <button type="button" class="q-btn" onclick="quickPenAdd(1)">+1</button>
-        <button type="button" class="q-btn" onclick="quickPenAdd(5)">+5</button>
-        <button type="button" class="q-btn" onclick="quickPenAdd(10)">+10</button>
-        <button type="button" class="q-btn" onclick="quickPenAdd(12)">+12</button>
-        <button type="button" class="q-btn" onclick="quickPenNext()" style="background:#eff6ff; color:var(--primary);">ถัดไป ⤵️</button>
+      <!-- Mobile Row Switcher -->
+      <div class="pen-row-tabs no-print">
+        <button class="pen-row-btn active" onclick="switchPenView('A', this)">แถว A <span class="pen-row-sum-badge" id="badgeSumA">0</span></button>
+        <button class="pen-row-btn" onclick="switchPenView('B', this)">แถว B <span class="pen-row-sum-badge" id="badgeSumB">0</span></button>
+        <button class="pen-row-btn" onclick="switchPenView('C', this)">แถว C <span class="pen-row-sum-badge" id="badgeSumC">0</span></button>
+        <button class="pen-row-btn" onclick="switchPenView('D', this)">แถว D <span class="pen-row-sum-badge" id="badgeSumD">0</span></button>
+        <button class="pen-row-btn" onclick="switchPenView('ALL', this)">ดู 4 แถว <span class="pen-row-sum-badge">รวม</span></button>
       </div>
 
-      <table class="grid-table">
-        <thead>
-          <tr>
-            <th>A</th><th>จ.น.ตัว</th>
-            <th>B</th><th>จ.น.ตัว</th>
-            <th>C</th><th>จ.น.ตัว</th>
-            <th>D</th><th>จ.น.ตัว</th>
-          </tr>
-        </thead>
-        <tbody id="penGridBody"></tbody>
-        <tfoot>
-          <tr class="total-foot">
-            <td>รวม</td><td id="sumPenA">0</td>
-            <td>รวม</td><td id="sumPenB">0</td>
-            <td>รวม</td><td id="sumPenC">0</td>
-            <td>รวม</td><td id="sumPenD">0</td>
-          </tr>
-        </tfoot>
-      </table>
+      <!-- Mobile Single-Row Container -->
+      <div id="mobilePenContainer" class="no-print"></div>
+
+      <!-- Full 4-Col Table (Always used for Print A4 & 'ดู 4 แถว') -->
+      <div id="fullPenTableWrap" style="display:none;">
+        <table class="grid-table">
+          <thead>
+            <tr>
+              <th>A</th><th>จ.น.ตัว</th>
+              <th>B</th><th>จ.น.ตัว</th>
+              <th>C</th><th>จ.น.ตัว</th>
+              <th>D</th><th>จ.น.ตัว</th>
+            </tr>
+          </thead>
+          <tbody id="penGridBody"></tbody>
+          <tfoot>
+            <tr class="total-foot">
+              <td>รวม</td><td id="sumPenA">0</td>
+              <td>รวม</td><td id="sumPenB">0</td>
+              <td>รวม</td><td id="sumPenC">0</td>
+              <td>รวม</td><td id="sumPenD">0</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
     </div>
   </div>
 
   <!-- Footer Signatures -->
-  <div class="card tab-pane active" id="tabSigs">
+  <div class="card tab-pane" id="tabSigs">
     <div class="section-title screen-only-title">ลงชื่อผู้เกี่ยวข้อง</div>
     <div class="sig-grid">
       <div class="sig-box">
         <label>เกษตรกร</label>
-        <input type="text" id="sig_farmer" placeholder="ลงชื่อ / วันที่" onchange="updateSig('farmer', this.value)" />
+        <input type="text" id="sig_farmer" placeholder="ลงชื่อ / ว/ด/ป" onchange="updateSig('farmer', this.value)" />
       </div>
       <div class="sig-box">
         <label>ผู้ตรวจนับ</label>
-        <input type="text" id="sig_counter" placeholder="ลงชื่อ / วันที่" onchange="updateSig('counter', this.value)" />
+        <input type="text" id="sig_counter" placeholder="ลงชื่อ / ว/ด/ป" onchange="updateSig('counter', this.value)" />
       </div>
       <div class="sig-box">
         <label>สัตวบาล</label>
-        <input type="text" id="sig_vet" placeholder="ลงชื่อ / วันที่" onchange="updateSig('vet', this.value)" />
+        <input type="text" id="sig_vet" placeholder="ลงชื่อ / ว/ด/ป" onchange="updateSig('vet', this.value)" />
       </div>
       <div class="sig-box">
         <label>บัญชี</label>
-        <input type="text" id="sig_account" placeholder="ลงชื่อ / วันที่" onchange="updateSig('account', this.value)" />
+        <input type="text" id="sig_account" placeholder="ลงชื่อ / ว/ด/ป" onchange="updateSig('account', this.value)" />
       </div>
       <div class="sig-box">
         <label>ผู้จัดการฟาร์ม</label>
-        <input type="text" id="sig_manager" placeholder="ลงชื่อ / วันที่" onchange="updateSig('manager', this.value)" />
+        <input type="text" id="sig_manager" placeholder="ลงชื่อ / ว/ด/ป" onchange="updateSig('manager', this.value)" />
       </div>
     </div>
   </div>
@@ -466,8 +635,7 @@
           <tr>
             <th>วัน-เวลา</th>
             <th>รายการ / จุดที่คีย์</th>
-            <th>สูตร / ค่าที่กรอก</th>
-            <th>ผลลัพธ์</th>
+            <th>จำนวน</th>
           </tr>
         </thead>
         <tbody id="logTbody"></tbody>
@@ -477,7 +645,7 @@
 </div>
 
 <script>
-  const STORAGE_KEY = 'cpf_pig_stock_form_v1';
+  const STORAGE_KEY = 'cpf_pig_stock_mobile_v2';
 
   const DEFAULT_PIG_ROWS = [
     { key: 'pigletA', label: 'ลูกสุกร แถว A', causeFixed: 'คลอด', docFixed: 'รายงานคลอด', group: 'piglet' },
@@ -487,9 +655,9 @@
     { key: 'pigletSum', label: 'รวมลูกสุกร', isSum: 'piglet' },
 
     { key: 'boar', label: 'พ่อพันธุ์', causeFixed: 'รับเข้า', docFixed: 'ใบเคลื่อนย้ายฯ', group: 'boar' },
-    { key: 'boar2', label: '', causeFixed: 'โอนออก', docFixed: 'ใบโอนย้าย', subOnly: true },
-    { key: 'boar3', label: '', causeFixed: 'คัดทิ้ง', docFixed: 'ใบขออนุมัติฯ', subOnly: true },
-    { key: 'boar4', label: '', causeFixed: 'ตาย', docFixed: '', subOnly: true },
+    { key: 'boar2', label: 'พ่อพันธุ์ (เอกสาร 2)', causeFixed: 'โอนออก', docFixed: 'ใบโอนย้าย', subOnly: true },
+    { key: 'boar3', label: 'พ่อพันธุ์ (เอกสาร 3)', causeFixed: 'คัดทิ้ง', docFixed: 'ใบขออนุมัติฯ', subOnly: true },
+    { key: 'boar4', label: 'พ่อพันธุ์ (เอกสาร 4)', causeFixed: 'ตาย', docFixed: '', subOnly: true },
 
     { key: 'sow1', label: 'แม่ซองยืน แถว 1', causeFixed: 'รับเข้า', docFixed: 'ใบเคลื่อนย้ายฯ', group: 'sow' },
     { key: 'sow2', label: 'แม่ซองยืน แถว 2', causeFixed: 'โอนออก', docFixed: 'ใบโอนย้าย', group: 'sow' },
@@ -526,14 +694,15 @@
   }
 
   let state = loadState();
-  let activePen = { col: 'A', idx: 0 };
+  let currentPenCol = 'A';
+  let lastFocusedPig = null;
+  let lastFocusedFeed = null;
 
   function loadState() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return createInitialState();
-      const parsed = JSON.parse(raw);
-      return Object.assign(createInitialState(), parsed);
+      return Object.assign(createInitialState(), JSON.parse(raw));
     } catch {
       return createInitialState();
     }
@@ -542,31 +711,26 @@
   function saveState(msg = 'บันทึกแล้ว') {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     const badge = document.getElementById('saveStatus');
-    const t = new Date().toTimeString().slice(0, 8);
-    badge.textContent = `● ${msg} (${t})`;
+    badge.textContent = `● ${msg} (${new Date().toTimeString().slice(0, 8)})`;
   }
 
-  function addLog(section, rawInput, resultVal) {
+  function addLog(section, value) {
     const now = new Date();
     const timeStr = `${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')} ${now.toTimeString().slice(0,8)}`;
-    state.logs.unshift({ time: timeStr, section, input: String(rawInput), value: String(resultVal) });
+    state.logs.unshift({ time: timeStr, section, value: String(value) });
     if (state.logs.length > 500) state.logs.pop();
     renderLogs();
   }
 
-  function evalMath(str) {
-    const s = String(str ?? '').trim().replace(/[xX×]/g, '*').replace(/÷/g, '/').replace(/\s+/g, '');
-    if (s === '') return '';
-    if (!/^[0-9+\-*/().]+$/.test(s)) return NaN;
-    try {
-      const val = Function('"use strict"; return (' + s + ')')();
-      return (typeof val === 'number' && isFinite(val)) ? Math.round(val * 10000) / 10000 : NaN;
-    } catch {
-      return NaN;
-    }
+  function sanitizeInt(val) {
+    return String(val ?? '').replace(/[^0-9]/g, '');
   }
 
-  // --- Render Functions ---
+  function sanitizeDecimal(val) {
+    return String(val ?? '').replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+  }
+
+  // --- Render Header ---
   function renderHeader() {
     document.getElementById('hdr_date').value = state.header.date || '';
     document.getElementById('hdr_barnName').value = state.header.barnName || '';
@@ -584,6 +748,7 @@
     });
   }
 
+  // --- Render Pig Table ---
   function renderPigTable() {
     const tbody = document.getElementById('pigTbody');
     tbody.innerHTML = '';
@@ -592,6 +757,51 @@
       const tr = document.createElement('tr');
       if (row.isSum) {
         tr.className = 'sum-row';
+        tr.innerHTML = `
+          <td class="left col-name">${row.label}</td>
+          <td class="col-num" data-label="รวม PigPro" id="pig_sum_pro_${row.isSum}"></td>
+          <td class="col-num" data-label="รวมนับได้" id="pig_sum_cnt_${row.isSum}"></td>
+          <td class="diff-cell col-diff" data-label="รวมผลต่าง" id="pig_sum_diff_${row.isSum}"></td>
+          <td colspan="4" class="col-empty-mobile"></td>
+        `;
+      } else {
+        const d = state.pigData[row.key];
+        const isSyncedRow =
+          (state.syncTarget === 'piglet' && ['pigletA','pigletB','pigletC','pigletD'].includes(row.key)) ||
+          (state.syncTarget === 'sow' && ['sow1','sow2','sow3','sow4'].includes(row.key));
+
+        if (row.subOnly) tr.className = 'sub-only-row';
+
+        tr.innerHTML = `
+          <td class="left col-name">${row.subOnly ? '<span class="no-print" style="font-size:0.8rem;color:#64748b;">' + row.label + '</span>' : row.label}</td>
+          <td class="col-num" data-label="รายงาน PigPro">
+            ${row.subOnly ? '' : `<input type="text" inputmode="numeric" pattern="[0-9]*" class="cell-input" id="pig_in_${row.key}_pigpro" data-prev="${d.pigpro}" value="${d.pigpro}"
+              onfocus="setAdderTarget('pig','${row.key}','pigpro','${row.label} (PigPro)')"
+              oninput="onPigLiveInput('${row.key}','pigpro',this)"
+              onchange="onPigCommit('${row.key}','pigpro',this,'${row.label} (PigPro)')" />`}
+          </td>
+          <td class="col-num" data-label="ตรวจนับได้">
+            ${row.subOnly ? '' : `<input type="text" inputmode="numeric" pattern="[0-9]*" class="cell-input" id="pig_in_${row.key}_counted" data-prev="${d.counted}" value="${d.counted}"
+              style="${isSyncedRow ? 'background:#dbeafe;color:#1e40af;' : ''}"
+              onfocus="setAdderTarget('pig','${row.key}','counted','${row.label} (นับได้)')"
+              oninput="onPigLiveInput('${row.key}','counted',this)"
+              onchange="onPigCommit('${row.key}','counted',this,'${row.label} (นับได้)')" />`}
+          </td>
+          <td class="diff-cell col-diff" data-label="ผลต่าง" id="pig_diff_${row.key}"></td>
+          <td class="col-doc" data-label="สาเหตุผลต่าง"><input type="text" class="cell-input doc-input" value="${d.cause}" onchange="onPigText('${row.key}','cause',this.value)" /></td>
+          <td class="col-doc" data-label="ชื่อเอกสาร"><input type="text" class="cell-input text-left doc-input" value="${d.docName}" onchange="onPigText('${row.key}','docName',this.value)" /></td>
+          <td class="col-doc" data-label="เลขที่เอกสาร"><input type="text" class="cell-input doc-input" value="${d.docNo}" onchange="onPigText('${row.key}','docNo',this.value)" /></td>
+          <td class="col-doc" data-label="วัน เดือน ปี"><input type="text" class="cell-input doc-input" value="${d.docDate}" placeholder="ว/ด/ป" onchange="onPigText('${row.key}','docDate',this.value)" /></td>
+        `;
+      }
+      tbody.appendChild(tr);
+    });
+    recalcPigDiffAndSums();
+  }
+
+  function recalcPigDiffAndSums() {
+    DEFAULT_PIG_ROWS.forEach(row => {
+      if (row.isSum) {
         const groupRows = DEFAULT_PIG_ROWS.filter(r => r.group === row.isSum);
         let sumPro = 0, sumCnt = 0, hasPro = false, hasCnt = false;
         groupRows.forEach(gr => {
@@ -600,181 +810,177 @@
           if (d.counted !== '') { sumCnt += Number(d.counted) || 0; hasCnt = true; }
         });
         const diff = (hasPro || hasCnt) ? (sumCnt - sumPro) : '';
-        const diffCls = diff === '' ? '' : (diff === 0 ? 'diff-zero' : 'diff-nonzero');
-        tr.innerHTML = `
-          <td class="left">${row.label}</td>
-          <td>${hasPro ? sumPro : ''}</td>
-          <td>${hasCnt ? sumCnt : ''}</td>
-          <td class="diff-cell ${diffCls}">${diff === '' ? '' : (diff > 0 ? '+' + diff : diff)}</td>
-          <td colspan="4" style="background:#f8fafc;"></td>
-        `;
-      } else {
+        document.getElementById(`pig_sum_pro_${row.isSum}`).textContent = hasPro ? sumPro : '';
+        document.getElementById(`pig_sum_cnt_${row.isSum}`).textContent = hasCnt ? sumCnt : '';
+        const diffEl = document.getElementById(`pig_sum_diff_${row.isSum}`);
+        diffEl.textContent = diff === '' ? '' : (diff > 0 ? '+' + diff : diff);
+        diffEl.className = 'diff-cell col-diff ' + (diff === '' ? '' : (diff === 0 ? 'diff-zero' : 'diff-nonzero'));
+      } else if (!row.subOnly) {
         const d = state.pigData[row.key];
         const proVal = d.pigpro === '' ? null : Number(d.pigpro);
         const cntVal = d.counted === '' ? null : Number(d.counted);
         const diff = (proVal !== null || cntVal !== null) ? ((cntVal || 0) - (proVal || 0)) : '';
-        const diffCls = diff === '' ? '' : (diff === 0 ? 'diff-zero' : 'diff-nonzero');
-
-        const isSyncedRow =
-          (state.syncTarget === 'piglet' && ['pigletA','pigletB','pigletC','pigletD'].includes(row.key)) ||
-          (state.syncTarget === 'sow' && ['sow1','sow2','sow3','sow4'].includes(row.key));
-
-        tr.innerHTML = `
-          <td class="left">${row.label}</td>
-          <td>${row.subOnly ? '' : `<input type="text" class="cell-input" value="${d.pigpro}" onblur="onPigInput('${row.key}','pigpro',this.value,'${row.label} (PigPro)')" onkeydown="enterBlur(event,this)" />`}</td>
-          <td>${row.subOnly ? '' : `<input type="text" class="cell-input" style="${isSyncedRow ? 'background:#dbeafe;color:#1e40af;' : ''}" value="${d.counted}" ${isSyncedRow ? 'title="ดึงยอดอัตโนมัติจากตาราง A-D"' : ''} onblur="onPigInput('${row.key}','counted',this.value,'${row.label} (นับได้)')" onkeydown="enterBlur(event,this)" />`}</td>
-          <td class="diff-cell ${diffCls}">${row.subOnly || diff === '' ? '' : (diff > 0 ? '+' + diff : diff)}</td>
-          <td><input type="text" class="cell-input" value="${d.cause}" onchange="onPigText('${row.key}','cause',this.value)" /></td>
-          <td><input type="text" class="cell-input text-left" value="${d.docName}" onchange="onPigText('${row.key}','docName',this.value)" /></td>
-          <td><input type="text" class="cell-input" value="${d.docNo}" onchange="onPigText('${row.key}','docNo',this.value)" /></td>
-          <td><input type="text" class="cell-input" value="${d.docDate}" placeholder="ว/ด/ป" onchange="onPigText('${row.key}','docDate',this.value)" /></td>
-        `;
+        const diffEl = document.getElementById(`pig_diff_${row.key}`);
+        if (diffEl) {
+          diffEl.textContent = diff === '' ? '' : (diff > 0 ? '+' + diff : diff);
+          diffEl.className = 'diff-cell col-diff ' + (diff === '' ? '' : (diff === 0 ? 'diff-zero' : 'diff-nonzero'));
+        }
       }
-      tbody.appendChild(tr);
     });
   }
 
+  // --- Render Feed Table ---
   function renderFeedTable() {
     const tbody = document.getElementById('feedTbody');
     tbody.innerHTML = '';
     state.feedData.forEach((f, idx) => {
-      const rep = f.report === '' ? null : Number(f.report);
-      const cnt = f.counted === '' ? null : Number(f.counted);
-      const diff = (rep !== null || cnt !== null) ? ((cnt || 0) - (rep || 0)) : '';
-      const diffCls = diff === '' ? '' : (diff === 0 ? 'diff-zero' : 'diff-nonzero');
-
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td><input type="text" class="cell-input" value="${f.code}" placeholder="เบอร์" onchange="onFeedText(${idx},'code',this.value)" /></td>
-        <td><input type="text" class="cell-input" value="${f.report}" onblur="onFeedNum(${idx},'report',this.value)" onkeydown="enterBlur(event,this)" /></td>
-        <td><input type="text" class="cell-input" value="${f.counted}" onblur="onFeedNum(${idx},'counted',this.value)" onkeydown="enterBlur(event,this)" /></td>
-        <td class="diff-cell ${diffCls}">${diff === '' ? '' : (diff > 0 ? '+' + diff : diff)}</td>
-        <td>
-          <select class="cell-input" onchange="onFeedText(${idx},'causeType',this.value)">
+        <td class="col-name" style="font-weight:700;">
+          <span class="no-print" style="font-size:0.78rem;color:#64748b;margin-right:6px;">รายการอาหาร #${idx+1} เบอร์:</span>
+          <input type="text" class="cell-input" style="width:90px;display:inline-block;" value="${f.code}" placeholder="เบอร์" onchange="onFeedText(${idx},'code',this.value)" />
+        </td>
+        <td class="col-num" data-label="รายงาน">
+          <input type="text" inputmode="decimal" class="cell-input" id="feed_in_${idx}_report" data-prev="${f.report}" value="${f.report}"
+            onfocus="setAdderTarget('feed',${idx},'report','อาหารแถว ${idx+1} (รายงาน)')"
+            oninput="onFeedLiveInput(${idx},'report',this)"
+            onchange="onFeedCommit(${idx},'report',this)" />
+        </td>
+        <td class="col-num" data-label="นับได้">
+          <input type="text" inputmode="decimal" class="cell-input" id="feed_in_${idx}_counted" data-prev="${f.counted}" value="${f.counted}"
+            onfocus="setAdderTarget('feed',${idx},'counted','อาหารแถว ${idx+1} (นับได้)')"
+            oninput="onFeedLiveInput(${idx},'counted',this)"
+            onchange="onFeedCommit(${idx},'counted',this)" />
+        </td>
+        <td class="diff-cell col-diff" data-label="ผลต่าง" id="feed_diff_${idx}"></td>
+        <td class="col-doc" data-label="สาเหตุผลต่าง">
+          <select class="cell-input doc-input" onchange="onFeedText(${idx},'causeType',this.value)">
             <option value="" ${f.causeType===''?'selected':''}>-</option>
             <option value="รับเข้า" ${f.causeType==='รับเข้า'?'selected':''}>รับเข้า</option>
             <option value="ใช้ไป" ${f.causeType==='ใช้ไป'?'selected':''}>ใช้ไป</option>
           </select>
         </td>
-        <td><input type="text" class="cell-input text-left" value="${f.docName}" onchange="onFeedText(${idx},'docName',this.value)" /></td>
-        <td><input type="text" class="cell-input" value="${f.docNo}" onchange="onFeedText(${idx},'docNo',this.value)" /></td>
-        <td><input type="text" class="cell-input" value="${f.docDate}" placeholder="ว/ด/ป" onchange="onFeedText(${idx},'docDate',this.value)" /></td>
+        <td class="col-doc" data-label="ชื่อเอกสาร"><input type="text" class="cell-input text-left doc-input" value="${f.docName}" onchange="onFeedText(${idx},'docName',this.value)" /></td>
+        <td class="col-doc" data-label="เลขที่เอกสาร"><input type="text" class="cell-input doc-input" value="${f.docNo}" onchange="onFeedText(${idx},'docNo',this.value)" /></td>
+        <td class="col-doc" data-label="วัน เดือน ปี"><input type="text" class="cell-input doc-input" value="${f.docDate}" placeholder="ว/ด/ป" onchange="onFeedText(${idx},'docDate',this.value)" /></td>
       `;
       tbody.appendChild(tr);
     });
+    recalcFeedDiffs();
   }
 
-  function renderPenGrid() {
+  function recalcFeedDiffs() {
+    state.feedData.forEach((f, idx) => {
+      const rep = f.report === '' ? null : Number(f.report);
+      const cnt = f.counted === '' ? null : Number(f.counted);
+      const diff = (rep !== null || cnt !== null) ? Math.round(((cnt || 0) - (rep || 0)) * 10000) / 10000 : '';
+      const diffEl = document.getElementById(`feed_diff_${idx}`);
+      if (diffEl) {
+        diffEl.textContent = diff === '' ? '' : (diff > 0 ? '+' + diff : diff);
+        diffEl.className = 'diff-cell col-diff ' + (diff === '' ? '' : (diff === 0 ? 'diff-zero' : 'diff-nonzero'));
+      }
+    });
+  }
+
+  // --- Render Pens (Mobile Single-Row + Full 4-Col Table) ---
+  function renderMobilePenList() {
+    const wrap = document.getElementById('mobilePenContainer');
+    if (currentPenCol === 'ALL') {
+      wrap.style.display = 'none';
+      document.getElementById('fullPenTableWrap').style.display = 'block';
+      return;
+    }
+    wrap.style.display = 'block';
+    document.getElementById('fullPenTableWrap').style.display = 'none';
+    wrap.innerHTML = '';
+
+    for (let i = 0; i < 30; i++) {
+      const val = state.grid[currentPenCol][i];
+      const div = document.createElement('div');
+      div.className = 'mobile-pen-item';
+      div.innerHTML = `
+        <div class="mobile-pen-no">${currentPenCol}${i + 1}</div>
+        <input type="text" inputmode="numeric" pattern="[0-9]*" class="mobile-pen-input" id="mpen_${currentPenCol}_${i}" data-prev="${val}" value="${val}"
+          placeholder="0"
+          oninput="onPenLiveInput('${currentPenCol}',${i},this)"
+          onchange="onPenCommit('${currentPenCol}',${i},this)"
+          onkeydown="onPenEnter(event,'${currentPenCol}',${i},'mpen')" />
+        <button type="button" class="q-tap" onclick="stepPen('${currentPenCol}',${i},-1)">-1</button>
+        <button type="button" class="q-tap plus" onclick="stepPen('${currentPenCol}',${i},1)">+1</button>
+        <button type="button" class="q-tap plus" onclick="stepPen('${currentPenCol}',${i},5)">+5</button>
+      `;
+      wrap.appendChild(div);
+    }
+  }
+
+  function renderFullPenTable() {
     const tbody = document.getElementById('penGridBody');
     tbody.innerHTML = '';
     const cols = ['A', 'B', 'C', 'D'];
-
     for (let i = 0; i < 30; i++) {
       const tr = document.createElement('tr');
       cols.forEach(c => {
         const val = state.grid[c][i];
         tr.innerHTML += `
           <td class="pen-no">${i + 1}</td>
-          <td><input type="text" inputmode="numeric" class="pen-input" id="pen_${c}_${i}" value="${val}"
-            onfocus="activePen={col:'${c}',idx:${i}}"
-            onblur="onPenBlur('${c}', ${i}, this.value)"
-            onkeydown="onPenKeyDown(event, '${c}', ${i}, this)" /></td>
+          <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="pen-input" id="fpen_${c}_${i}" data-prev="${val}" value="${val}"
+            oninput="onPenLiveInput('${c}',${i},this)"
+            onchange="onPenCommit('${c}',${i},this)"
+            onkeydown="onPenEnter(event,'${c}',${i},'fpen')" /></td>
         `;
       });
       tbody.appendChild(tr);
     }
-    updatePenSums(false);
   }
 
-  function updatePenSums(shouldRenderPig = true) {
+  function updatePenSumsAndSync() {
     const sums = {};
     ['A','B','C','D'].forEach(c => {
       let total = 0;
       state.grid[c].forEach(v => { if (v !== '') total += Number(v) || 0; });
-      sums[c] = Math.round(total * 10000) / 10000;
-      document.getElementById('sumPen' + c).textContent = sums[c];
+      sums[c] = total;
+      document.getElementById('sumPen' + c).textContent = total;
+      document.getElementById('badgeSum' + c).textContent = total;
     });
 
     const hasAny = col => state.grid[col].some(v => v !== '');
+    const syncMap = state.syncTarget === 'piglet'
+      ? { A: 'pigletA', B: 'pigletB', C: 'pigletC', D: 'pigletD' }
+      : (state.syncTarget === 'sow' ? { A: 'sow1', B: 'sow2', C: 'sow3', D: 'sow4' } : null);
 
-    if (state.syncTarget === 'piglet') {
-      const map = { A: 'pigletA', B: 'pigletB', C: 'pigletC', D: 'pigletD' };
-      ['A','B','C','D'].forEach(c => { state.pigData[map[c]].counted = hasAny(c) ? sums[c] : ''; });
-    } else if (state.syncTarget === 'sow') {
-      const map = { A: 'sow1', B: 'sow2', C: 'sow3', D: 'sow4' };
-      ['A','B','C','D'].forEach(c => { state.pigData[map[c]].counted = hasAny(c) ? sums[c] : ''; });
+    if (syncMap) {
+      ['A','B','C','D'].forEach(c => {
+        const rowKey = syncMap[c];
+        const newVal = hasAny(c) ? String(sums[c]) : '';
+        state.pigData[rowKey].counted = newVal;
+        const inp = document.getElementById(`pig_in_${rowKey}_counted`);
+        if (inp) { inp.value = newVal; inp.dataset.prev = newVal; }
+      });
+      recalcPigDiffAndSums();
     }
-    if (shouldRenderPig) renderPigTable();
   }
 
-  function renderLogs() {
-    document.getElementById('logCountBadge').textContent = state.logs.length;
-    const tbody = document.getElementById('logTbody');
-    tbody.innerHTML = '';
-    if (state.logs.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#64748b;padding:20px;">ยังไม่มีประวัติการคีย์</td></tr>';
-      return;
+  function switchPenView(col, btn) {
+    currentPenCol = col;
+    document.querySelectorAll('.pen-row-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderMobilePenList();
+  }
+
+  // --- Input Handlers (Live & Commit) ---
+  function onPigLiveInput(rowKey, field, el) {
+    const clean = sanitizeInt(el.value);
+    if (el.value !== clean) el.value = clean;
+    state.pigData[rowKey][field] = clean;
+    recalcPigDiffAndSums();
+  }
+
+  function onPigCommit(rowKey, field, el, label) {
+    const val = el.value;
+    if (el.dataset.prev !== val && val !== '') {
+      addLog(label, val);
     }
-    state.logs.forEach(l => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td style="white-space:nowrap;color:#64748b;">${l.time}</td>
-        <td><strong>${escapeHtml(l.section)}</strong></td>
-        <td><code>${escapeHtml(l.input)}</code></td>
-        <td style="font-weight:700;color:var(--primary);">${escapeHtml(l.value)}</td>
-      `;
-      tbody.appendChild(tr);
-    });
-  }
-
-  // --- Event Handlers ---
-  function enterBlur(e, el) {
-    if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
-  }
-
-  function updateHeader(field, val) {
-    state.header[field] = val;
-    saveState();
-  }
-
-  function updateBarnType(field, checked) {
-    state.header[field] = checked;
-    if (checked && field === 'typeF') { state.syncTarget = 'piglet'; }
-    if (checked && field === 'typeRI') { state.syncTarget = 'sow'; }
-    document.getElementById('syncTarget').value = state.syncTarget;
-    updatePenSums(true);
-    saveState();
-  }
-
-  function changeSyncTarget(val) {
-    state.syncTarget = val;
-    updatePenSums(true);
-    saveState();
-  }
-
-  function updateNote(key, val) {
-    state[key] = val;
-    saveState();
-  }
-
-  function updateSig(key, val) {
-    state.sigs[key] = val;
-    saveState();
-  }
-
-  function onPigInput(rowKey, field, rawVal, label) {
-    const oldVal = state.pigData[rowKey][field];
-    const calc = evalMath(rawVal);
-    if (isNaN(calc)) {
-      alert('สูตรตัวเลขไม่ถูกต้อง');
-      renderPigTable();
-      return;
-    }
-    state.pigData[rowKey][field] = calc;
-    if (String(oldVal) !== String(calc) && calc !== '') {
-      addLog(label, rawVal, calc);
-    }
-    renderPigTable();
+    el.dataset.prev = val;
     saveState();
   }
 
@@ -783,20 +989,20 @@
     saveState();
   }
 
-  function onFeedNum(idx, field, rawVal) {
-    const oldVal = state.feedData[idx][field];
-    const calc = evalMath(rawVal);
-    if (isNaN(calc)) {
-      alert('สูตรตัวเลขไม่ถูกต้อง');
-      renderFeedTable();
-      return;
-    }
-    state.feedData[idx][field] = calc;
-    if (String(oldVal) !== String(calc) && calc !== '') {
+  function onFeedLiveInput(idx, field, el) {
+    const clean = sanitizeDecimal(el.value);
+    if (el.value !== clean) el.value = clean;
+    state.feedData[idx][field] = clean;
+    recalcFeedDiffs();
+  }
+
+  function onFeedCommit(idx, field, el) {
+    const val = el.value;
+    if (el.dataset.prev !== val && val !== '') {
       const code = state.feedData[idx].code || `แถว ${idx+1}`;
-      addLog(`อาหาร เบอร์ ${code} (${field === 'report' ? 'รายงาน' : 'นับได้'})`, rawVal, calc);
+      addLog(`อาหาร เบอร์ ${code} (${field === 'report' ? 'รายงาน' : 'นับได้'})`, val);
     }
-    renderFeedTable();
+    el.dataset.prev = val;
     saveState();
   }
 
@@ -805,76 +1011,169 @@
     saveState();
   }
 
-  function onPenBlur(col, idx, rawVal) {
-    const oldVal = state.grid[col][idx];
-    const calc = evalMath(rawVal);
-    if (isNaN(calc)) {
-      document.getElementById(`pen_${col}_${idx}`).value = oldVal;
-      return;
+  function onPenLiveInput(col, idx, el) {
+    const clean = sanitizeInt(el.value);
+    if (el.value !== clean) el.value = clean;
+    state.grid[col][idx] = clean;
+    // Sync mirror input
+    const mEl = document.getElementById(`mpen_${col}_${idx}`);
+    const fEl = document.getElementById(`fpen_${col}_${idx}`);
+    if (mEl && mEl !== el) mEl.value = clean;
+    if (fEl && fEl !== el) fEl.value = clean;
+    updatePenSumsAndSync();
+  }
+
+  function onPenCommit(col, idx, el) {
+    const val = el.value;
+    if (el.dataset.prev !== val && val !== '') {
+      addLog(`คอก ${col}${idx + 1}`, val);
     }
-    state.grid[col][idx] = calc;
-    document.getElementById(`pen_${col}_${idx}`).value = calc;
-    if (String(oldVal) !== String(calc) && calc !== '') {
-      addLog(`คอก ${col}${idx + 1}`, rawVal, calc);
-    }
-    updatePenSums(true);
+    el.dataset.prev = val;
+    const mEl = document.getElementById(`mpen_${col}_${idx}`);
+    const fEl = document.getElementById(`fpen_${col}_${idx}`);
+    if (mEl) mEl.dataset.prev = val;
+    if (fEl) fEl.dataset.prev = val;
     saveState();
   }
 
-  function onPenKeyDown(e, col, idx, el) {
+  function stepPen(col, idx, delta) {
+    const cur = Number(state.grid[col][idx] || 0);
+    const next = Math.max(0, cur + delta);
+    const nextStr = next === 0 && state.grid[col][idx] === '' ? '' : String(next);
+    state.grid[col][idx] = nextStr;
+
+    const mEl = document.getElementById(`mpen_${col}_${idx}`);
+    const fEl = document.getElementById(`fpen_${col}_${idx}`);
+    if (mEl) { mEl.value = nextStr; mEl.dataset.prev = nextStr; }
+    if (fEl) { fEl.value = nextStr; fEl.dataset.prev = nextStr; }
+
+    updatePenSumsAndSync();
+    addLog(`คอก ${col}${idx + 1}`, next);
+    saveState();
+  }
+
+  function onPenEnter(e, col, idx, prefix) {
     if (e.key === 'Enter') {
       e.preventDefault();
-      onPenBlur(col, idx, el.value);
       if (idx < 29) {
-        document.getElementById(`pen_${col}_${idx + 1}`).focus();
-      } else {
-        const nextCol = { A: 'B', B: 'C', C: 'D' }[col];
-        if (nextCol) document.getElementById(`pen_${nextCol}_0`).focus();
+        const nextEl = document.getElementById(`${prefix}_${col}_${idx + 1}`);
+        if (nextEl) nextEl.focus();
       }
     }
   }
 
-  function quickPenAdd(num) {
-    const el = document.getElementById(`pen_${activePen.col}_${activePen.idx}`);
-    if (!el) return;
-    const cur = evalMath(el.value);
-    const next = (cur === '' || isNaN(cur) ? 0 : Number(cur)) + num;
-    el.value = next;
-    onPenBlur(activePen.col, activePen.idx, String(next));
-    el.focus();
-  }
-
-  function quickPenNext() {
-    const nextIdx = activePen.idx < 29 ? activePen.idx + 1 : 0;
-    const el = document.getElementById(`pen_${activePen.col}_${nextIdx}`);
-    if (el) el.focus();
-  }
-
-  // --- Tabs ---
-  function switchTab(tabId, btn) {
-    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-
-    const root = document.getElementById('appRoot');
-    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-
-    if (tabId === 'tabAll') {
-      root.classList.add('view-all');
-      ['tabHeader','tabPigs','tabPens','tabFeed','tabSigs'].forEach(id => document.getElementById(id).classList.add('active'));
-    } else if (tabId === 'tabPigs') {
-      root.classList.remove('view-all');
-      document.getElementById('tabHeader').classList.add('active');
-      document.getElementById('tabPigs').classList.add('active');
-      document.getElementById('tabSigs').classList.add('active');
+  // --- Quick Adder (For adding stacks without '+' key) ---
+  function setAdderTarget(type, key, field, label) {
+    if (type === 'pig') {
+      lastFocusedPig = { key, field, label };
+      document.getElementById('pigAdderTarget').textContent = `🧮 กำลังเลือก: ${label} (ยอดเดิม: ${state.pigData[key][field] || 0})`;
     } else {
-      root.classList.remove('view-all');
-      document.getElementById(tabId).classList.add('active');
+      lastFocusedFeed = { idx: key, field, label };
+      document.getElementById('feedAdderTarget').textContent = `🧮 กำลังเลือก: ${label} (ยอดเดิม: ${state.feedData[key][field] || 0})`;
     }
   }
 
-  // --- Reset & Export ---
+  function applyAdder(type) {
+    if (type === 'pig') {
+      if (!lastFocusedPig) return alert('กรุณาแตะเลือกช่องตัวเลขในตารางสุกรก่อนครับ');
+      const addInput = document.getElementById('pigAdderVal');
+      const addVal = Number(addInput.value);
+      if (!addVal) return;
+      const { key, field, label } = lastFocusedPig;
+      const cur = Number(state.pigData[key][field] || 0);
+      const next = String(cur + addVal);
+      state.pigData[key][field] = next;
+      const targetEl = document.getElementById(`pig_in_${key}_${field}`);
+      if (targetEl) { targetEl.value = next; targetEl.dataset.prev = next; }
+      recalcPigDiffAndSums();
+      addLog(`${label} (+${addVal})`, next);
+      saveState();
+      addInput.value = '';
+      setAdderTarget('pig', key, field, label);
+    } else {
+      if (!lastFocusedFeed) return alert('กรุณาแตะเลือกช่องตัวเลขในตารางอาหารก่อนครับ');
+      const addInput = document.getElementById('feedAdderVal');
+      const addVal = Number(addInput.value);
+      if (!addVal) return;
+      const { idx, field, label } = lastFocusedFeed;
+      const cur = Number(state.feedData[idx][field] || 0);
+      const next = String(Math.round((cur + addVal) * 10000) / 10000);
+      state.feedData[idx][field] = next;
+      const targetEl = document.getElementById(`feed_in_${idx}_${field}`);
+      if (targetEl) { targetEl.value = next; targetEl.dataset.prev = next; }
+      recalcFeedDiffs();
+      addLog(`${label} (+${addVal})`, next);
+      saveState();
+      addInput.value = '';
+      setAdderTarget('feed', idx, field, label);
+    }
+  }
+
+  function toggleDocCols(tableId, show) {
+    document.getElementById(tableId).classList.toggle('hide-docs', !show);
+  }
+
+  // --- Header & Settings ---
+  function updateHeader(field, val) { state.header[field] = val; saveState(); }
+  function updateBarnType(field, checked) {
+    state.header[field] = checked;
+    if (checked && field === 'typeF') state.syncTarget = 'piglet';
+    if (checked && field === 'typeRI') state.syncTarget = 'sow';
+    document.getElementById('syncTarget').value = state.syncTarget;
+    updatePenSumsAndSync();
+    renderPigTable();
+    saveState();
+  }
+  function changeSyncTarget(val) {
+    state.syncTarget = val;
+    updatePenSumsAndSync();
+    renderPigTable();
+    saveState();
+  }
+  function updateNote(key, val) { state[key] = val; saveState(); }
+  function updateSig(key, val) { state.sigs[key] = val; saveState(); }
+
+  // --- Tabs ---
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+
+    if (tab === 'pigs') {
+      document.getElementById('tabHeader').classList.add('active');
+      document.getElementById('tabPigs').classList.add('active');
+    } else if (tab === 'pens') {
+      document.getElementById('tabPens').classList.add('active');
+    } else if (tab === 'feed') {
+      document.getElementById('tabFeed').classList.add('active');
+    } else if (tab === 'logs') {
+      document.getElementById('tabSigs').classList.add('active');
+      document.getElementById('tabLogs').classList.add('active');
+    }
+  }
+
+  // --- Logs & Export ---
+  function renderLogs() {
+    document.getElementById('logCountBadge').textContent = state.logs.length;
+    const tbody = document.getElementById('logTbody');
+    tbody.innerHTML = '';
+    if (state.logs.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:#64748b;padding:20px;">ยังไม่มีประวัติการคีย์</td></tr>';
+      return;
+    }
+    state.logs.forEach(l => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="white-space:nowrap;color:#64748b;">${l.time}</td>
+        <td><strong>${escapeHtml(l.section)}</strong></td>
+        <td style="font-weight:700;color:var(--primary);">${escapeHtml(l.value)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
   function clearLogsOnly() {
-    if (!confirm('ล้างเฉพาะประวัติ Log เวลาใช่หรือไม่? (ยอดที่กรอกในตารางยังอยู่)')) return;
+    if (!confirm('ล้างเฉพาะประวัติ Log เวลาใช่หรือไม่?')) return;
     state.logs = [];
     renderLogs();
     saveState('ล้าง Log แล้ว');
@@ -887,21 +1186,16 @@
     saveState('เริ่มใบใหม่แล้ว');
   }
 
-  function csvCell(v) {
-    return `"${String(v ?? '').replace(/"/g, '""')}"`;
-  }
+  function csvCell(v) { return `"${String(v ?? '').replace(/"/g, '""')}"`; }
 
   function downloadCSV(rows, filename) {
     const content = '\uFEFF' + rows.map(r => r.map(csvCell).join(',')).join('\r\n');
     const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a); URL.revokeObjectURL(url);
   }
 
   function exportFullCSV() {
@@ -914,7 +1208,6 @@
       ['--- สรุปการตรวจนับสุกรคงเหลือ ---'],
       ['ชนิด', 'รายงาน PigPro', 'ตรวจนับได้', 'ผลต่าง', 'สาเหตุผลต่าง', 'ชื่อเอกสาร', 'เลขที่เอกสาร', 'วัน เดือน ปี']
     ];
-
     DEFAULT_PIG_ROWS.forEach(r => {
       if (r.isSum) {
         const grp = DEFAULT_PIG_ROWS.filter(x => x.group === r.isSum);
@@ -927,35 +1220,28 @@
         rows.push([r.label, d.pigpro, d.counted, diff, d.cause, d.docName, d.docNo, d.docDate]);
       }
     });
-    rows.push(['หมายเหตุ (สุกร)', state.pigNote]);
-
-    rows.push([], ['--- การตรวจนับอาหารคงเหลือ ---']);
+    rows.push(['หมายเหตุ (สุกร)', state.pigNote], [], ['--- การตรวจนับอาหารคงเหลือ ---']);
     rows.push(['เบอร์', 'รายงาน', 'นับได้', 'ผลต่าง', 'สาเหตุผลต่าง', 'ชื่อเอกสาร', 'เลขที่เอกสาร', 'วัน เดือน ปี']);
     state.feedData.forEach(f => {
       const diff = (f.report !== '' || f.counted !== '') ? ((Number(f.counted)||0) - (Number(f.report)||0)) : '';
       rows.push([f.code, f.report, f.counted, diff, f.causeType, f.docName, f.docNo, f.docDate]);
     });
-    rows.push(['หมายเหตุ (อาหาร)', state.feedNote]);
-
-    rows.push([], ['--- ตารางนับรายคอก (1-30) ---']);
+    rows.push(['หมายเหตุ (อาหาร)', state.feedNote], [], ['--- ตารางนับรายคอก (1-30) ---']);
     rows.push(['คอกที่', 'แถว A', 'แถว B', 'แถว C', 'แถว D']);
-    for (let i = 0; i < 30; i++) {
-      rows.push([i + 1, state.grid.A[i], state.grid.B[i], state.grid.C[i], state.grid.D[i]]);
-    }
+    for (let i = 0; i < 30; i++) rows.push([i + 1, state.grid.A[i], state.grid.B[i], state.grid.C[i], state.grid.D[i]]);
     rows.push(['รวม',
       document.getElementById('sumPenA').textContent,
       document.getElementById('sumPenB').textContent,
       document.getElementById('sumPenC').textContent,
       document.getElementById('sumPenD').textContent
     ]);
-
     downloadCSV(rows, `pig-stock-${h.barnName || 'report'}-${h.date}.csv`);
   }
 
   function exportLogsCSV() {
     if (state.logs.length === 0) return alert('ยังไม่มีข้อมูล Log');
-    const rows = [['วัน-เวลา', 'จุดที่คีย์', 'สูตร/ค่าที่กรอก', 'ผลลัพธ์']];
-    [...state.logs].reverse().forEach(l => rows.push([l.time, l.section, l.input, l.value]));
+    const rows = [['วัน-เวลา', 'จุดที่คีย์', 'จำนวน']];
+    [...state.logs].reverse().forEach(l => rows.push([l.time, l.section, l.value]));
     downloadCSV(rows, `pig-stock-logs-${state.header.date}.csv`);
   }
 
@@ -965,14 +1251,14 @@
 
   function initRender() {
     renderHeader();
-    renderPenGrid();
     renderPigTable();
     renderFeedTable();
+    renderFullPenTable();
+    renderMobilePenList();
+    updatePenSumsAndSync();
     renderLogs();
   }
 
-  // Start
-  document.getElementById('appRoot').classList.add('view-all');
   initRender();
 </script>
 </body>
