@@ -255,7 +255,7 @@
       </div>
       <div class="field">
         <label>ฟาร์ม:</label>
-        <input type="text" id="hdr_farm" placeholder="ฟาร์มท่าจะหลุง" onchange="updateHeader('farm', this.value)" />
+        <input type="text" id="hdr_farm" placeholder="ระบุชื่อฟาร์ม" onchange="updateHeader('farm', this.value)" />
       </div>
       <div class="field" style="grid-column: 1 / -1;">
         <label>ประเภทเล้า:</label>
@@ -427,8 +427,8 @@
 </div>
 
 <script>
-  // หากต้องการให้ทุกเครื่องที่เปิดเว็บเชื่อมต่ออัตโนมัติ ให้วางลิงก์ /exec ในเครื่องหมายคำพูดด้านล่างนี้ได้เลยครับ
-  const DEFAULT_GSHEET_URL = 'https://script.google.com/macros/s/AKfycbzSXNDP-30B_AQRbcxlyi4gPK8auPloAi-EZxQaJd7b0NbXKeKb0SRWsmpTSp5tHVzS3g/exec';
+  // หากต้องการให้ทุกเครื่องเชื่อมต่ออัตโนมัติ ให้วางลิงก์ /exec ในเครื่องหมายคำพูดด้านล่างนี้ได้เลยครับ
+  const DEFAULT_GSHEET_URL = 'https://script.google.com/macros/s/AKfycbxc4CXnGK0kbNoq8F3P-nPFSR_54bShs7VoTjeTgCw1rczByKaQKkBnv9ov8Y6YCDQbvw/exec';
 
   const GSHEET_URL_KEY = 'cpf_pig_gsheet_url_v1';
   const CURRENT_KEY = 'cpf_pig_stock_current_v4';
@@ -544,9 +544,16 @@
     return false;
   }
 
+  function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+
+  // รองรับทั้ง Android/PC และ iPhone Safari (fallback no-cors + ตรวจยืนยันผ่าน GET)
   async function postReportToGoogleSheet(reportObj) {
     const url = getGSheetUrl();
     if (!url) return { ok: false, noUrl: true };
+
+    const syncNonce = String(Date.now()) + '_' + Math.random().toString(36).slice(2, 6);
+    reportObj.syncNonce = syncNonce;
+
     try {
       const res = await fetch(url, {
         method: 'POST',
@@ -559,7 +566,41 @@
       }
       return { ok: false, error: json?.message || 'ไม่สามารถสร้างชีตได้' };
     } catch (err) {
-      return { ok: false, error: err.message };
+      // Fallback สำหรับ iPhone Safari ที่ติด Load failed ตอน 302 Redirect
+      try {
+        const ping = await fetch(url);
+        const pingJson = await ping.json();
+        if (pingJson.status !== 'running') {
+          return { ok: false, error: 'ลิงก์ Apps Script ไม่ตอบสนอง' };
+        }
+      } catch (pingErr) {
+        return { ok: false, error: 'iPhone เข้าถึงลิงก์ไม่ได้ (ให้เช็กว่าตั้ง Deploy เป็น "ทุกคน (Anyone)" และใช้ @gmail.com ส่วนตัว)' };
+      }
+
+      try {
+        await fetch(url, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(reportObj)
+        });
+        await sleep(700);
+        let verifyRes = await fetch(url + '?checkId=' + encodeURIComponent(syncNonce));
+        let verifyJson = await verifyRes.json();
+        if (verifyJson && verifyJson.status === 'ok') {
+          return { ok: true, sheetName: verifyJson.sheetName };
+        }
+        // ลองเช็กซ้ำอีกครั้งเผื่อเน็ตช้า
+        await sleep(1200);
+        verifyRes = await fetch(url + '?checkId=' + encodeURIComponent(syncNonce));
+        verifyJson = await verifyRes.json();
+        if (verifyJson && verifyJson.status === 'ok') {
+          return { ok: true, sheetName: verifyJson.sheetName };
+        }
+        return { ok: false, error: 'ส่งคำขอแล้วแต่ยังไม่ได้รับการยืนยัน (กรุณาลองกดดูใน Google Sheet)' };
+      } catch (err2) {
+        return { ok: false, error: err2.message };
+      }
     }
   }
 
