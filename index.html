@@ -274,12 +274,6 @@
       <div class="card tab-pane active" id="tabPigs">
         <div class="section-title"><span>สรุปการตรวจนับสุกรคงเหลือ</span></div>
 
-        <div class="adder-bar no-print">
-          <div class="adder-label" id="pigAdderTarget">🧮 ตัวช่วยบวกเพิ่ม: แตะช่องตัวเลขที่ต้องการ แล้วพิมพ์เลขมาบวกเพิ่ม</div>
-          <input type="text" inputmode="numeric" class="adder-input" id="pigAdderVal" placeholder="จำนวนที่จะบวกเพิ่ม" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
-          <button type="button" class="adder-btn" onclick="applyAdder('pig')">➕ บวกเข้าช่อง</button>
-        </div>
-
         <div class="doc-toggle-bar no-print">
           <span>📄 แสดงช่อง สาเหตุ / เอกสาร / เลขที่ / วันที่</span>
           <input type="checkbox" id="togglePigDocs" style="width:20px;height:20px;" onchange="toggleDocCols('pigSummaryTable', this.checked)" />
