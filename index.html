@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ระบบนับสต๊อก & บวกเลขเร็ว</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    body { margin: 0; padding: 12px; background: var(--bg); color: var(--text); }
+    .container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border: 1px solid var(--border);
+    }
+
+    h1 { margin: 0 0 4px 0; font-size: 1.25rem; display: flex; align-items: center; justify-content: space-between; }
+    .subtitle { font-size: 0.85rem; color: var(--muted); margin-bottom: 12px; }
+
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .stat-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+    .stat-label { font-size: 0.75rem; color: var(--muted); }
+    .stat-val { font-size: 1.25rem; font-weight: 700; color: var(--primary); margin-top: 2px; }
+
+    label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: #334155; }
+    .input-row { margin-bottom: 12px; }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 1.05rem;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input[type="text"]:focus { border-color: var(--primary); }
+
+    .math-wrapper { position: relative; }
+    #mathInput {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      padding-right: 90px;
+    }
+    .live-preview {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--success);
+      background: #dcfce7;
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+    .live-preview.error { color: var(--danger); background: #fee2e2; }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 6px;
+      cursor: pointer;
+    }
+
+    .quick-keys {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .q-btn {
+      padding: 10px 6px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--text);
+      touch-action: manipulation;
+    }
+    .q-btn:active { background: #e2e8f0; transform: scale(0.97); }
+    .q-btn.op { background: #eff6ff; color: var(--primary); border-color: #bfdbfe; font-size: 1.1rem; }
+
+    .btn-save {
+      width: 100%;
+      padding: 14px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      background: var(--primary);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .btn-save:hover { background: var(--primary-dark); }
+    .btn-save:active { transform: scale(0.99); }
+
+    .flash-saved { animation: flashGreen 0.5s ease; }
+    @keyframes flashGreen {
+      0% { background-color: #bbf7d0; }
+      100% { background-color: var(--card); }
+    }
+
+    .tabs { display: flex; gap: 8px; margin-bottom: 12px; border-bottom: 2px solid var(--border); padding-bottom: 8px; }
+    .tab-btn {
+      padding: 8px 14px;
+      border: none;
+      background: transparent;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+    .tab-btn.active { background: #eff6ff; color: var(--primary); }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .btn-sm {
+      padding: 7px 12px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+    }
+    .btn-export { background: #16a34a; color: #fff; border-color: #16a34a; }
+    .btn-danger { color: var(--danger); border-color: #fecaca; background: #fef2f2; }
+
+    .table-wrap { overflow-x: auto; max-height: 420px; overflow-y: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { padding: 10px 8px; text-align: left; border-bottom: 1px solid var(--border); }
+    th { background: #f8fafc; position: sticky; top: 0; font-size: 0.8rem; color: var(--muted); z-index: 1; }
+    .num-col { text-align: right; font-weight: 700; font-family: monospace; font-size: 1rem; }
+    .time-col { font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
+    .formula-badge {
+      display: inline-block;
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: #475569;
+    }
+    .del-btn {
+      background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 1rem; padding: 4px 8px;
+    }
+    .del-btn:hover { color: var(--danger); }
+    .empty-state { text-align: center; padding: 30px; color: var(--muted); font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header & Input Card -->
+  <div class="card" id="inputCard">
+    <h1>
+      <span>📦 นับสต๊อก & บวกเลขเร็ว</span>
+    </h1>
+    <div class="subtitle">พิมพ์สูตรคำนวณได้เลย เช่น <code>12*4+5</code> แล้วกด Enter</div>
+
+    <div class="stats-bar">
+      <div class="stat-box">
+        <div class="stat-label">จำนวนครั้งที่คีย์</div>
+        <div class="stat-val" id="statLogs">0</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">จำนวนรายการสินค้า</div>
+        <div class="stat-val" id="statItems">0</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">ยอดรวมทั้งหมด</div>
+        <div class="stat-val" id="statTotal">0</div>
+      </div>
+    </div>
+
+    <div class="input-row">
+      <label for="itemInput">รหัส / ชื่อสินค้า (เว้นว่างได้)</label>
+      <input type="text" id="itemInput" list="itemSuggestions" placeholder="เช่น น้ำดื่ม 600ml หรือ รหัสสินค้า" autocomplete="off" />
+      <datalist id="itemSuggestions"></datalist>
+      <label class="checkbox-row">
+        <input type="checkbox" id="keepItemName" checked />
+        จำชื่อสินค้าเดิมไว้หลังบันทึก (สะดวกตอนนับสินค้าเดิมหลายจุด)
+      </label>
+    </div>
+
+    <div class="input-row">
+      <label for="mathInput">จำนวน หรือ สูตรบวกเลข</label>
+      <div class="math-wrapper">
+        <input type="text" id="mathInput" placeholder="เช่น 24*3+6" autocomplete="off" inputmode="text" />
+        <span class="live-preview" id="livePreview" style="display:none;">= 0</span>
+      </div>
+    </div>
+
+    <!-- ปุ่มช่วยพิมพ์เร็วบนมือถือ -->
+    <div class="quick-keys">
+      <button type="button" class="q-btn op" onclick="appendMath('+')">+</button>
+      <button type="button" class="q-btn op" onclick="appendMath('*')">×</button>
+      <button type="button" class="q-btn op" onclick="appendMath('-')">-</button>
+      <button type="button" class="q-btn op" onclick="backspaceMath()">⌫ ลบ</button>
+
+      <button type="button" class="q-btn" onclick="addQuickVal(1)">+1</button>
+      <button type="button" class="q-btn" onclick="addQuickVal(6)">+6</button>
+      <button type="button" class="q-btn" onclick="addQuickVal(12)">+12 (โหล)</button>
+      <button type="button" class="q-btn" onclick="addQuickVal(24)">+24 (ลัง)</button>
+    </div>
+
+    <button type="button" class="btn-save" onclick="saveEntry()">✅ บันทึกยอด (Enter)</button>
+  </div>
+
+  <!-- Log & Summary Card -->
+  <div class="card">
+    <div class="tabs">
+      <button class="tab-btn active" id="tabLogBtn" onclick="switchTab('log')">🕒 ประวัติการคีย์ (Log)</button>
+      <button class="tab-btn" id="tabSumBtn" onclick="switchTab('summary')">📊 สรุปยอดแยกตามสินค้า</button>
+    </div>
+
+    <div class="toolbar">
+      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        <button class="btn-sm btn-export" onclick="exportCSV('log')">⬇️ โหลด Log (Excel/CSV)</button>
+        <button class="btn-sm btn-export" onclick="exportCSV('summary')">⬇️ โหลดสรุปยอด (CSV)</button>
+      </div>
+      <button class="btn-sm btn-danger" onclick="clearAllLogs()">🗑️ ล้างข้อมูลทั้งหมด</button>
+    </div>
+
+    <!-- Tab 1: Log Table -->
+    <div class="table-wrap" id="logTab">
+      <table>
+        <thead>
+          <tr>
+            <th>เวลาที่คีย์</th>
+            <th>สินค้า</th>
+            <th>สูตรที่กรอก</th>
+            <th class="num-col">จำนวน</th>
+            <th style="width:36px;"></th>
+          </tr>
+        </thead>
+        <tbody id="logTableBody"></tbody>
+      </table>
+      <div class="empty-state" id="logEmpty">ยังไม่มีข้อมูลการนับสต๊อก</div>
+    </div>
+
+    <!-- Tab 2: Summary Table -->
+    <div class="table-wrap" id="summaryTab" style="display:none;">
+      <table>
+        <thead>
+          <tr>
+            <th>ชื่อสินค้า</th>
+            <th class="num-col">นับไป (ครั้ง)</th>
+            <th class="num-col">ยอดรวมสุทธิ</th>
+          </tr>
+        </thead>
+        <tbody id="summaryTableBody"></tbody>
+      </table>
+      <div class="empty-state" id="summaryEmpty">ยังไม่มีข้อมูลสรุป</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'stock_fast_count_logs_v1';
+  let logs = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  let currentTab = 'log';
+
+  const itemInput = document.getElementById('itemInput');
+  const mathInput = document.getElementById('mathInput');
+  const livePreview = document.getElementById('livePreview');
+  const keepItemName = document.getElementById('keepItemName');
+
+  // คำนวณสูตรคณิตศาสตร์อย่างปลอดภัย
+  function evaluateMath(expr) {
+    if (!expr) return null;
+    let clean = expr.replace(/[xX×]/g, '*').replace(/÷/g, '/').replace(/\s+/g, '');
+    if (!clean) return null;
+    if (!/^[0-9+\-*/().]+$/.test(clean)) return NaN;
+    try {
+      const result = Function('"use strict"; return (' + clean + ')')();
+      if (typeof result === 'number' && isFinite(result)) {
+        return Math.round(result * 10000) / 10000;
+      }
+      return NaN;
+    } catch {
+      return NaN;
+    }
+  }
+
+  // อัปเดตผลลัพธ์ล่วงหน้าขณะพิมพ์
+  function updateLivePreview() {
+    const val = mathInput.value.trim();
+    if (!val) {
+      livePreview.style.display = 'none';
+      return;
+    }
+    const res = evaluateMath(val);
+    livePreview.style.display = 'inline-block';
+    if (isNaN(res)) {
+      livePreview.textContent = 'สูตรผิด';
+      livePreview.classList.add('error');
+    } else {
+      livePreview.textContent = '= ' + res.toLocaleString();
+      livePreview.classList.remove('error');
+    }
+  }
+
+  mathInput.addEventListener('input', updateLivePreview);
+
+  // กด Enter เพื่อบันทึกทันที
+  mathInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      saveEntry();
+    }
+  });
+  itemInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      mathInput.focus();
+    }
+  });
+
+  // ปุ่มช่วยพิมพ์บนมือถือ
+  function appendMath(char) {
+    mathInput.value += char;
+    mathInput.focus();
+    updateLivePreview();
+  }
+
+  function addQuickVal(num) {
+    const cur = mathInput.value.trim();
+    if (!cur) {
+      mathInput.value = String(num);
+    } else if (/[+\-*/(]$/.test(cur)) {
+      mathInput.value += String(num);
+    } else {
+      mathInput.value += '+' + num;
+    }
+    mathInput.focus();
+    updateLivePreview();
+  }
+
+  function backspaceMath() {
+    mathInput.value = mathInput.value.slice(0, -1);
+    mathInput.focus();
+    updateLivePreview();
+  }
+
+  // บันทึกรายการพร้อม Timestamp
+  function saveEntry() {
+    const rawExpr = mathInput.value.trim();
+    const qty = evaluateMath(rawExpr);
+
+    if (qty === null || isNaN(qty)) {
+      alert('กรุณากรอกตัวเลขหรือสูตรคำนวณให้ถูกต้อง (เช่น 12*4+5)');
+      mathInput.focus();
+      return;
+    }
+
+    const itemName = itemInput.value.trim() || 'สินค้าทั่วไป';
+    const now = new Date();
+
+    const entry = {
+      id: Date.now() + Math.random().toString(36).slice(2, 6),
+      isoTime: now.toISOString(),
+      displayTime: formatThaiTime(now),
+      item: itemName,
+      formula: rawExpr.replace(/[xX×]/g, '*'),
+      qty: qty
+    };
+
+    logs.unshift(entry); // ใหม่สุดอยู่บนสุด
+    persistAndRender();
+
+    // Flash effect ให้รู้ว่าบันทึกแล้ว
+    const card = document.getElementById('inputCard');
+    card.classList.remove('flash-saved');
+    void card.offsetWidth;
+    card.classList.add('flash-saved');
+
+    mathInput.value = '';
+    updateLivePreview();
+
+    if (!keepItemName.checked) {
+      itemInput.value = '';
+      itemInput.focus();
+    } else {
+      mathInput.focus();
+    }
+  }
+
+  function formatThaiTime(date) {
+    const d = String(date.getDate()).padStart(2, '0');
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const y = date.getFullYear();
+    const hh = String(date.getHours()).padStart(2, '0');
+    const mm = String(date.getMinutes()).padStart(2, '0');
+    const ss = String(date.getSeconds()).padStart(2, '0');
+    return `${d}/${m}/${y} ${hh}:${mm}:${ss}`;
+  }
+
+  function deleteLog(id) {
+    if (!confirm('ต้องการลบรายการนี้ใช่ไหม?')) return;
+    logs = logs.filter(l => l.id !== id);
+    persistAndRender();
+  }
+
+  function clearAllLogs() {
+    if (logs.length === 0) return;
+    if (!confirm('ยืนยันการล้างข้อมูล Log ทั้งหมด? (แนะนำให้ Export CSV เก็บไว้ก่อน)')) return;
+    logs = [];
+    persistAndRender();
+  }
+
+  function switchTab(tab) {
+    currentTab = tab;
+    document.getElementById('logTab').style.display = tab === 'log' ? 'block' : 'none';
+    document.getElementById('summaryTab').style.display = tab === 'summary' ? 'block' : 'none';
+    document.getElementById('tabLogBtn').classList.toggle('active', tab === 'log');
+    document.getElementById('tabSumBtn').classList.toggle('active', tab === 'summary');
+  }
+
+  function getSummaryData() {
+    const map = {};
+    logs.forEach(l => {
+      if (!map[l.item]) {
+        map[l.item] = { item: l.item, count: 0, total: 0 };
+      }
+      map[l.item].count += 1;
+      map[l.item].total = Math.round((map[l.item].total + l.qty) * 10000) / 10000;
+    });
+    return Object.values(map);
+  }
+
+  function persistAndRender() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(logs));
+    renderAll();
+  }
+
+  function renderAll() {
+    // 1. Render Log Table
+    const logBody = document.getElementById('logTableBody');
+    const logEmpty = document.getElementById('logEmpty');
+    logBody.innerHTML = '';
+
+    if (logs.length === 0) {
+      logEmpty.style.display = 'block';
+    } else {
+      logEmpty.style.display = 'none';
+      logs.forEach(l => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="time-col">${escapeHtml(l.displayTime)}</td>
+          <td><strong>${escapeHtml(l.item)}</strong></td>
+          <td><span class="formula-badge">${escapeHtml(l.formula)}</span></td>
+          <td class="num-col">${l.qty.toLocaleString()}</td>
+          <td><button class="del-btn" title="ลบ" onclick="deleteLog('${l.id}')">✕</button></td>
+        `;
+        logBody.appendChild(tr);
+      });
+    }
+
+    // 2. Render Summary Table & Suggestions
+    const summary = getSummaryData();
+    const sumBody = document.getElementById('summaryTableBody');
+    const sumEmpty = document.getElementById('summaryEmpty');
+    const datalist = document.getElementById('itemSuggestions');
+    sumBody.innerHTML = '';
+    datalist.innerHTML = '';
+
+    if (summary.length === 0) {
+      sumEmpty.style.display = 'block';
+    } else {
+      sumEmpty.style.display = 'none';
+      summary.forEach(s => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${escapeHtml(s.item)}</strong></td>
+          <td class="num-col">${s.count}</td>
+          <td class="num-col" style="color:var(--primary);">${s.total.toLocaleString()}</td>
+        `;
+        sumBody.appendChild(tr);
+
+        const opt = document.createElement('option');
+        opt.value = s.item;
+        datalist.appendChild(opt);
+      });
+    }
+
+    // 3. Update Stats
+    const grandTotal = logs.reduce((acc, l) => acc + l.qty, 0);
+    document.getElementById('statLogs').textContent = logs.length.toLocaleString();
+    document.getElementById('statItems').textContent = summary.length.toLocaleString();
+    document.getElementById('statTotal').textContent = (Math.round(grandTotal * 10000) / 10000).toLocaleString();
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, m => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[m]));
+  }
+
+  function csvCell(val) {
+    const str = String(val ?? '');
+    return `"${str.replace(/"/g, '""')}"`;
+  }
+
+  // Export CSV (ใส่ BOM เพื่อให้อ่านภาษาไทยใน Excel ได้ถูกต้อง)
+  function exportCSV(type) {
+    if (logs.length === 0) {
+      alert('ยังไม่มีข้อมูลสำหรับ Export');
+      return;
+    }
+
+    let rows = [];
+    let filename = '';
+    const dateStamp = new Date().toISOString().slice(0, 10);
+
+    if (type === 'log') {
+      rows.push(['เวลาที่คีย์', 'ชื่อสินค้า', 'สูตรที่กรอก', 'จำนวน'].map(csvCell).join(','));
+      // เรียงจากเก่าไปใหม่ตอน Export เพื่อให้อ่าน Timeline ง่าย
+      [...logs].reverse().forEach(l => {
+        rows.push([l.displayTime, l.item, l.formula, l.qty].map(csvCell).join(','));
+      });
+      filename = `stock-log-${dateStamp}.csv`;
+    } else {
+      rows.push(['ชื่อสินค้า', 'จำนวนครั้งที่นับ', 'ยอดรวมสุทธิ'].map(csvCell).join(','));
+      getSummaryData().forEach(s => {
+        rows.push([s.item, s.count, s.total].map(csvCell).join(','));
+      });
+      filename = `stock-summary-${dateStamp}.csv`;
+    }
+
+    const csvContent = '\uFEFF' + rows.join('\r\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  // โหลดข้อมูลครั้งแรก
+  renderAll();
+</script>
+</body>
+</html>
