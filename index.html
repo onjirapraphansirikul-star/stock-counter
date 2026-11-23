@@ -126,32 +126,49 @@
       table.mobile-cards tr.sum-row td.col-diff { text-align: center; font-size: 1rem; }
     }
 
+    .pen-summary-banner {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px;
+      background: #f8fafc; border: 1px solid var(--border); border-radius: 10px;
+      padding: 8px 12px; margin-bottom: 10px; font-weight: 700; font-size: 0.9rem;
+    }
     .pen-row-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-bottom: 10px; }
-    .pen-row-btn { padding: 9px 2px; border: 1px solid var(--border); background: #f8fafc; border-radius: 8px; font-weight: 700; font-size: 0.82rem; cursor: pointer; text-align: center; }
+    .pen-row-btn { padding: 8px 2px; border: 1px solid var(--border); background: #f8fafc; border-radius: 8px; font-weight: 700; font-size: 0.82rem; cursor: pointer; text-align: center; }
     .pen-row-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-    .pen-row-sum-badge { display: block; font-size: 0.72rem; font-weight: 600; opacity: 0.9; }
+    .pen-row-sum-badge { display: block; font-size: 0.68rem; font-weight: 600; opacity: 0.92; margin-top: 2px; }
 
     .mobile-pen-item {
-      display: grid; grid-template-columns: 56px 1fr auto auto auto; gap: 6px; align-items: center;
+      display: grid; grid-template-columns: 52px auto 1fr; gap: 8px; align-items: center;
       padding: 6px 8px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 6px; background: #fff;
     }
     .mobile-pen-no { font-weight: 800; font-size: 0.95rem; color: #334155; }
+    .sow-check-label {
+      display: inline-flex; align-items: center; gap: 5px; padding: 8px 11px;
+      border: 2px solid #cbd5e1; border-radius: 8px; background: #f8fafc;
+      font-weight: 700; font-size: 0.88rem; cursor: pointer; user-select: none; touch-action: manipulation;
+    }
+    .sow-check-label.checked {
+      background: #fdf2f8; border-color: #db2777; color: #9d174d;
+    }
+    .sow-check-label input[type="checkbox"] {
+      width: 19px; height: 19px; accent-color: #db2777; cursor: pointer; margin: 0;
+    }
     .mobile-pen-input {
-      width: 100%; padding: 9px 6px; font-size: 1.15rem; font-weight: 800; text-align: center;
+      width: 100%; padding: 9px 6px; font-size: 1.1rem; font-weight: 800; text-align: center;
       border: 2px solid #cbd5e1; border-radius: 8px; background: #f8fafc;
     }
     .mobile-pen-input:focus { border-color: var(--primary); background: #fff; outline: none; }
-    .q-tap { padding: 10px; border: 1px solid var(--border); background: #f1f5f9; border-radius: 8px; font-weight: 800; font-size: 0.88rem; cursor: pointer; touch-action: manipulation; }
-    .q-tap:active { background: #cbd5e1; }
-    .q-tap.plus { background: #eff6ff; color: var(--primary); border-color: #bfdbfe; }
 
-    table.grid-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-    table.grid-table th, table.grid-table td { border: 1px solid #94a3b8; padding: 3px; text-align: center; }
-    table.grid-table th { background: #e2e8f0; padding: 6px 4px; }
-    table.grid-table td.pen-no { background: #f1f5f9; font-weight: 700; width: 32px; color: #475569; }
-    table.grid-table input.pen-input { width: 100%; border: none; padding: 7px 2px; text-align: center; font-size: 0.95rem; font-weight: 700; background: transparent; }
+    table.grid-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+    table.grid-table th, table.grid-table td { border: 1px solid #94a3b8; padding: 3px; text-align: center; vertical-align: middle; }
+    table.grid-table th { background: #e2e8f0; padding: 6px 3px; font-size: 0.78rem; }
+    table.grid-table td.pen-no { background: #f1f5f9; font-weight: 700; width: 26px; color: #475569; }
+    table.grid-table td.sow-cell { width: 32px; background: #fff; }
+    table.grid-table td.sow-cell.checked { background: #fdf2f8; }
+    table.grid-table input.sow-chk { width: 17px; height: 17px; accent-color: #db2777; cursor: pointer; vertical-align: middle; margin: 0; }
+    table.grid-table input.pen-input { width: 100%; min-width: 36px; border: none; padding: 6px 2px; text-align: center; font-size: 0.92rem; font-weight: 700; background: transparent; }
     table.grid-table input.pen-input:focus { background: #eff6ff; outline: 2px solid var(--primary); }
-    table.grid-table tr.total-foot td { background: #dbeafe; font-weight: 700; font-size: 0.95rem; padding: 7px 4px; color: var(--primary); }
+    table.grid-table tr.total-foot td { background: #dbeafe; font-weight: 700; font-size: 0.82rem; padding: 5px 2px; color: var(--primary); line-height: 1.25; }
+    table.grid-table tr.total-foot td.sow-total-cell { color: #9d174d; background: #fce7f3; }
 
     .note-box { width: 100%; margin-top: 8px; padding: 9px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; }
 
@@ -189,7 +206,7 @@
       .print-only-header h3 { margin: 2px 0 6px 0; font-size: 12px; font-weight: 600; }
       .screen-only-title { display: none !important; }
 
-      .print-2col { display: grid !important; grid-template-columns: 1.55fr 1fr; gap: 6px; align-items: start; }
+      .print-2col { display: grid !important; grid-template-columns: 1.1fr 1.3fr; gap: 6px; align-items: start; }
       table.mobile-cards, table.mobile-cards thead, table.mobile-cards tbody, table.mobile-cards tr, table.mobile-cards td {
         display: revert !important; border: 1px solid #000 !important; padding: 2px 3px !important; margin: 0 !important; background: transparent !important;
       }
@@ -200,10 +217,15 @@
       table.form-table tr.sum-row td { background: #f3f4f6 !important; color: #000; }
       .cell-input, select { border: none; background: transparent; padding: 1px; font-size: 9px; color: #000; appearance: none; }
       .diff-nonzero { background: transparent !important; color: #000; }
-      table.grid-table { font-size: 9px; }
-      table.grid-table th, table.grid-table td { border: 1px solid #000; padding: 1.5px 2px; }
-      table.grid-table input.pen-input { padding: 1px; font-size: 9px; }
-      table.grid-table tr.total-foot td { background: #f3f4f6 !important; color: #000; }
+      .pen-summary-banner { border: 1px solid #000; padding: 3px 6px; font-size: 9px; margin-bottom: 4px; background: #fff; }
+      table.grid-table { font-size: 8px; }
+      table.grid-table th, table.grid-table td { border: 1px solid #000; padding: 1px; }
+      table.grid-table td.pen-no { width: 16px; }
+      table.grid-table td.sow-cell { width: 16px; background: transparent !important; }
+      table.grid-table input.sow-chk { width: 10px; height: 10px; }
+      table.grid-table input.pen-input { padding: 1px; font-size: 8px; min-width: 18px; }
+      table.grid-table tr.total-foot td,
+      table.grid-table tr.total-foot td.sow-total-cell { background: #f3f4f6 !important; color: #000; font-size: 7.5px; }
       .header-grid { display: flex; flex-wrap: wrap; gap: 10px; font-size: 10px; margin-bottom: 6px; }
       .field label { display: inline; font-weight: 700; color: #000; margin-right: 4px; }
       .field input { border: none; border-bottom: 1px dotted #000; border-radius: 0; padding: 1px 4px; width: auto; font-size: 10px; }
@@ -331,20 +353,32 @@
       <div class="section-title"><span>แม่พันธุ์เล้าเตรียมทดแทน / ลูกเล้าคลอด</span></div>
 
       <div class="no-print" style="background:#eff6ff; border:1px solid #bfdbfe; padding:8px 10px; border-radius:10px; margin-bottom:10px;">
-        <div style="font-size:0.8rem; font-weight:700; margin-bottom:4px; color:#1e40af;">🔗 ดึงยอดรวม A, B, C, D ไปใส่ช่อง "ตรวจนับได้" ที่:</div>
+        <div style="font-size:0.8rem; font-weight:700; margin-bottom:4px; color:#1e40af;">🔗 ดึงยอดรวมจำนวนลูก A, B, C, D ไปใส่ช่อง "ตรวจนับได้" ที่:</div>
         <select id="syncTarget" onchange="changeSyncTarget(this.value)" style="font-weight:700;">
           <option value="piglet">ลูกสุกร แถว A, B, C, D</option>
           <option value="sow">แม่ซองยืน แถว 1, 2, 3, 4</option>
           <option value="none">ไม่ดึงอัตโนมัติ (กรอกเอง)</option>
         </select>
+        <label style="display:flex; align-items:center; gap:6px; margin-top:8px; font-size:0.82rem; font-weight:700; color:#9d174d; cursor:pointer;">
+          <input type="checkbox" id="syncSowFarrowChk" style="width:17px; height:17px; accent-color:#db2777;" onchange="toggleSyncSowFarrow(this.checked)" />
+          ดึงยอด "รวมแม่" (ที่ติ๊กทั้ง 4 แถว) ไปใส่ช่อง "แม่ซองคลอด" อัตโนมัติ
+        </label>
+      </div>
+
+      <div class="pen-summary-banner">
+        <span>📊 รวมทั้งหมด (A-D)</span>
+        <span>
+          รวมแม่: <strong id="totalAllSows" style="color:#be185d;">0</strong> ตัว &nbsp;|&nbsp;
+          รวมลูก: <strong id="totalAllPiglets" style="color:#1d4ed8;">0</strong> ตัว
+        </span>
       </div>
 
       <div class="pen-row-tabs no-print">
-        <button class="pen-row-btn active" onclick="switchPenView('A', this)">แถว A <span class="pen-row-sum-badge" id="badgeSumA">0</span></button>
-        <button class="pen-row-btn" onclick="switchPenView('B', this)">แถว B <span class="pen-row-sum-badge" id="badgeSumB">0</span></button>
-        <button class="pen-row-btn" onclick="switchPenView('C', this)">แถว C <span class="pen-row-sum-badge" id="badgeSumC">0</span></button>
-        <button class="pen-row-btn" onclick="switchPenView('D', this)">แถว D <span class="pen-row-sum-badge" id="badgeSumD">0</span></button>
-        <button class="pen-row-btn" onclick="switchPenView('ALL', this)">ดู 4 แถว <span class="pen-row-sum-badge">รวม</span></button>
+        <button class="pen-row-btn active" onclick="switchPenView('A', this)">แถว A <span class="pen-row-sum-badge" id="badgeSumA">แม่ 0 | ลูก 0</span></button>
+        <button class="pen-row-btn" onclick="switchPenView('B', this)">แถว B <span class="pen-row-sum-badge" id="badgeSumB">แม่ 0 | ลูก 0</span></button>
+        <button class="pen-row-btn" onclick="switchPenView('C', this)">แถว C <span class="pen-row-sum-badge" id="badgeSumC">แม่ 0 | ลูก 0</span></button>
+        <button class="pen-row-btn" onclick="switchPenView('D', this)">แถว D <span class="pen-row-sum-badge" id="badgeSumD">แม่ 0 | ลูก 0</span></button>
+        <button class="pen-row-btn" onclick="switchPenView('ALL', this)">ดู 4 แถว <span class="pen-row-sum-badge">รวมแม่/ลูก</span></button>
       </div>
 
       <div id="mobilePenContainer" class="no-print"></div>
@@ -353,19 +387,27 @@
         <table class="grid-table">
           <thead>
             <tr>
-              <th>A</th><th>จ.น.ตัว</th>
-              <th>B</th><th>จ.น.ตัว</th>
-              <th>C</th><th>จ.น.ตัว</th>
-              <th>D</th><th>จ.น.ตัว</th>
+              <th>A</th><th>แม่</th><th>จ.น.ลูก</th>
+              <th>B</th><th>แม่</th><th>จ.น.ลูก</th>
+              <th>C</th><th>แม่</th><th>จ.น.ลูก</th>
+              <th>D</th><th>แม่</th><th>จ.น.ลูก</th>
             </tr>
           </thead>
           <tbody id="penGridBody"></tbody>
           <tfoot>
             <tr class="total-foot">
-              <td>รวม</td><td id="sumPenA">0</td>
-              <td>รวม</td><td id="sumPenB">0</td>
-              <td>รวม</td><td id="sumPenC">0</td>
-              <td>รวม</td><td id="sumPenD">0</td>
+              <td>รวม</td>
+              <td class="sow-total-cell">แม่<br><span id="sumSowA">0</span></td>
+              <td>ลูก<br><span id="sumPenA">0</span></td>
+              <td>รวม</td>
+              <td class="sow-total-cell">แม่<br><span id="sumSowB">0</span></td>
+              <td>ลูก<br><span id="sumPenB">0</span></td>
+              <td>รวม</td>
+              <td class="sow-total-cell">แม่<br><span id="sumSowC">0</span></td>
+              <td>ลูก<br><span id="sumPenC">0</span></td>
+              <td>รวม</td>
+              <td class="sow-total-cell">แม่<br><span id="sumSowD">0</span></td>
+              <td>ลูก<br><span id="sumPenD">0</span></td>
             </tr>
           </tfoot>
         </table>
@@ -426,8 +468,8 @@
   const DEFAULT_PIG_ROWS = [
     { key: 'pigletA', label: 'ลูกสุกร แถว A', causeFixed: '', docFixed: '', group: 'piglet' },
     { key: 'pigletB', label: 'ลูกสุกร แถว B', causeFixed: '', docFixed: '', group: 'piglet' },
-    { key: 'pigletC', label: 'ลูกสุกร แถว C', causeFixed: '' , docFixed: '', group: 'piglet' },
-    { key: 'pigletD', label: 'ลูกสุกร แถว D', causeFixed: '' , docFixed: '', group: 'piglet' },
+    { key: 'pigletC', label: 'ลูกสุกร แถว C', causeFixed: '', docFixed: '', group: 'piglet' },
+    { key: 'pigletD', label: 'ลูกสุกร แถว D', causeFixed: '', docFixed: '', group: 'piglet' },
     { key: 'pigletSum', label: 'รวมลูกสุกร', isSum: 'piglet' },
 
     { key: 'boar', label: 'พ่อพันธุ์', causeFixed: '', docFixed: '', group: 'boar' },
@@ -470,13 +512,26 @@
         farm: keepHeader ? keepHeader.farm : ''
       },
       syncTarget: 'piglet',
+      syncSowFarrow: true,
       grid: { A: Array(30).fill(''), B: Array(30).fill(''), C: Array(30).fill(''), D: Array(30).fill('') },
+      sows: { A: Array(30).fill(false), B: Array(30).fill(false), C: Array(30).fill(false), D: Array(30).fill(false) },
       pigData,
       pigNote: '',
       feedData,
       feedNote: '',
       logs: []
     };
+  }
+
+  function normalizeState(obj) {
+    const base = Object.assign(createInitialState(), obj || {});
+    if (!base.sows) base.sows = { A: Array(30).fill(false), B: Array(30).fill(false), C: Array(30).fill(false), D: Array(30).fill(false) };
+    ['A','B','C','D'].forEach(c => {
+      if (!Array.isArray(base.grid[c]) || base.grid[c].length !== 30) base.grid[c] = Array(30).fill('');
+      if (!Array.isArray(base.sows[c]) || base.sows[c].length !== 30) base.sows[c] = Array(30).fill(false);
+    });
+    if (typeof base.syncSowFarrow === 'undefined') base.syncSowFarrow = true;
+    return base;
   }
 
   let state = loadCurrent();
@@ -500,7 +555,7 @@
     try {
       const raw = localStorage.getItem(CURRENT_KEY);
       if (!raw) return createInitialState();
-      return Object.assign(createInitialState(), JSON.parse(raw));
+      return normalizeState(JSON.parse(raw));
     } catch { return createInitialState(); }
   }
 
@@ -530,6 +585,7 @@
     if (Object.values(s.pigData).some(p => p.pigpro !== '' || p.counted !== '')) return true;
     if (s.feedData.some(f => f.code !== '' || f.report !== '' || f.counted !== '')) return true;
     if (['A','B','C','D'].some(c => s.grid[c].some(v => v !== ''))) return true;
+    if (s.sows && ['A','B','C','D'].some(c => s.sows[c].some(Boolean))) return true;
     return false;
   }
 
@@ -674,7 +730,7 @@
     if (hasAnyData(state) && state.reportId !== reportId) {
       if (!confirm('ใบที่กำลังเปิดอยู่มีข้อมูลที่ยังไม่กดบันทึก ต้องการเปิดใบที่เลือกทับเลยไหม?')) return;
     }
-    state = JSON.parse(JSON.stringify(target));
+    state = normalizeState(JSON.parse(JSON.stringify(target)));
     initRender();
     saveState(`เปิดแก้ไข: ${state.header.barnName}`);
     switchTab('pigs', document.getElementById('navBtn_pigs'));
@@ -730,6 +786,7 @@
     document.getElementById('hdr_typeM').checked = !!state.header.typeM;
     document.getElementById('hdr_typeRI').checked = !!state.header.typeRI;
     document.getElementById('syncTarget').value = state.syncTarget || 'piglet';
+    document.getElementById('syncSowFarrowChk').checked = state.syncSowFarrow !== false;
     document.getElementById('pigNote').value = state.pigNote || '';
     document.getElementById('feedNote').value = state.feedNote || '';
     document.getElementById('gsheetUrlInput').value = getGSheetUrl();
@@ -752,10 +809,11 @@
         `;
       } else {
         const d = state.pigData[row.key] || { pigpro: '', counted: '', cause: '' };
-        const displayLabel = row.logLabel || row.label;
+        const displayLabel = row.logLabel || row.label || row.key;
         const isSyncedRow =
           (state.syncTarget === 'piglet' && ['pigletA','pigletB','pigletC','pigletD'].includes(row.key)) ||
-          (state.syncTarget === 'sow' && ['sow1','sow2','sow3','sow4'].includes(row.key));
+          (state.syncTarget === 'sow' && ['sow1','sow2','sow3','sow4'].includes(row.key)) ||
+          (state.syncSowFarrow !== false && row.key === 'sowFarrow');
         tr.innerHTML = `
           <td class="left col-name">${row.label}</td>
           <td class="col-num" data-label="รายงาน PigPro">
@@ -875,12 +933,18 @@
 
     for (let i = 0; i < 30; i++) {
       const val = state.grid[currentPenCol][i];
+      const hasSow = !!(state.sows && state.sows[currentPenCol] && state.sows[currentPenCol][i]);
       const div = document.createElement('div');
       div.className = 'mobile-pen-item';
       div.innerHTML = `
         <div class="mobile-pen-no">${currentPenCol}${i + 1}</div>
+        <label class="sow-check-label ${hasSow ? 'checked' : ''}" id="msow_lbl_${currentPenCol}_${i}">
+          <input type="checkbox" id="msow_${currentPenCol}_${i}" ${hasSow ? 'checked' : ''}
+            onchange="onSowToggle('${currentPenCol}',${i},this.checked)" />
+          แม่
+        </label>
         <input type="text" inputmode="numeric" pattern="[0-9]*" class="mobile-pen-input" id="mpen_${currentPenCol}_${i}" data-prev="${val}" value="${val}"
-          placeholder="0"
+          placeholder="จำนวนลูก"
           oninput="onPenLiveInput('${currentPenCol}',${i},this)"
           onchange="onPenCommit('${currentPenCol}',${i},this)"
           onkeydown="onPenEnter(event,'${currentPenCol}',${i},'mpen')" />
@@ -897,8 +961,13 @@
       const tr = document.createElement('tr');
       cols.forEach(c => {
         const val = state.grid[c][i];
+        const hasSow = !!(state.sows && state.sows[c] && state.sows[c][i]);
         tr.innerHTML += `
           <td class="pen-no">${i + 1}</td>
+          <td class="sow-cell ${hasSow ? 'checked' : ''}" id="fsow_cell_${c}_${i}">
+            <input type="checkbox" class="sow-chk" id="fsow_${c}_${i}" ${hasSow ? 'checked' : ''}
+              onchange="onSowToggle('${c}',${i},this.checked)" />
+          </td>
           <td><input type="text" inputmode="numeric" pattern="[0-9]*" class="pen-input" id="fpen_${c}_${i}" data-prev="${val}" value="${val}"
             oninput="onPenLiveInput('${c}',${i},this)"
             onchange="onPenCommit('${c}',${i},this)"
@@ -909,15 +978,34 @@
     }
   }
 
-  function updatePenSumsAndSync() {
-    const sums = {};
+  function updatePenSumsAndSync(sowTouched = false) {
+    if (!state.sows) {
+      state.sows = { A: Array(30).fill(false), B: Array(30).fill(false), C: Array(30).fill(false), D: Array(30).fill(false) };
+    }
+    const pigletSums = {};
+    const sowSums = {};
+    let totalAllSows = 0;
+    let totalAllPiglets = 0;
+
     ['A','B','C','D'].forEach(c => {
-      let total = 0;
-      state.grid[c].forEach(v => { if (v !== '') total += Number(v) || 0; });
-      sums[c] = total;
-      document.getElementById('sumPen' + c).textContent = total;
-      document.getElementById('badgeSum' + c).textContent = total;
+      let pTotal = 0;
+      let sTotal = 0;
+      for (let i = 0; i < 30; i++) {
+        if (state.grid[c][i] !== '') pTotal += Number(state.grid[c][i]) || 0;
+        if (state.sows[c][i]) sTotal += 1;
+      }
+      pigletSums[c] = pTotal;
+      sowSums[c] = sTotal;
+      totalAllPiglets += pTotal;
+      totalAllSows += sTotal;
+
+      document.getElementById('sumPen' + c).textContent = pTotal;
+      document.getElementById('sumSow' + c).textContent = sTotal;
+      document.getElementById('badgeSum' + c).textContent = `แม่ ${sTotal} | ลูก ${pTotal}`;
     });
+
+    document.getElementById('totalAllSows').textContent = totalAllSows;
+    document.getElementById('totalAllPiglets').textContent = totalAllPiglets;
 
     const hasAny = col => state.grid[col].some(v => v !== '');
     const syncMap = state.syncTarget === 'piglet'
@@ -927,13 +1015,21 @@
     if (syncMap) {
       ['A','B','C','D'].forEach(c => {
         const rowKey = syncMap[c];
-        const newVal = hasAny(c) ? String(sums[c]) : '';
+        const newVal = hasAny(c) ? String(pigletSums[c]) : '';
         state.pigData[rowKey].counted = newVal;
         const inp = document.getElementById(`pig_in_${rowKey}_counted`);
         if (inp) { inp.value = newVal; inp.dataset.prev = newVal; }
       });
-      recalcPigDiffAndSums();
     }
+
+    if (state.syncSowFarrow !== false && (totalAllSows > 0 || sowTouched)) {
+      const sowVal = totalAllSows > 0 ? String(totalAllSows) : '';
+      state.pigData['sowFarrow'].counted = sowVal;
+      const sowInp = document.getElementById('pig_in_sowFarrow_counted');
+      if (sowInp) { sowInp.value = sowVal; sowInp.dataset.prev = sowVal; }
+    }
+
+    recalcPigDiffAndSums();
   }
 
   function renderSavedReports() {
@@ -1030,6 +1126,24 @@
   }
   function onFeedText(idx, field, val) { state.feedData[idx][field] = val; saveState(); }
 
+  function onSowToggle(col, idx, checked) {
+    if (!state.sows) state.sows = { A: Array(30).fill(false), B: Array(30).fill(false), C: Array(30).fill(false), D: Array(30).fill(false) };
+    state.sows[col][idx] = !!checked;
+
+    const mChk = document.getElementById(`msow_${col}_${idx}`);
+    const mLbl = document.getElementById(`msow_lbl_${col}_${idx}`);
+    const fChk = document.getElementById(`fsow_${col}_${idx}`);
+    const fCell = document.getElementById(`fsow_cell_${col}_${idx}`);
+    if (mChk) mChk.checked = !!checked;
+    if (mLbl) mLbl.classList.toggle('checked', !!checked);
+    if (fChk) fChk.checked = !!checked;
+    if (fCell) fCell.classList.toggle('checked', !!checked);
+
+    updatePenSumsAndSync(true);
+    addLog(`คอก ${col}${idx + 1} (แม่)`, checked ? 'มีแม่ (1)' : 'ไม่มีแม่ (0)');
+    saveState();
+  }
+
   function onPenLiveInput(col, idx, el) {
     const clean = sanitizeInt(el.value);
     if (el.value !== clean) el.value = clean;
@@ -1041,25 +1155,12 @@
     updatePenSumsAndSync();
   }
   function onPenCommit(col, idx, el) {
-    if (el.dataset.prev !== el.value && el.value !== '') addLog(`คอก ${col}${idx + 1}`, el.value);
+    if (el.dataset.prev !== el.value && el.value !== '') addLog(`คอก ${col}${idx + 1} (ลูก)`, el.value);
     el.dataset.prev = el.value;
     const mEl = document.getElementById(`mpen_${col}_${idx}`);
     const fEl = document.getElementById(`fpen_${col}_${idx}`);
     if (mEl) mEl.dataset.prev = el.value;
     if (fEl) fEl.dataset.prev = el.value;
-    saveState();
-  }
-  function stepPen(col, idx, delta) {
-    const cur = Number(state.grid[col][idx] || 0);
-    const next = Math.max(0, cur + delta);
-    const nextStr = next === 0 && state.grid[col][idx] === '' ? '' : String(next);
-    state.grid[col][idx] = nextStr;
-    const mEl = document.getElementById(`mpen_${col}_${idx}`);
-    const fEl = document.getElementById(`fpen_${col}_${idx}`);
-    if (mEl) { mEl.value = nextStr; mEl.dataset.prev = nextStr; }
-    if (fEl) { fEl.value = nextStr; fEl.dataset.prev = nextStr; }
-    updatePenSumsAndSync();
-    addLog(`คอก ${col}${idx + 1}`, next);
     saveState();
   }
   function onPenEnter(e, col, idx, prefix) {
@@ -1119,14 +1220,24 @@
   function updateHeader(field, val) { state.header[field] = val; saveState(); }
   function updateBarnType(field, checked) {
     state.header[field] = checked;
-    if (checked && field === 'typeF') state.syncTarget = 'piglet';
+    if (checked && field === 'typeF') {
+      state.syncTarget = 'piglet';
+      state.syncSowFarrow = true;
+    }
     if (checked && field === 'typeRI') state.syncTarget = 'sow';
     document.getElementById('syncTarget').value = state.syncTarget;
+    document.getElementById('syncSowFarrowChk').checked = state.syncSowFarrow !== false;
     updatePenSumsAndSync();
     renderPigTable();
     saveState();
   }
   function changeSyncTarget(val) { state.syncTarget = val; updatePenSumsAndSync(); renderPigTable(); saveState(); }
+  function toggleSyncSowFarrow(checked) {
+    state.syncSowFarrow = checked;
+    updatePenSumsAndSync(checked);
+    renderPigTable();
+    saveState();
+  }
   function updateNote(key, val) { state[key] = val; saveState(); }
 
   function switchTab(tab, btn) {
@@ -1198,7 +1309,7 @@
           const diff = (pro !== '' || cnt !== '') ? ((Number(cnt)||0) - (Number(pro)||0)) : '';
           rows.push([
             rep.reportId, h.date, h.farm, h.promote, h.barnName, bTypes,
-            'สุกร', r.logLabel || r.label, pro, cnt, diff, d.cause, d.docName, d.docNo, d.docDate, rep.pigNote, rep.savedAt
+            'สุกร', r.logLabel || r.label || r.key, pro, cnt, diff, d.cause, d.docName, d.docNo, d.docDate, rep.pigNote, rep.savedAt
           ]);
         });
         rep.feedData.forEach((f, i) => {
@@ -1214,13 +1325,14 @@
       });
       downloadCSV(rows, `DB_Stock_${dateStamp}.csv`);
     } else if (type === 'pens') {
-      const rows = [['Report_ID', 'วันที่', 'ฟาร์ม', 'ชื่อเล้า', 'แถว', 'คอกที่', 'จำนวนตัว', 'Key_Lookup']];
+      const rows = [['Report_ID', 'วันที่', 'ฟาร์ม', 'ชื่อเล้า', 'แถว', 'คอกที่', 'แม่พันธุ์', 'จำนวนลูก', 'Key_Lookup']];
       reports.forEach(rep => {
         const h = rep.header;
         ['A','B','C','D'].forEach(col => {
           for (let i = 0; i < 30; i++) {
+            const sowVal = (rep.sows && rep.sows[col] && rep.sows[col][i]) ? 1 : 0;
             const val = rep.grid[col][i] === '' ? 0 : Number(rep.grid[col][i]);
-            rows.push([rep.reportId, h.date, h.farm, h.barnName, col, i + 1, val, `${rep.reportId}-${col}${i+1}`]);
+            rows.push([rep.reportId, h.date, h.farm, h.barnName, col, i + 1, sowVal, val, `${rep.reportId}-${col}${i+1}`]);
           }
         });
       });
