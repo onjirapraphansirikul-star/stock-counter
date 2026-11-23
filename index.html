@@ -105,8 +105,10 @@
         grid-column: 1 / -1; font-size: 0.95rem; color: #0f172a;
         border-bottom: 1px dashed #e2e8f0 !important; padding-bottom: 5px !important; margin-bottom: 2px;
       }
+      table.mobile-cards td.col-name:empty { display: none; }
       table.mobile-cards td.col-num::before,
       table.mobile-cards td.col-diff::before,
+      table.mobile-cards td.col-cause::before,
       table.mobile-cards td.col-doc::before {
         content: attr(data-label); display: block; font-size: 0.72rem; font-weight: 700; color: var(--muted); margin-bottom: 2px;
       }
@@ -115,6 +117,7 @@
       }
       table.mobile-cards td.col-diff.diff-nonzero { background: #fef2f2 !important; }
       table.mobile-cards td.col-diff.diff-zero { background: #f0fdf4 !important; }
+      table.mobile-cards td.col-cause { grid-column: 1 / -1; }
       table.mobile-cards td.col-doc { grid-column: span 1; }
       table.mobile-cards.hide-docs td.col-doc { display: none; }
       table.mobile-cards td.col-empty-mobile { display: none; }
@@ -274,19 +277,14 @@
       <div class="card tab-pane active" id="tabPigs">
         <div class="section-title"><span>สรุปการตรวจนับสุกรคงเหลือ</span></div>
 
-        <div class="doc-toggle-bar no-print">
-          <span>📄 แสดงช่อง สาเหตุ / เอกสาร / เลขที่ / วันที่</span>
-          <input type="checkbox" id="togglePigDocs" style="width:20px;height:20px;" onchange="toggleDocCols('pigSummaryTable', this.checked)" />
-        </div>
-
-        <table class="form-table mobile-cards hide-docs" id="pigSummaryTable">
+        <table class="form-table mobile-cards" id="pigSummaryTable">
           <thead>
             <tr>
-              <th style="width:18%;">ชนิด</th>
-              <th style="width:9%;">รายงาน<br>PigPro</th>
-              <th style="width:9%;">ตรวจ<br>นับได้</th>
-              <th style="width:8%;">ผลต่าง</th>
-              <th style="width:11%;">สาเหตุ</th>
+              <th style="width:28%;">ชนิด</th>
+              <th style="width:16%;">รายงาน<br>PigPro</th>
+              <th style="width:16%;">ตรวจ<br>นับได้</th>
+              <th style="width:14%;">ผลต่าง</th>
+              <th style="width:26%;">สาเหตุ</th>
             </tr>
           </thead>
           <tbody id="pigTbody"></tbody>
@@ -426,22 +424,22 @@
   const SAVED_KEY = 'cpf_pig_stock_saved_v4';
 
   const DEFAULT_PIG_ROWS = [
-    { key: 'pigletA', label: 'ลูกสุกร แถว A', causeFixed: 'คลอด', docFixed: 'รายงานคลอด', group: 'piglet' },
-    { key: 'pigletB', label: 'ลูกสุกร แถว B', causeFixed: 'คัดทิ้ง', docFixed: 'ใบเคลื่อนย้ายฯ', group: 'piglet' },
-    { key: 'pigletC', label: 'ลูกสุกร แถว C', causeFixed: 'ตาย', docFixed: 'ใบโอนย้าย', group: 'piglet' },
-    { key: 'pigletD', label: 'ลูกสุกร แถว D', causeFixed: 'จับออก', docFixed: 'ใบขออนุมัติฯ', group: 'piglet' },
+    { key: 'pigletA', label: 'ลูกสุกร แถว A', causeFixed: '', docFixed: '', group: 'piglet' },
+    { key: 'pigletB', label: 'ลูกสุกร แถว B', causeFixed: '', docFixed: '', group: 'piglet' },
+    { key: 'pigletC', label: 'ลูกสุกร แถว C', causeFixed: '' , docFixed: '', group: 'piglet' },
+    { key: 'pigletD', label: 'ลูกสุกร แถว D', causeFixed: '' , docFixed: '', group: 'piglet' },
     { key: 'pigletSum', label: 'รวมลูกสุกร', isSum: 'piglet' },
 
-    { key: 'boar', label: 'พ่อพันธุ์ ', causeFixed: 'รับเข้า', docFixed: 'ใบเคลื่อนย้ายฯ', group: 'boar' },
-    { key: 'boar2', label: '' , causeFixed: 'โอนออก', docFixed: 'ใบโอนย้าย', group: 'boar' },
-    { key: 'boar3', label: '' , causeFixed: 'คัดทิ้ง', docFixed: 'ใบขออนุมัติฯ', group: 'boar' },
-    { key: 'boar4', label: '' , causeFixed: 'ตาย', docFixed: '', group: 'boar' },
+    { key: 'boar', label: 'พ่อพันธุ์', causeFixed: '', docFixed: '', group: 'boar' },
+    { key: 'boar2', label: '', logLabel: '', causeFixed: '', docFixed: '', group: 'boar' },
+    { key: 'boar3', label: '', logLabel: '', causeFixed: '', docFixed: '', group: 'boar' },
+    { key: 'boar4', label: '', logLabel: '', causeFixed: '', docFixed: '', group: 'boar' },
     { key: 'boarSum', label: 'รวมพ่อพันธุ์', isSum: 'boar' },
 
-    { key: 'sow1', label: 'แม่ซองยืน แถว 1', causeFixed: 'รับเข้า', docFixed: 'ใบเคลื่อนย้ายฯ', group: 'sow' },
-    { key: 'sow2', label: 'แม่ซองยืน แถว 2', causeFixed: 'โอนออก', docFixed: 'ใบโอนย้าย', group: 'sow' },
-    { key: 'sow3', label: 'แม่ซองยืน แถว 3', causeFixed: 'คัดทิ้ง', docFixed: 'ใบขออนุมัติฯ', group: 'sow' },
-    { key: 'sow4', label: 'แม่ซองยืน แถว 4', causeFixed: 'ตาย', docFixed: '', group: 'sow' },
+    { key: 'sow1', label: 'แม่ซองยืน แถว 1', causeFixed: '', docFixed: '', group: 'sow' },
+    { key: 'sow2', label: 'แม่ซองยืน แถว 2', causeFixed: '', docFixed: '', group: 'sow' },
+    { key: 'sow3', label: 'แม่ซองยืน แถว 3', causeFixed: '', docFixed: '', group: 'sow' },
+    { key: 'sow4', label: 'แม่ซองยืน แถว 4', causeFixed: '', docFixed: '', group: 'sow' },
     { key: 'sowFarrow', label: 'แม่ซองคลอด', causeFixed: '', docFixed: '', group: 'sow' },
     { key: 'sowSum', label: 'รวมแม่พันธุ์', isSum: 'sow' }
   ];
@@ -453,7 +451,7 @@
     const pigData = {};
     DEFAULT_PIG_ROWS.forEach(r => {
       if (!r.isSum) {
-        pigData[r.key] = { pigpro: '', counted: '', cause: r.causeFixed || '', docName: r.docFixed || '', docNo: '', docDate: '' };
+        pigData[r.key] = { pigpro: '', counted: '', cause: r.causeFixed || '', docName: '', docNo: '', docDate: '' };
       }
     });
     const feedData = DEFAULT_FEED_DOCS.map(doc => ({
@@ -581,7 +579,6 @@
         if (verifyJson && verifyJson.status === 'ok') {
           return { ok: true, sheetName: verifyJson.sheetName };
         }
-        // ลองเช็กซ้ำอีกครั้งเผื่อเน็ตช้า
         await sleep(1200);
         verifyRes = await fetch(url + '?checkId=' + encodeURIComponent(syncNonce));
         verifyJson = await verifyRes.json();
@@ -751,10 +748,11 @@
           <td class="col-num" data-label="รวม PigPro" id="pig_sum_pro_${row.isSum}"></td>
           <td class="col-num" data-label="รวมนับได้" id="pig_sum_cnt_${row.isSum}"></td>
           <td class="diff-cell col-diff" data-label="รวมผลต่าง" id="pig_sum_diff_${row.isSum}"></td>
-          <td colspan="4" class="col-empty-mobile"></td>
+          <td class="col-empty-mobile"></td>
         `;
       } else {
-        const d = state.pigData[row.key] || { pigpro: '', counted: '', cause: '', docName: '', docNo: '', docDate: '' };
+        const d = state.pigData[row.key] || { pigpro: '', counted: '', cause: '' };
+        const displayLabel = row.logLabel || row.label;
         const isSyncedRow =
           (state.syncTarget === 'piglet' && ['pigletA','pigletB','pigletC','pigletD'].includes(row.key)) ||
           (state.syncTarget === 'sow' && ['sow1','sow2','sow3','sow4'].includes(row.key));
@@ -762,22 +760,19 @@
           <td class="left col-name">${row.label}</td>
           <td class="col-num" data-label="รายงาน PigPro">
             <input type="text" inputmode="numeric" pattern="[0-9]*" class="cell-input" id="pig_in_${row.key}_pigpro" data-prev="${d.pigpro}" value="${d.pigpro}"
-              onfocus="setAdderTarget('pig','${row.key}','pigpro','${row.label} (PigPro)')"
+              onfocus="setAdderTarget('pig','${row.key}','pigpro','${displayLabel} (PigPro)')"
               oninput="onPigLiveInput('${row.key}','pigpro',this)"
-              onchange="onPigCommit('${row.key}','pigpro',this,'${row.label} (PigPro)')" />
+              onchange="onPigCommit('${row.key}','pigpro',this,'${displayLabel} (PigPro)')" />
           </td>
           <td class="col-num" data-label="ตรวจนับได้">
             <input type="text" inputmode="numeric" pattern="[0-9]*" class="cell-input" id="pig_in_${row.key}_counted" data-prev="${d.counted}" value="${d.counted}"
               style="${isSyncedRow ? 'background:#dbeafe;color:#1e40af;' : ''}"
-              onfocus="setAdderTarget('pig','${row.key}','counted','${row.label} (นับได้)')"
+              onfocus="setAdderTarget('pig','${row.key}','counted','${displayLabel} (นับได้)')"
               oninput="onPigLiveInput('${row.key}','counted',this)"
-              onchange="onPigCommit('${row.key}','counted',this,'${row.label} (นับได้)')" />
+              onchange="onPigCommit('${row.key}','counted',this,'${displayLabel} (นับได้)')" />
           </td>
           <td class="diff-cell col-diff" data-label="ผลต่าง" id="pig_diff_${row.key}"></td>
-          <td class="col-doc" data-label="สาเหตุผลต่าง"><input type="text" class="cell-input doc-input" value="${d.cause}" onchange="onPigText('${row.key}','cause',this.value)" /></td>
-          <td class="col-doc" data-label="ชื่อเอกสาร"><input type="text" class="cell-input text-left doc-input" value="${d.docName}" onchange="onPigText('${row.key}','docName',this.value)" /></td>
-          <td class="col-doc" data-label="เลขที่เอกสาร"><input type="text" class="cell-input doc-input" value="${d.docNo}" onchange="onPigText('${row.key}','docNo',this.value)" /></td>
-          <td class="col-doc" data-label="วัน เดือน ปี"><input type="text" class="cell-input doc-input" value="${d.docDate}" placeholder="ว/ด/ป" onchange="onPigText('${row.key}','docDate',this.value)" /></td>
+          <td class="col-cause" data-label="สาเหตุ"><input type="text" class="cell-input doc-input" value="${d.cause || ''}" onchange="onPigText('${row.key}','cause',this.value)" /></td>
         `;
       }
       tbody.appendChild(tr);
@@ -889,9 +884,6 @@
           oninput="onPenLiveInput('${currentPenCol}',${i},this)"
           onchange="onPenCommit('${currentPenCol}',${i},this)"
           onkeydown="onPenEnter(event,'${currentPenCol}',${i},'mpen')" />
-        <button type="button" class="q-tap" onclick="stepPen('${currentPenCol}',${i},-1)">-1</button>
-        <button type="button" class="q-tap plus" onclick="stepPen('${currentPenCol}',${i},1)">+1</button>
-        <button type="button" class="q-tap plus" onclick="stepPen('${currentPenCol}',${i},5)">+5</button>
       `;
       wrap.appendChild(div);
     }
@@ -1080,10 +1072,12 @@
   function setAdderTarget(type, key, field, label) {
     if (type === 'pig') {
       lastFocusedPig = { key, field, label };
-      document.getElementById('pigAdderTarget').textContent = `🧮 กำลังเลือก: ${label} (ยอดเดิม: ${state.pigData[key][field] || 0})`;
+      const targetEl = document.getElementById('pigAdderTarget');
+      if (targetEl) targetEl.textContent = `🧮 กำลังเลือก: ${label} (ยอดเดิม: ${state.pigData[key][field] || 0})`;
     } else {
       lastFocusedFeed = { idx: key, field, label };
-      document.getElementById('feedAdderTarget').textContent = `🧮 กำลังเลือก: ${label} (ยอดเดิม: ${state.feedData[key][field] || 0})`;
+      const targetEl = document.getElementById('feedAdderTarget');
+      if (targetEl) targetEl.textContent = `🧮 กำลังเลือก: ${label} (ยอดเดิม: ${state.feedData[key][field] || 0})`;
     }
   }
 
@@ -1204,7 +1198,7 @@
           const diff = (pro !== '' || cnt !== '') ? ((Number(cnt)||0) - (Number(pro)||0)) : '';
           rows.push([
             rep.reportId, h.date, h.farm, h.promote, h.barnName, bTypes,
-            'สุกร', r.label, pro, cnt, diff, d.cause, d.docName, d.docNo, d.docDate, rep.pigNote, rep.savedAt
+            'สุกร', r.logLabel || r.label, pro, cnt, diff, d.cause, d.docName, d.docNo, d.docDate, rep.pigNote, rep.savedAt
           ]);
         });
         rep.feedData.forEach((f, i) => {
