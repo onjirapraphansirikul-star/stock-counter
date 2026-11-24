@@ -277,7 +277,7 @@
     <h3>รายงานการตรวจนับสินค้าระหว่างผลิตสุกรพันธุ์</h3>
   </div>
 
-  <div class="card tab-pane active" id="tabHeader">
+  <div class="card" id="tabHeader">
     <div class="section-title screen-only-title">
       <span>ข้อมูลทั่วไปของใบตรวจนับ</span>
       <span id="editingBadge" style="font-size:0.78rem; color:#15803d;"></span>
@@ -1414,7 +1414,6 @@
     btn.classList.add('active');
     document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
     if (tab === 'pigs') {
-      document.getElementById('tabHeader').classList.add('active');
       document.getElementById('tabPigs').classList.add('active');
     } else if (tab === 'pens') {
       document.getElementById('tabPens').classList.add('active');
