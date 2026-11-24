@@ -74,6 +74,8 @@
     .cell-input:focus { outline: none; border-color: var(--primary); background: #fff; box-shadow: 0 0 0 2px #bfdbfe; }
     .cell-input.text-left { text-align: left; font-weight: 400; font-size: 0.88rem; }
     .cell-input.doc-input { font-weight: 500; font-size: 0.85rem; }
+    .cell-input.synced-piglet { background: #dbeafe; color: #1e40af; }
+    .cell-input.synced-sow { background: #fce7f3; color: #9d174d; }
 
     .diff-cell { font-weight: 700; font-family: monospace; font-size: 1rem; }
     .diff-zero { color: var(--success); }
@@ -198,7 +200,7 @@
       table.form-table { font-size: 9px; }
       table.form-table th { background: #f3f4f6 !important; -webkit-print-color-adjust: exact; border: 1px solid #000; font-size: 8.5px; }
       table.form-table tr.sum-row td { background: #f3f4f6 !important; color: #000; }
-      .cell-input, select { border: none; background: transparent; padding: 1px; font-size: 9px; color: #000; appearance: none; }
+      .cell-input, select { border: none; background: transparent !important; padding: 1px; font-size: 9px; color: #000 !important; appearance: none; }
       .diff-nonzero { background: transparent !important; color: #000; }
       .pen-summary-banner { border: 1px solid #000; padding: 3px 6px; font-size: 9px; margin-bottom: 4px; background: #fff; }
       table.grid-table { font-size: 7.5px; }
@@ -443,6 +445,7 @@
     { key: 'sowSum', label: 'รวมแม่พันธุ์', isSum: 'sow' }
   ];
 
+  const PIGLET_SYNC_MAP = { A: 'pigletA', B: 'pigletB', C: 'pigletC', D: 'pigletD' };
   const FEED_ROW_COUNT = 4;
 
   function padArray(arr, targetLen, fillVal) {
@@ -767,6 +770,9 @@
       } else {
         const d = state.pigData[row.key] || { pigpro: '', counted: '', cause: '' };
         const displayLabel = row.logLabel || row.label || row.key;
+        const isPigletSync = ['pigletA','pigletB','pigletC','pigletD'].includes(row.key);
+        const isSowSync = row.key === 'sowFarrow';
+        const syncClass = isPigletSync ? 'synced-piglet' : (isSowSync ? 'synced-sow' : '');
         tr.innerHTML = `
           <td class="left col-name">${row.label}</td>
           <td class="col-num" data-label="รายงาน PigPro">
@@ -775,7 +781,7 @@
               onchange="onPigCommit('${row.key}','pigpro',this,'${displayLabel} (PigPro)')" />
           </td>
           <td class="col-num" data-label="ตรวจนับได้">
-            <input type="text" inputmode="numeric" pattern="[0-9]*" class="cell-input" id="pig_in_${row.key}_counted" data-prev="${d.counted}" value="${d.counted}"
+            <input type="text" inputmode="numeric" pattern="[0-9]*" class="cell-input ${syncClass}" id="pig_in_${row.key}_counted" data-prev="${d.counted}" value="${d.counted}"
               oninput="onPigLiveInput('${row.key}','counted',this)"
               onchange="onPigCommit('${row.key}','counted',this,'${displayLabel} (นับได้)')" />
           </td>
@@ -923,7 +929,8 @@
     }
   }
 
-  function updatePenSums() {
+  function updatePenSums(opts = {}) {
+    const { sowTouched = false, touchedCol = null } = opts;
     if (!state.sows) {
       state.sows = { A: Array(PEN_COUNT).fill(false), B: Array(PEN_COUNT).fill(false), C: Array(PEN_COUNT).fill(false), D: Array(PEN_COUNT).fill(false) };
     }
@@ -933,8 +940,12 @@
     ['A','B','C','D'].forEach(c => {
       let pTotal = 0;
       let sTotal = 0;
+      let hasAnyPiglet = false;
       for (let i = 0; i < PEN_COUNT; i++) {
-        if (state.grid[c][i] !== '') pTotal += Number(state.grid[c][i]) || 0;
+        if (state.grid[c][i] !== '') {
+          pTotal += Number(state.grid[c][i]) || 0;
+          hasAnyPiglet = true;
+        }
         if (state.sows[c][i]) sTotal += 1;
       }
       totalAllPiglets += pTotal;
@@ -943,10 +954,29 @@
       document.getElementById('sumPen' + c).textContent = pTotal;
       document.getElementById('sumSow' + c).textContent = sTotal;
       document.getElementById('badgeSum' + c).textContent = `แม่ ${sTotal} | ลูก ${pTotal}`;
+
+      // ดึงยอดรวมลูกของแต่ละแถว (A, B, C, D) ไปใส่ช่อง ตรวจนับได้ ของ ลูกสุกร แถว A, B, C, D
+      const rowKey = PIGLET_SYNC_MAP[c];
+      if (rowKey && state.pigData[rowKey] && (hasAnyPiglet || touchedCol === c)) {
+        const newPigletVal = hasAnyPiglet ? String(pTotal) : '';
+        state.pigData[rowKey].counted = newPigletVal;
+        const inp = document.getElementById(`pig_in_${rowKey}_counted`);
+        if (inp) { inp.value = newPigletVal; inp.dataset.prev = newPigletVal; }
+      }
     });
 
     document.getElementById('totalAllSows').textContent = totalAllSows;
     document.getElementById('totalAllPiglets').textContent = totalAllPiglets;
+
+    // ดึงยอดรวมแม่ทั้งหมดที่ติ๊ก ไปใส่ช่อง ตรวจนับได้ ของ แม่ซองคลอด
+    if (state.pigData['sowFarrow'] && (totalAllSows > 0 || sowTouched)) {
+      const sowVal = totalAllSows > 0 ? String(totalAllSows) : '';
+      state.pigData['sowFarrow'].counted = sowVal;
+      const sowInp = document.getElementById('pig_in_sowFarrow_counted');
+      if (sowInp) { sowInp.value = sowVal; sowInp.dataset.prev = sowVal; }
+    }
+
+    recalcPigDiffAndSums();
   }
 
   function renderSavedReports() {
@@ -1056,7 +1086,7 @@
     if (fChk) fChk.checked = !!checked;
     if (fCell) fCell.classList.toggle('checked', !!checked);
 
-    updatePenSums();
+    updatePenSums({ sowTouched: true });
     addLog(`คอก ${col}${idx + 1} (แม่)`, checked ? 'มีแม่ (1)' : 'ไม่มีแม่ (0)');
     saveState();
   }
@@ -1069,7 +1099,7 @@
     const fEl = document.getElementById(`fpen_${col}_${idx}`);
     if (mEl && mEl !== el) mEl.value = clean;
     if (fEl && fEl !== el) fEl.value = clean;
-    updatePenSums();
+    updatePenSums({ touchedCol: col });
   }
   function onPenCommit(col, idx, el) {
     if (el.dataset.prev !== el.value && el.value !== '') addLog(`คอก ${col}${idx + 1} (ลูก)`, el.value);
