@@ -256,16 +256,21 @@
         <input type="date" id="hdr_date" onchange="updateHeader('date', this.value)" />
       </div>
       <div class="field">
+        <label>ส่งเสริม / ฟาร์ม:</label>
+        <div class="combo-wrap" id="promoteFarmCombo">
+          <input type="text" id="hdr_promoteFarm" autocomplete="off"
+            placeholder="พิมพ์ค้นหา หรือกดเลือก ส่งเสริม / ฟาร์ม..."
+            onfocus="openPromoteFarmList(true)"
+            oninput="onPromoteFarmInput(this.value)"
+            onkeydown="onPromoteFarmKey(event)" />
+          <button type="button" class="combo-clear no-print" id="btnClearPF" title="ล้าง" onclick="clearPromoteFarm()">✕</button>
+          <button type="button" class="combo-arrow no-print" title="แสดงรายการทั้งหมด" onclick="togglePromoteFarmList()">▼</button>
+          <div class="combo-list no-print" id="promoteFarmList"></div>
+        </div>
+      </div>
+      <div class="field">
         <label>ชื่อเล้า:</label>
         <input type="text" id="hdr_barnName" placeholder="ระบุชื่อเล้า (เช่น เล้าคลอด 1)" onchange="updateHeader('barnName', this.value)" />
-      </div>
-      <div class="field">
-        <label>ส่งเสริมสุกรพันธุ์:</label>
-        <input type="text" id="hdr_promote" placeholder="ระบุเขต/ส่งเสริม" onchange="updateHeader('promote', this.value)" />
-      </div>
-      <div class="field">
-        <label>ฟาร์ม:</label>
-        <input type="text" id="hdr_farm" placeholder="ระบุชื่อฟาร์ม" onchange="updateHeader('farm', this.value)" />
       </div>
       <div class="field" style="grid-column: 1 / -1;">
         <label>ประเภทเล้า:</label>
