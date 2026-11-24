@@ -64,19 +64,6 @@
     .checkbox-group label { display: flex; align-items: center; gap: 5px; font-weight: 700; color: var(--text); cursor: pointer; margin: 0; font-size: 0.9rem; }
     .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; }
 
-    .adder-bar {
-      background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 8px 10px;
-      margin-bottom: 10px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
-    }
-    .adder-label { font-size: 0.78rem; font-weight: 700; color: #1e40af; flex: 1 1 100%; }
-    .adder-input { flex: 1; min-width: 100px; padding: 8px 10px; border: 2px solid #93c5fd; border-radius: 8px; font-size: 1rem; font-weight: 700; text-align: center; }
-    .adder-btn { padding: 9px 14px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-weight: 700; font-size: 0.88rem; cursor: pointer; }
-
-    .doc-toggle-bar {
-      display: flex; align-items: center; justify-content: space-between; background: #f8fafc;
-      border: 1px solid var(--border); padding: 8px 10px; border-radius: 8px; margin-bottom: 10px; font-size: 0.85rem; font-weight: 700;
-    }
-
     table.form-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
     table.form-table th, table.form-table td { border: 1px solid #94a3b8; padding: 4px 5px; text-align: center; vertical-align: middle; }
     table.form-table th { background: #e2e8f0; font-weight: 700; font-size: 0.8rem; }
@@ -108,8 +95,7 @@
       table.mobile-cards td.col-name:empty { display: none; }
       table.mobile-cards td.col-num::before,
       table.mobile-cards td.col-diff::before,
-      table.mobile-cards td.col-cause::before,
-      table.mobile-cards td.col-doc::before {
+      table.mobile-cards td.col-cause::before {
         content: attr(data-label); display: block; font-size: 0.72rem; font-weight: 700; color: var(--muted); margin-bottom: 2px;
       }
       table.mobile-cards td.col-diff {
@@ -118,8 +104,6 @@
       table.mobile-cards td.col-diff.diff-nonzero { background: #fef2f2 !important; }
       table.mobile-cards td.col-diff.diff-zero { background: #f0fdf4 !important; }
       table.mobile-cards td.col-cause { grid-column: 1 / -1; }
-      table.mobile-cards td.col-doc { grid-column: span 1; }
-      table.mobile-cards.hide-docs td.col-doc { display: none; }
       table.mobile-cards td.col-empty-mobile { display: none; }
       table.mobile-cards tr.sum-row td.col-name { grid-column: 1 / -1; }
       table.mobile-cards tr.sum-row td.col-num,
@@ -197,7 +181,7 @@
     @media print {
       @page { size: A4 portrait; margin: 7mm; }
       body { background: #fff; padding: 0; font-size: 10px; color: #000; }
-      .top-bar, .nav-tabs, .no-print, #tabSaved, #tabLogs, #mobilePenContainer, .adder-bar, .doc-toggle-bar, .pen-row-tabs { display: none !important; }
+      .top-bar, .nav-tabs, .no-print, #tabSaved, #tabLogs, #mobilePenContainer, .pen-row-tabs { display: none !important; }
       .tab-pane { display: block !important; }
       #fullPenTableWrap { display: block !important; }
       .card { border: none; box-shadow: none; padding: 0; margin: 0 0 6px 0; }
@@ -211,19 +195,18 @@
         display: revert !important; border: 1px solid #000 !important; padding: 2px 3px !important; margin: 0 !important; background: transparent !important;
       }
       table.mobile-cards td::before { display: none !important; }
-      table.mobile-cards.hide-docs td.col-doc { display: revert !important; }
       table.form-table { font-size: 9px; }
       table.form-table th { background: #f3f4f6 !important; -webkit-print-color-adjust: exact; border: 1px solid #000; font-size: 8.5px; }
       table.form-table tr.sum-row td { background: #f3f4f6 !important; color: #000; }
       .cell-input, select { border: none; background: transparent; padding: 1px; font-size: 9px; color: #000; appearance: none; }
       .diff-nonzero { background: transparent !important; color: #000; }
       .pen-summary-banner { border: 1px solid #000; padding: 3px 6px; font-size: 9px; margin-bottom: 4px; background: #fff; }
-      table.grid-table { font-size: 8px; }
-      table.grid-table th, table.grid-table td { border: 1px solid #000; padding: 1px; }
+      table.grid-table { font-size: 7.5px; }
+      table.grid-table th, table.grid-table td { border: 1px solid #000; padding: 0.5px 1px; }
       table.grid-table td.pen-no { width: 16px; }
-      table.grid-table td.sow-cell { width: 16px; background: transparent !important; }
-      table.grid-table input.sow-chk { width: 10px; height: 10px; }
-      table.grid-table input.pen-input { padding: 1px; font-size: 8px; min-width: 18px; }
+      table.grid-table td.sow-cell { width: 15px; background: transparent !important; }
+      table.grid-table input.sow-chk { width: 9px; height: 9px; }
+      table.grid-table input.pen-input { padding: 0; font-size: 7.5px; min-width: 18px; }
       table.grid-table tr.total-foot td,
       table.grid-table tr.total-foot td.sow-total-cell { background: #f3f4f6 !important; color: #000; font-size: 7.5px; }
       .header-grid { display: flex; flex-wrap: wrap; gap: 10px; font-size: 10px; margin-bottom: 6px; }
@@ -318,28 +301,14 @@
       <div class="card tab-pane" id="tabFeed">
         <div class="section-title"><span>การตรวจนับอาหารคงเหลือ</span></div>
 
-        <div class="adder-bar no-print">
-          <div class="adder-label" id="feedAdderTarget">🧮 ตัวช่วยบวกเพิ่ม (นับหลายกอง): แตะช่องอาหาร แล้วพิมพ์เลขมาบวก</div>
-          <input type="text" inputmode="decimal" class="adder-input" id="feedAdderVal" placeholder="จำนวนที่จะบวกเพิ่ม" oninput="this.value=sanitizeDecimal(this.value)" />
-          <button type="button" class="adder-btn" onclick="applyAdder('feed')">➕ บวกเข้าช่อง</button>
-        </div>
-
-        <div class="doc-toggle-bar no-print">
-          <span>📄 แสดงช่อง สาเหตุ / เอกสาร / เลขที่ / วันที่</span>
-          <input type="checkbox" id="toggleFeedDocs" style="width:20px;height:20px;" onchange="toggleDocCols('feedTable', this.checked)" />
-        </div>
-
-        <table class="form-table mobile-cards hide-docs" id="feedTable">
+        <table class="form-table mobile-cards" id="feedTable">
           <thead>
             <tr>
-              <th style="width:10%;">เบอร์</th>
-              <th style="width:10%;">รายงาน</th>
-              <th style="width:11%;">นับได้</th>
-              <th style="width:9%;">ผลต่าง</th>
-              <th style="width:13%;">สาเหตุผลต่าง<br>(รับเข้า / ใช้ไป)</th>
-              <th style="width:17%;">รายการ<br>ชื่อเอกสาร</th>
-              <th style="width:15%;">เลขที่เอกสาร</th>
-              <th style="width:15%;">วัน เดือน ปี</th>
+              <th style="width:20%;">เบอร์</th>
+              <th style="width:18%;">รายงาน</th>
+              <th style="width:18%;">นับได้</th>
+              <th style="width:16%;">ผลต่าง</th>
+              <th style="width:28%;">สาเหตุ<br>(รับเข้า / ใช้ไป)</th>
             </tr>
           </thead>
           <tbody id="feedTbody"></tbody>
@@ -348,7 +317,7 @@
       </div>
     </div>
 
-    <!-- 2. คอก A-D (1-30) -->
+    <!-- 2. คอก A-D (1-72) -->
     <div class="card tab-pane" id="tabPens">
       <div class="section-title"><span>แม่พันธุ์เล้าเตรียมทดแทน / ลูกเล้าคลอด</span></div>
 
@@ -451,6 +420,7 @@
   const GSHEET_URL_KEY = 'cpf_pig_gsheet_url_v1';
   const CURRENT_KEY = 'cpf_pig_stock_current_v4';
   const SAVED_KEY = 'cpf_pig_stock_saved_v4';
+  const PEN_COUNT = 72;
 
   const DEFAULT_PIG_ROWS = [
     { key: 'pigletA', label: 'ลูกสุกร แถว A', causeFixed: '', docFixed: '', group: 'piglet' },
@@ -473,7 +443,13 @@
     { key: 'sowSum', label: 'รวมแม่พันธุ์', isSum: 'sow' }
   ];
 
-  const DEFAULT_FEED_DOCS = ['ใบเบิกวัตถุดิบฯ', 'ใบโอนย้าย', 'ใบโอนสินค้า', ''];
+  const FEED_ROW_COUNT = 4;
+
+  function padArray(arr, targetLen, fillVal) {
+    const res = Array.isArray(arr) ? arr.slice(0, targetLen) : [];
+    while (res.length < targetLen) res.push(fillVal);
+    return res;
+  }
 
   function createInitialState(keepHeader = null) {
     const today = new Date().toISOString().slice(0, 10);
@@ -483,8 +459,8 @@
         pigData[r.key] = { pigpro: '', counted: '', cause: r.causeFixed || '', docName: '', docNo: '', docDate: '' };
       }
     });
-    const feedData = DEFAULT_FEED_DOCS.map(doc => ({
-      code: '', report: '', counted: '', causeType: '', docName: doc, docNo: '', docDate: ''
+    const feedData = Array.from({ length: FEED_ROW_COUNT }, () => ({
+      code: '', report: '', counted: '', causeType: '', docName: '', docNo: '', docDate: ''
     }));
     return {
       reportId: null,
@@ -498,8 +474,8 @@
         promote: keepHeader ? keepHeader.promote : '',
         farm: keepHeader ? keepHeader.farm : ''
       },
-      grid: { A: Array(30).fill(''), B: Array(30).fill(''), C: Array(30).fill(''), D: Array(30).fill('') },
-      sows: { A: Array(30).fill(false), B: Array(30).fill(false), C: Array(30).fill(false), D: Array(30).fill(false) },
+      grid: { A: Array(PEN_COUNT).fill(''), B: Array(PEN_COUNT).fill(''), C: Array(PEN_COUNT).fill(''), D: Array(PEN_COUNT).fill('') },
+      sows: { A: Array(PEN_COUNT).fill(false), B: Array(PEN_COUNT).fill(false), C: Array(PEN_COUNT).fill(false), D: Array(PEN_COUNT).fill(false) },
       pigData,
       pigNote: '',
       feedData,
@@ -510,10 +486,11 @@
 
   function normalizeState(obj) {
     const base = Object.assign(createInitialState(), obj || {});
-    if (!base.sows) base.sows = { A: Array(30).fill(false), B: Array(30).fill(false), C: Array(30).fill(false), D: Array(30).fill(false) };
+    if (!base.grid) base.grid = {};
+    if (!base.sows) base.sows = {};
     ['A','B','C','D'].forEach(c => {
-      if (!Array.isArray(base.grid[c]) || base.grid[c].length !== 30) base.grid[c] = Array(30).fill('');
-      if (!Array.isArray(base.sows[c]) || base.sows[c].length !== 30) base.sows[c] = Array(30).fill(false);
+      base.grid[c] = padArray(base.grid[c], PEN_COUNT, '');
+      base.sows[c] = padArray(base.sows[c], PEN_COUNT, false);
     });
     return base;
   }
@@ -521,8 +498,6 @@
   let state = loadCurrent();
   let savedReports = loadSavedReports();
   let currentPenCol = 'A';
-  let lastFocusedPig = null;
-  let lastFocusedFeed = null;
 
   function getGSheetUrl() {
     return (localStorage.getItem(GSHEET_URL_KEY) || DEFAULT_GSHEET_URL || '').trim();
@@ -796,13 +771,11 @@
           <td class="left col-name">${row.label}</td>
           <td class="col-num" data-label="รายงาน PigPro">
             <input type="text" inputmode="numeric" pattern="[0-9]*" class="cell-input" id="pig_in_${row.key}_pigpro" data-prev="${d.pigpro}" value="${d.pigpro}"
-              onfocus="setAdderTarget('pig','${row.key}','pigpro','${displayLabel} (PigPro)')"
               oninput="onPigLiveInput('${row.key}','pigpro',this)"
               onchange="onPigCommit('${row.key}','pigpro',this,'${displayLabel} (PigPro)')" />
           </td>
           <td class="col-num" data-label="ตรวจนับได้">
             <input type="text" inputmode="numeric" pattern="[0-9]*" class="cell-input" id="pig_in_${row.key}_counted" data-prev="${d.counted}" value="${d.counted}"
-              onfocus="setAdderTarget('pig','${row.key}','counted','${displayLabel} (นับได้)')"
               oninput="onPigLiveInput('${row.key}','counted',this)"
               onchange="onPigCommit('${row.key}','counted',this,'${displayLabel} (นับได้)')" />
           </td>
@@ -857,27 +830,22 @@
         </td>
         <td class="col-num" data-label="รายงาน">
           <input type="text" inputmode="decimal" class="cell-input" id="feed_in_${idx}_report" data-prev="${f.report}" value="${f.report}"
-            onfocus="setAdderTarget('feed',${idx},'report','อาหารแถว ${idx+1} (รายงาน)')"
             oninput="onFeedLiveInput(${idx},'report',this)"
             onchange="onFeedCommit(${idx},'report',this)" />
         </td>
         <td class="col-num" data-label="นับได้">
           <input type="text" inputmode="decimal" class="cell-input" id="feed_in_${idx}_counted" data-prev="${f.counted}" value="${f.counted}"
-            onfocus="setAdderTarget('feed',${idx},'counted','อาหารแถว ${idx+1} (นับได้)')"
             oninput="onFeedLiveInput(${idx},'counted',this)"
             onchange="onFeedCommit(${idx},'counted',this)" />
         </td>
         <td class="diff-cell col-diff" data-label="ผลต่าง" id="feed_diff_${idx}"></td>
-        <td class="col-doc" data-label="สาเหตุผลต่าง">
+        <td class="col-cause" data-label="สาเหตุ (รับเข้า / ใช้ไป)">
           <select class="cell-input doc-input" onchange="onFeedText(${idx},'causeType',this.value)">
             <option value="" ${f.causeType===''?'selected':''}>-</option>
             <option value="รับเข้า" ${f.causeType==='รับเข้า'?'selected':''}>รับเข้า</option>
             <option value="ใช้ไป" ${f.causeType==='ใช้ไป'?'selected':''}>ใช้ไป</option>
           </select>
         </td>
-        <td class="col-doc" data-label="ชื่อเอกสาร"><input type="text" class="cell-input text-left doc-input" value="${f.docName}" onchange="onFeedText(${idx},'docName',this.value)" /></td>
-        <td class="col-doc" data-label="เลขที่เอกสาร"><input type="text" class="cell-input doc-input" value="${f.docNo}" onchange="onFeedText(${idx},'docNo',this.value)" /></td>
-        <td class="col-doc" data-label="วัน เดือน ปี"><input type="text" class="cell-input doc-input" value="${f.docDate}" placeholder="ว/ด/ป" onchange="onFeedText(${idx},'docDate',this.value)" /></td>
       `;
       tbody.appendChild(tr);
     });
@@ -908,7 +876,7 @@
     document.getElementById('fullPenTableWrap').style.display = 'none';
     wrap.innerHTML = '';
 
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < PEN_COUNT; i++) {
       const val = state.grid[currentPenCol][i];
       const hasSow = !!(state.sows && state.sows[currentPenCol] && state.sows[currentPenCol][i]);
       const div = document.createElement('div');
@@ -934,7 +902,7 @@
     const tbody = document.getElementById('penGridBody');
     tbody.innerHTML = '';
     const cols = ['A', 'B', 'C', 'D'];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < PEN_COUNT; i++) {
       const tr = document.createElement('tr');
       cols.forEach(c => {
         const val = state.grid[c][i];
@@ -957,7 +925,7 @@
 
   function updatePenSums() {
     if (!state.sows) {
-      state.sows = { A: Array(30).fill(false), B: Array(30).fill(false), C: Array(30).fill(false), D: Array(30).fill(false) };
+      state.sows = { A: Array(PEN_COUNT).fill(false), B: Array(PEN_COUNT).fill(false), C: Array(PEN_COUNT).fill(false), D: Array(PEN_COUNT).fill(false) };
     }
     let totalAllSows = 0;
     let totalAllPiglets = 0;
@@ -965,7 +933,7 @@
     ['A','B','C','D'].forEach(c => {
       let pTotal = 0;
       let sTotal = 0;
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < PEN_COUNT; i++) {
         if (state.grid[c][i] !== '') pTotal += Number(state.grid[c][i]) || 0;
         if (state.sows[c][i]) sTotal += 1;
       }
@@ -1076,7 +1044,7 @@
   function onFeedText(idx, field, val) { state.feedData[idx][field] = val; saveState(); }
 
   function onSowToggle(col, idx, checked) {
-    if (!state.sows) state.sows = { A: Array(30).fill(false), B: Array(30).fill(false), C: Array(30).fill(false), D: Array(30).fill(false) };
+    if (!state.sows) state.sows = { A: Array(PEN_COUNT).fill(false), B: Array(PEN_COUNT).fill(false), C: Array(PEN_COUNT).fill(false), D: Array(PEN_COUNT).fill(false) };
     state.sows[col][idx] = !!checked;
 
     const mChk = document.getElementById(`msow_${col}_${idx}`);
@@ -1115,57 +1083,10 @@
   function onPenEnter(e, col, idx, prefix) {
     if (e.key === 'Enter') {
       e.preventDefault();
-      if (idx < 29) document.getElementById(`${prefix}_${col}_${idx + 1}`)?.focus();
+      if (idx < PEN_COUNT - 1) document.getElementById(`${prefix}_${col}_${idx + 1}`)?.focus();
     }
   }
 
-  function setAdderTarget(type, key, field, label) {
-    if (type === 'pig') {
-      lastFocusedPig = { key, field, label };
-      const targetEl = document.getElementById('pigAdderTarget');
-      if (targetEl) targetEl.textContent = `🧮 กำลังเลือก: ${label} (ยอดเดิม: ${state.pigData[key][field] || 0})`;
-    } else {
-      lastFocusedFeed = { idx: key, field, label };
-      const targetEl = document.getElementById('feedAdderTarget');
-      if (targetEl) targetEl.textContent = `🧮 กำลังเลือก: ${label} (ยอดเดิม: ${state.feedData[key][field] || 0})`;
-    }
-  }
-
-  function applyAdder(type) {
-    if (type === 'pig') {
-      if (!lastFocusedPig) return alert('กรุณาแตะเลือกช่องตัวเลขในตารางสุกรก่อนครับ');
-      const addInput = document.getElementById('pigAdderVal');
-      const addVal = Number(addInput.value);
-      if (!addVal) return;
-      const { key, field, label } = lastFocusedPig;
-      const next = String(Number(state.pigData[key][field] || 0) + addVal);
-      state.pigData[key][field] = next;
-      const targetEl = document.getElementById(`pig_in_${key}_${field}`);
-      if (targetEl) { targetEl.value = next; targetEl.dataset.prev = next; }
-      recalcPigDiffAndSums();
-      addLog(`${label} (+${addVal})`, next);
-      saveState();
-      addInput.value = '';
-      setAdderTarget('pig', key, field, label);
-    } else {
-      if (!lastFocusedFeed) return alert('กรุณาแตะเลือกช่องตัวเลขในตารางอาหารก่อนครับ');
-      const addInput = document.getElementById('feedAdderVal');
-      const addVal = Number(addInput.value);
-      if (!addVal) return;
-      const { idx, field, label } = lastFocusedFeed;
-      const next = String(Math.round((Number(state.feedData[idx][field] || 0) + addVal) * 10000) / 10000);
-      state.feedData[idx][field] = next;
-      const targetEl = document.getElementById(`feed_in_${idx}_${field}`);
-      if (targetEl) { targetEl.value = next; targetEl.dataset.prev = next; }
-      recalcFeedDiffs();
-      addLog(`${label} (+${addVal})`, next);
-      saveState();
-      addInput.value = '';
-      setAdderTarget('feed', idx, field, label);
-    }
-  }
-
-  function toggleDocCols(tableId, show) { document.getElementById(tableId).classList.toggle('hide-docs', !show); }
   function updateHeader(field, val) { state.header[field] = val; saveState(); }
   function updateBarnType(field, checked) { state.header[field] = checked; saveState(); }
   function updateNote(key, val) { state[key] = val; saveState(); }
@@ -1259,9 +1180,10 @@
       reports.forEach(rep => {
         const h = rep.header;
         ['A','B','C','D'].forEach(col => {
-          for (let i = 0; i < 30; i++) {
+          for (let i = 0; i < PEN_COUNT; i++) {
             const sowVal = (rep.sows && rep.sows[col] && rep.sows[col][i]) ? 1 : 0;
-            const val = rep.grid[col][i] === '' ? 0 : Number(rep.grid[col][i]);
+            const rawGrid = (rep.grid && rep.grid[col] && rep.grid[col][i] !== undefined) ? rep.grid[col][i] : '';
+            const val = rawGrid === '' ? 0 : Number(rawGrid);
             rows.push([rep.reportId, h.date, h.farm, h.barnName, col, i + 1, sowVal, val, `${rep.reportId}-${col}${i+1}`]);
           }
         });
