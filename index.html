@@ -55,7 +55,10 @@
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
     }
 
-    .header-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
+    .header-grid { display: grid; grid-template-columns: 165px minmax(240px, 1.5fr) minmax(170px, 1fr); gap: 8px; }
+    @media screen and (max-width: 768px) {
+      .header-grid { grid-template-columns: 1fr; }
+    }
     .field label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--muted); margin-bottom: 3px; }
     .field input[type="text"], .field input[type="date"], select {
       width: 100%; padding: 9px 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; background: #fff;
@@ -63,6 +66,33 @@
     .checkbox-group { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding-top: 4px; }
     .checkbox-group label { display: flex; align-items: center; gap: 5px; font-weight: 700; color: var(--text); cursor: pointer; margin: 0; font-size: 0.9rem; }
     .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; }
+
+    /* Searchable Dropdown (ส่งเสริม / ฟาร์ม) */
+    .combo-wrap { position: relative; }
+    .combo-wrap input[type="text"] { padding-right: 60px; }
+    .combo-clear, .combo-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      border: none; background: transparent; cursor: pointer;
+      color: var(--muted); font-weight: 700; padding: 6px; line-height: 1; touch-action: manipulation;
+    }
+    .combo-clear { right: 28px; font-size: 0.85rem; display: none; }
+    .combo-clear.visible { display: inline-flex; }
+    .combo-arrow { right: 4px; font-size: 0.85rem; }
+    .combo-list {
+      position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+      background: #fff; border: 1px solid #94a3b8; border-radius: 10px;
+      max-height: 270px; overflow-y: auto; z-index: 80;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.18); display: none;
+    }
+    .combo-list.open { display: block; }
+    .combo-item {
+      padding: 10px 12px; cursor: pointer; font-size: 0.92rem;
+      border-bottom: 1px solid #f1f5f9; text-align: left;
+    }
+    .combo-item:last-child { border-bottom: none; }
+    .combo-item:hover, .combo-item.active { background: #eff6ff; color: var(--primary); font-weight: 700; }
+    .combo-item.selected { background: #dbeafe; font-weight: 700; }
+    .combo-empty { padding: 12px; text-align: center; color: var(--muted); font-size: 0.85rem; }
 
     table.form-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
     table.form-table th, table.form-table td { border: 1px solid #94a3b8; padding: 4px 5px; text-align: center; vertical-align: middle; }
@@ -214,6 +244,8 @@
       .header-grid { display: flex; flex-wrap: wrap; gap: 10px; font-size: 10px; margin-bottom: 6px; }
       .field label { display: inline; font-weight: 700; color: #000; margin-right: 4px; }
       .field input { border: none; border-bottom: 1px dotted #000; border-radius: 0; padding: 1px 4px; width: auto; font-size: 10px; }
+      .combo-wrap { display: inline-block; }
+      .combo-wrap input[type="text"] { padding-right: 4px; }
       .note-box { border: none; border-bottom: 1px dotted #000; border-radius: 0; padding: 2px 0; font-size: 9.5px; }
     }
   </style>
@@ -433,6 +465,78 @@
   const SAVED_KEY = 'cpf_pig_stock_saved_v4';
   const PEN_COUNT = 72;
 
+  const PROMOTE_FARM_LIST = [
+    'สส.FAT-พิบูลมังสาหาร',
+    'ฟ-FAT-ชัยภูมิ-BOI',
+    'ฟ-BRD-น้ำใส2-ชย',
+    'ฟ-BG-สกลนคร',
+    'สส.FAT-โชคชัย',
+    'สส-FAT-ชุมแพ-ขก',
+    'ฟ-BG-ชุมพวง-นม',
+    'ฟ-BG-จัตุรัส-ชย',
+    'สส-BRD-วารินชำราบ-อบ',
+    'สส-FAT-อำนาจเจริญ',
+    'สส-FAT-กาฬสินธุ์',
+    'ฟ-BG-อุดรธานี',
+    'ฟ-BG-ศรีมงคล-อด',
+    'สส-BG-อุดรธานี',
+    'สส-BG-หนองคาย',
+    'สส-FAT-อุดรธานี',
+    'สส-FAT-หนองคาย',
+    'สส-FAT-เลย',
+    'สส-FAT-ร้อยเอ็ด (I)',
+    'สส-BG-ยโสธร',
+    'สส-FAT-ยโสธร',
+    'สส-BG-ขอนแก่น',
+    'สส-FAT-ขอนแก่น',
+    'สส-FAT-มหาสารคาม',
+    'สส-BG-นครราชสีมา',
+    'สส-FAT-นครราชสีมา',
+    'ฟ-BG-ร้อยเอ็ด-รอ AI',
+    'ฟ-FAT-สีคิ้ว-นม',
+    'สส-FAT-ชัยภูมิ',
+    'ฟ-BG-นครราชสีมา',
+    'ฟ-BG-โชคชัย-นม',
+    'ฟ-BG-บุรีรัมย์',
+    'สส-FAT-สีสุราช-มค',
+    'สส-FAT-มุกดาหาร',
+    'สส-FAT-บึงกาฬ',
+    'สส.FAT-สกลนคร',
+    'สส-FAT-สุรินทร์',
+    'สส-FAT-หนองบัวลำภู',
+    'ฟ-BRD-คอนสวรรค์-BOI',
+    'ฟ-BG-อุบลราชธานี',
+    'สส-FAT-บุรีรัมย์',
+    'สส-FAT-ศรีสะเกษ',
+    'ฟ-BG-สุรินทร์',
+    'ฟ-BG-ยโสธร',
+    'ฟ-BG-ขอนแก่น',
+    'ฟ-BG-บ้านเขว้า-ชย',
+    'ฟ-BG-ภูแลนคา-ชย',
+    'ฟ-BG-ท่าจะหลุง',
+    'ฟ-BG-พระยืน',
+    'สส-FAT-โพนพิสัย-นค',
+    'ฟ-BG-หนองคาย',
+    'ฟ-BG-ช่อผกา',
+    'ฟ-BG-อำนาจเจริญ',
+    'ฟ-FAT-เขาพริก',
+    'สส.สุกรขุนวานรนิวาส',
+    'สส.สุกรขุนบ้านผือ',
+    'สส.สุกรขุนหนองสองห้อง',
+    'ฟาร์มน้ำยืน',
+    'ฟาร์มบ้านม่วง',
+    'ฟาร์มบุณฑริก',
+    'สส.สุกรขุนศรีเมืองใหม่',
+    'สส.สุกรขุนกันทรลักษ์',
+    'สส.สุกรขุนโนนคูณ',
+    'สส.สุกรขุนพิมาย',
+    'สส.สุกรขุนระเว',
+    'สส.สุกรพันธุ์เลิงนกทา',
+    'สส.สุกรพันธุ์ขอนแก่นคัดทิ้ง',
+    'ฟ-BG-ศรีมงคล-อด AI',
+    'สส.สุกรขุนแก้งคร้อ'
+  ];
+
   const DEFAULT_PIG_ROWS = [
     { key: 'pigletA', label: 'ลูกสุกร แถว A', causeFixed: '', docFixed: '', group: 'piglet' },
     { key: 'pigletB', label: 'ลูกสุกร แถว B', causeFixed: '', docFixed: '', group: 'piglet' },
@@ -463,6 +567,28 @@
     return res;
   }
 
+  function getPromoteFarmDisplay(h) {
+    if (!h) return '';
+    if (h.promoteFarm) return h.promoteFarm;
+    if (h.promote && h.farm && h.promote !== h.farm) return `${h.promote} / ${h.farm}`;
+    return h.farm || h.promote || '';
+  }
+
+  function applyPromoteFarmToHeader(val) {
+    const clean = String(val || '').trim();
+    state.header.promoteFarm = clean;
+    if (!clean) {
+      state.header.promote = '';
+      state.header.farm = '';
+    } else if (clean.startsWith('สส')) {
+      state.header.promote = clean;
+      state.header.farm = '';
+    } else {
+      state.header.promote = '';
+      state.header.farm = clean;
+    }
+  }
+
   function createInitialState(keepHeader = null) {
     const today = new Date().toISOString().slice(0, 10);
     const pigData = {};
@@ -474,6 +600,7 @@
     const feedData = Array.from({ length: FEED_ROW_COUNT }, () => ({
       code: '', report: '', counted: '', causeIn: '', causeOut: '', causeType: '', docName: '', docNo: '', docDate: ''
     }));
+    const keepPF = keepHeader ? getPromoteFarmDisplay(keepHeader) : '';
     return {
       reportId: null,
       savedAt: null,
@@ -483,8 +610,9 @@
         date: keepHeader ? keepHeader.date : today,
         barnName: '',
         typeF: true, typeM: false, typeRI: false,
-        promote: keepHeader ? keepHeader.promote : '',
-        farm: keepHeader ? keepHeader.farm : ''
+        promoteFarm: keepPF,
+        promote: keepHeader ? (keepHeader.promote || '') : '',
+        farm: keepHeader ? (keepHeader.farm || '') : ''
       },
       grid: { A: Array(PEN_COUNT).fill(''), B: Array(PEN_COUNT).fill(''), C: Array(PEN_COUNT).fill(''), D: Array(PEN_COUNT).fill('') },
       sows: { A: Array(PEN_COUNT).fill(false), B: Array(PEN_COUNT).fill(false), C: Array(PEN_COUNT).fill(false), D: Array(PEN_COUNT).fill(false) },
@@ -498,6 +626,9 @@
 
   function normalizeState(obj) {
     const base = Object.assign(createInitialState(), obj || {});
+    if (!base.header.promoteFarm) {
+      base.header.promoteFarm = getPromoteFarmDisplay(base.header);
+    }
     if (!base.grid) base.grid = {};
     if (!base.sows) base.sows = {};
     ['A','B','C','D'].forEach(c => {
@@ -517,6 +648,8 @@
   let state = loadCurrent();
   let savedReports = loadSavedReports();
   let currentPenCol = 'A';
+  let comboActiveIdx = -1;
+  let comboFiltered = [];
 
   function getGSheetUrl() {
     return (localStorage.getItem(GSHEET_URL_KEY) || DEFAULT_GSHEET_URL || '').trim();
@@ -669,7 +802,12 @@
     else savedReports.unshift(snapshot);
     persistSavedReports();
 
-    const keep = { date: state.header.date, farm: state.header.farm, promote: state.header.promote };
+    const keep = {
+      date: state.header.date,
+      promoteFarm: state.header.promoteFarm,
+      farm: state.header.farm,
+      promote: state.header.promote
+    };
     state = createInitialState(keep);
     initRender();
     saveState('บันทึก & สร้างใบใหม่แล้ว');
@@ -733,7 +871,12 @@
 
   function clearCurrentDraft() {
     if (!confirm('ล้างข้อมูลในใบปัจจุบันเพื่อกรอกใหม่?')) return;
-    const keep = { date: state.header.date, farm: state.header.farm, promote: state.header.promote };
+    const keep = {
+      date: state.header.date,
+      promoteFarm: state.header.promoteFarm,
+      farm: state.header.farm,
+      promote: state.header.promote
+    };
     state = createInitialState(keep);
     initRender();
     saveState('ล้างใบปัจจุบันแล้ว');
@@ -755,11 +898,130 @@
   function sanitizeInt(val) { return String(val ?? '').replace(/[^0-9]/g, ''); }
   function sanitizeDecimal(val) { return String(val ?? '').replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'); }
 
+  // Searchable Dropdown: ส่งเสริม / ฟาร์ม
+  function renderPromoteFarmList(filterText = '') {
+    const listEl = document.getElementById('promoteFarmList');
+    const q = String(filterText || '').trim().toLowerCase();
+    comboFiltered = q
+      ? PROMOTE_FARM_LIST.filter(item => item.toLowerCase().includes(q))
+      : [...PROMOTE_FARM_LIST];
+
+    const currentVal = state.header.promoteFarm || '';
+    if (comboFiltered.length === 0) {
+      listEl.innerHTML = `<div class="combo-empty">ไม่พบ "${escapeHtml(filterText)}" (พิมพ์ใช้ชื่อนี้ได้เลย)</div>`;
+      comboActiveIdx = -1;
+      return;
+    }
+
+    listEl.innerHTML = comboFiltered.map((item, idx) => {
+      const cls = [
+        'combo-item',
+        item === currentVal ? 'selected' : '',
+        idx === comboActiveIdx ? 'active' : ''
+      ].filter(Boolean).join(' ');
+      return `<div class="${cls}" onclick="selectPromoteFarm(${idx})">${escapeHtml(item)}</div>`;
+    }).join('');
+  }
+
+  function openPromoteFarmList(showAll = false) {
+    const val = document.getElementById('hdr_promoteFarm').value;
+    comboActiveIdx = -1;
+    renderPromoteFarmList(showAll ? '' : val);
+    document.getElementById('promoteFarmList').classList.add('open');
+  }
+
+  function closePromoteFarmList() {
+    document.getElementById('promoteFarmList').classList.remove('open');
+    comboActiveIdx = -1;
+  }
+
+  function togglePromoteFarmList() {
+    const listEl = document.getElementById('promoteFarmList');
+    if (listEl.classList.contains('open')) {
+      closePromoteFarmList();
+    } else {
+      openPromoteFarmList(true);
+      document.getElementById('hdr_promoteFarm').focus();
+    }
+  }
+
+  function updateClearPFButton() {
+    const val = document.getElementById('hdr_promoteFarm').value;
+    document.getElementById('btnClearPF').classList.toggle('visible', val.length > 0);
+  }
+
+  function onPromoteFarmInput(val) {
+    applyPromoteFarmToHeader(val);
+    updateClearPFButton();
+    comboActiveIdx = -1;
+    renderPromoteFarmList(val);
+    document.getElementById('promoteFarmList').classList.add('open');
+    saveState();
+  }
+
+  function selectPromoteFarm(idx) {
+    const val = comboFiltered[idx];
+    if (val === undefined) return;
+    document.getElementById('hdr_promoteFarm').value = val;
+    applyPromoteFarmToHeader(val);
+    updateClearPFButton();
+    closePromoteFarmList();
+    saveState();
+  }
+
+  function clearPromoteFarm() {
+    const inp = document.getElementById('hdr_promoteFarm');
+    inp.value = '';
+    applyPromoteFarmToHeader('');
+    updateClearPFButton();
+    openPromoteFarmList(true);
+    inp.focus();
+    saveState();
+  }
+
+  function onPromoteFarmKey(e) {
+    const listEl = document.getElementById('promoteFarmList');
+    if (!listEl.classList.contains('open') && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+      openPromoteFarmList(false);
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (comboFiltered.length > 0) {
+        comboActiveIdx = (comboActiveIdx + 1) % comboFiltered.length;
+        renderPromoteFarmList(document.getElementById('hdr_promoteFarm').value);
+        listEl.children[comboActiveIdx]?.scrollIntoView({ block: 'nearest' });
+      }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (comboFiltered.length > 0) {
+        comboActiveIdx = comboActiveIdx <= 0 ? comboFiltered.length - 1 : comboActiveIdx - 1;
+        renderPromoteFarmList(document.getElementById('hdr_promoteFarm').value);
+        listEl.children[comboActiveIdx]?.scrollIntoView({ block: 'nearest' });
+      }
+    } else if (e.key === 'Enter') {
+      if (listEl.classList.contains('open') && comboActiveIdx >= 0 && comboFiltered[comboActiveIdx]) {
+        e.preventDefault();
+        selectPromoteFarm(comboActiveIdx);
+      } else {
+        closePromoteFarmList();
+      }
+    } else if (e.key === 'Escape') {
+      closePromoteFarmList();
+    }
+  }
+
+  document.addEventListener('click', function (e) {
+    const combo = document.getElementById('promoteFarmCombo');
+    if (combo && !combo.contains(e.target)) {
+      closePromoteFarmList();
+    }
+  });
+
   function renderHeader() {
     document.getElementById('hdr_date').value = state.header.date || '';
+    document.getElementById('hdr_promoteFarm').value = getPromoteFarmDisplay(state.header);
+    updateClearPFButton();
     document.getElementById('hdr_barnName').value = state.header.barnName || '';
-    document.getElementById('hdr_promote').value = state.header.promote || '';
-    document.getElementById('hdr_farm').value = state.header.farm || '';
     document.getElementById('hdr_typeF').checked = !!state.header.typeF;
     document.getElementById('hdr_typeM').checked = !!state.header.typeM;
     document.getElementById('hdr_typeRI').checked = !!state.header.typeRI;
@@ -1012,6 +1274,7 @@
       const boarSum = ['boar','boar2','boar3','boar4'].reduce((a,k) => a + (Number(r.pigData[k]?.counted)||0), 0);
       const sowSum = ['sow1','sow2','sow3','sow4','sowFarrow'].reduce((a,k) => a + (Number(r.pigData[k]?.counted)||0), 0);
       const isEditing = state.reportId === r.reportId;
+      const pfName = getPromoteFarmDisplay(r.header);
 
       const statusBadge = r.syncedToSheet
         ? `<span class="badge-synced">✅ ส่ง Google Sheet แล้ว (${escapeHtml(r.sheetName || '')})</span>`
@@ -1021,7 +1284,7 @@
       div.className = 'saved-card-item' + (isEditing ? ' editing' : '');
       div.innerHTML = `
         <div>
-          <div style="font-weight:700;font-size:0.95rem;">🏠 ${escapeHtml(r.header.barnName || 'ไม่ระบุเล้า')} <span style="font-size:0.75rem;color:#64748b;">(${r.header.date})</span></div>
+          <div style="font-weight:700;font-size:0.95rem;">🏠 ${escapeHtml(r.header.barnName || 'ไม่ระบุเล้า')} <span style="font-size:0.75rem;color:#64748b;">(${pfName ? escapeHtml(pfName) + ' · ' : ''}${r.header.date})</span></div>
           <div style="font-size:0.8rem;color:#475569;">ลูกสุกร: <b>${pigletSum}</b> | พ่อพันธุ์: <b>${boarSum}</b> | แม่พันธุ์: <b>${sowSum}</b> | บันทึก: ${r.savedAt || '-'}</div>
           ${statusBadge}
         </div>
@@ -1208,13 +1471,16 @@
       reports.forEach(rep => {
         const h = rep.header;
         const bTypes = [h.typeF?'F':'', h.typeM?'M':'', h.typeRI?'R/I':''].filter(Boolean).join('/');
+        const pfDisplay = getPromoteFarmDisplay(h);
+        const farmCol = h.farm || pfDisplay;
+        const promoteCol = h.promote || '';
         DEFAULT_PIG_ROWS.filter(r => !r.isSum).forEach(r => {
           const d = rep.pigData[r.key] || {};
           const pro = d.pigpro === '' ? '' : Number(d.pigpro);
           const cnt = d.counted === '' ? '' : Number(d.counted);
           const diff = (pro !== '' || cnt !== '') ? ((Number(cnt)||0) - (Number(pro)||0)) : '';
           rows.push([
-            rep.reportId, h.date, h.farm, h.promote, h.barnName, bTypes,
+            rep.reportId, h.date, farmCol, promoteCol, h.barnName, bTypes,
             'สุกร', r.logLabel || r.label || r.key, pro, cnt, diff, d.cause, d.docName, d.docNo, d.docDate, rep.pigNote, rep.savedAt
           ]);
         });
@@ -1229,22 +1495,23 @@
             (!f.causeIn && !f.causeOut && f.causeType) ? f.causeType : ''
           ].filter(Boolean).join(' / ');
           rows.push([
-            rep.reportId, h.date, h.farm, h.promote, h.barnName, bTypes,
+            rep.reportId, h.date, farmCol, promoteCol, h.barnName, bTypes,
             'อาหาร', f.code || `อาหาร_${i+1}`, rVal, cVal, diff, causeStr, f.docName, f.docNo, f.docDate, rep.feedNote, rep.savedAt
           ]);
         });
       });
       downloadCSV(rows, `DB_Stock_${dateStamp}.csv`);
     } else if (type === 'pens') {
-      const rows = [['Report_ID', 'วันที่', 'ฟาร์ม', 'ชื่อเล้า', 'แถว', 'คอกที่', 'แม่พันธุ์', 'จำนวนลูก', 'Key_Lookup']];
+      const rows = [['Report_ID', 'วันที่', 'ส่งเสริม/ฟาร์ม', 'ชื่อเล้า', 'แถว', 'คอกที่', 'แม่พันธุ์', 'จำนวนลูก', 'Key_Lookup']];
       reports.forEach(rep => {
         const h = rep.header;
+        const pfDisplay = getPromoteFarmDisplay(h);
         ['A','B','C','D'].forEach(col => {
           for (let i = 0; i < PEN_COUNT; i++) {
             const sowVal = (rep.sows && rep.sows[col] && rep.sows[col][i]) ? 1 : 0;
             const rawGrid = (rep.grid && rep.grid[col] && rep.grid[col][i] !== undefined) ? rep.grid[col][i] : '';
             const val = rawGrid === '' ? 0 : Number(rawGrid);
-            rows.push([rep.reportId, h.date, h.farm, h.barnName, col, i + 1, sowVal, val, `${rep.reportId}-${col}${i+1}`]);
+            rows.push([rep.reportId, h.date, pfDisplay, h.barnName, col, i + 1, sowVal, val, `${rep.reportId}-${col}${i+1}`]);
           }
         });
       });
