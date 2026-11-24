@@ -463,7 +463,7 @@
   const GSHEET_URL_KEY = 'cpf_pig_gsheet_url_v1';
   const CURRENT_KEY = 'cpf_pig_stock_current_v4';
   const SAVED_KEY = 'cpf_pig_stock_saved_v4';
-  const PEN_COUNT = 38;
+  const PEN_COUNT = 72;
 
   const PROMOTE_FARM_LIST = [
     'สส.FAT-พิบูลมังสาหาร',
@@ -1082,7 +1082,7 @@
           if (d.pigpro !== '') { sumPro += Number(d.pigpro) || 0; hasPro = true; }
           if (d.counted !== '') { sumCnt += Number(d.counted) || 0; hasCnt = true; }
         });
-        const diff = (hasPro || hasCnt) ? (sumCnt - sumPro) : '';
+        const diff = (hasPro || hasCnt) ? (sumPro - sumCnt) : '';
         document.getElementById(`pig_sum_pro_${row.isSum}`).textContent = hasPro ? sumPro : '';
         document.getElementById(`pig_sum_cnt_${row.isSum}`).textContent = hasCnt ? sumCnt : '';
         const diffEl = document.getElementById(`pig_sum_diff_${row.isSum}`);
@@ -1092,7 +1092,7 @@
         const d = state.pigData[row.key] || {};
         const proVal = d.pigpro === '' ? null : Number(d.pigpro);
         const cntVal = d.counted === '' ? null : Number(d.counted);
-        const diff = (proVal !== null || cntVal !== null) ? ((cntVal || 0) - (proVal || 0)) : '';
+        const diff = (proVal !== null || cntVal !== null) ? ((proVal || 0) - (cntVal || 0)) : '';
         const diffEl = document.getElementById(`pig_diff_${row.key}`);
         if (diffEl) {
           diffEl.textContent = diff === '' ? '' : (diff > 0 ? '+' + diff : diff);
@@ -1141,7 +1141,7 @@
     state.feedData.forEach((f, idx) => {
       const rep = f.report === '' ? null : Number(f.report);
       const cnt = f.counted === '' ? null : Number(f.counted);
-      const diff = (rep !== null || cnt !== null) ? Math.round(((cnt || 0) - (rep || 0)) * 10000) / 10000 : '';
+      const diff = (rep !== null || cnt !== null) ? Math.round(((rep || 0) - (cnt || 0)) * 10000) / 10000 : '';
       const diffEl = document.getElementById(`feed_diff_${idx}`);
       if (diffEl) {
         diffEl.textContent = diff === '' ? '' : (diff > 0 ? '+' + diff : diff);
@@ -1477,7 +1477,7 @@
           const d = rep.pigData[r.key] || {};
           const pro = d.pigpro === '' ? '' : Number(d.pigpro);
           const cnt = d.counted === '' ? '' : Number(d.counted);
-          const diff = (pro !== '' || cnt !== '') ? ((Number(cnt)||0) - (Number(pro)||0)) : '';
+          const diff = (pro !== '' || cnt !== '') ? ((Number(pro)||0) - (Number(cnt)||0)) : '';
           rows.push([
             rep.reportId, h.date, farmCol, promoteCol, h.barnName, bTypes,
             'สุกร', r.logLabel || r.label || r.key, pro, cnt, diff, d.cause, d.docName, d.docNo, d.docDate, rep.pigNote, rep.savedAt
@@ -1487,7 +1487,7 @@
           if (!f.code && f.report === '' && f.counted === '' && !f.causeIn && !f.causeOut && !f.docNo) return;
           const rVal = f.report === '' ? '' : Number(f.report);
           const cVal = f.counted === '' ? '' : Number(f.counted);
-          const diff = (rVal !== '' || cVal !== '') ? Math.round(((Number(cVal)||0) - (Number(rVal)||0))*10000)/10000 : '';
+          const diff = (rVal !== '' || cVal !== '') ? Math.round(((Number(rVal)||0) - (Number(cVal)||0))*10000)/10000 : '';
           const causeStr = [
             f.causeIn ? `รับเข้า: ${f.causeIn}` : '',
             f.causeOut ? `ใช้ไป: ${f.causeOut}` : '',
