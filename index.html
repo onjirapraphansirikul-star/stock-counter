@@ -152,6 +152,10 @@
     .pen-row-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
     .pen-row-sum-badge { display: block; font-size: 0.68rem; font-weight: 600; opacity: 0.92; margin-top: 2px; }
 
+    .sow-all-mobile-bar {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px;
+      background: #fdf2f8; border: 1px solid #f9a8d4; border-radius: 10px; padding: 7px 10px; margin-bottom: 8px;
+    }
     .mobile-pen-item {
       display: grid; grid-template-columns: 52px auto 1fr; gap: 8px; align-items: center;
       padding: 6px 8px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 6px; background: #fff;
@@ -176,11 +180,17 @@
 
     table.grid-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
     table.grid-table th, table.grid-table td { border: 1px solid #94a3b8; padding: 3px; text-align: center; vertical-align: middle; }
-    table.grid-table th { background: #e2e8f0; padding: 6px 3px; font-size: 0.78rem; }
+    table.grid-table th { background: #e2e8f0; padding: 5px 3px; font-size: 0.78rem; }
     table.grid-table td.pen-no { background: #f1f5f9; font-weight: 700; width: 26px; color: #475569; }
-    table.grid-table td.sow-cell { width: 32px; background: #fff; }
+    table.grid-table td.sow-cell { width: 38px; background: #fff; }
     table.grid-table td.sow-cell.checked { background: #fdf2f8; }
     table.grid-table input.sow-chk { width: 17px; height: 17px; accent-color: #db2777; cursor: pointer; vertical-align: middle; margin: 0; }
+    .sow-all-th {
+      display: inline-flex; align-items: center; justify-content: center; gap: 3px;
+      margin-top: 3px; padding: 2px 5px; border-radius: 5px; background: #fdf2f8; border: 1px solid #f472b6;
+      color: #9d174d; font-size: 0.7rem; font-weight: 700; cursor: pointer; user-select: none;
+    }
+    .sow-all-th input.sow-chk { width: 14px; height: 14px; }
     table.grid-table input.pen-input { width: 100%; min-width: 36px; border: none; padding: 6px 2px; text-align: center; font-size: 0.92rem; font-weight: 700; background: transparent; }
     table.grid-table input.pen-input:focus { background: #eff6ff; outline: 2px solid var(--primary); }
     table.grid-table tr.total-foot td { background: #dbeafe; font-weight: 700; font-size: 0.82rem; padding: 5px 2px; color: var(--primary); line-height: 1.25; }
@@ -386,10 +396,46 @@
         <table class="grid-table">
           <thead>
             <tr>
-              <th>A</th><th>แม่</th><th>จ.น.ลูก</th>
-              <th>B</th><th>แม่</th><th>จ.น.ลูก</th>
-              <th>C</th><th>แม่</th><th>จ.น.ลูก</th>
-              <th>D</th><th>แม่</th><th>จ.น.ลูก</th>
+              <th>A</th>
+              <th>
+                แม่
+                <div class="no-print">
+                  <label class="sow-all-th" title="ติ๊กเลือกแม่ทั้งหมด แถว A">
+                    <input type="checkbox" class="sow-chk" id="fsow_all_A" onchange="toggleAllSows('A', this.checked)" /> All
+                  </label>
+                </div>
+              </th>
+              <th>จ.น.ลูก</th>
+              <th>B</th>
+              <th>
+                แม่
+                <div class="no-print">
+                  <label class="sow-all-th" title="ติ๊กเลือกแม่ทั้งหมด แถว B">
+                    <input type="checkbox" class="sow-chk" id="fsow_all_B" onchange="toggleAllSows('B', this.checked)" /> All
+                  </label>
+                </div>
+              </th>
+              <th>จ.น.ลูก</th>
+              <th>C</th>
+              <th>
+                แม่
+                <div class="no-print">
+                  <label class="sow-all-th" title="ติ๊กเลือกแม่ทั้งหมด แถว C">
+                    <input type="checkbox" class="sow-chk" id="fsow_all_C" onchange="toggleAllSows('C', this.checked)" /> All
+                  </label>
+                </div>
+              </th>
+              <th>จ.น.ลูก</th>
+              <th>D</th>
+              <th>
+                แม่
+                <div class="no-print">
+                  <label class="sow-all-th" title="ติ๊กเลือกแม่ทั้งหมด แถว D">
+                    <input type="checkbox" class="sow-chk" id="fsow_all_D" onchange="toggleAllSows('D', this.checked)" /> All
+                  </label>
+                </div>
+              </th>
+              <th>จ.น.ลูก</th>
             </tr>
           </thead>
           <tbody id="penGridBody"></tbody>
@@ -458,7 +504,7 @@
 
 <script>
   // หากต้องการให้ทุกเครื่องเชื่อมต่ออัตโนมัติ ให้วางลิงก์ /exec ในเครื่องหมายคำพูดด้านล่างนี้ได้เลยครับ
-  const DEFAULT_GSHEET_URL = 'https://script.google.com/macros/s/AKfycby4U5r2sDTctuMDIz_L56FfPKpe8UHY1mAf-vP_DJObg9UdHcsuUao32OEntzo2HGI/exec';
+  const DEFAULT_GSHEET_URL = 'https://script.google.com/macros/s/AKfycbxc4CXnGK0kbNoq8F3P-nPFSR_54bShs7VoTjeTgCw1rczByKaQKkBnv9ov8Y6YCDQbvw/exec';
 
   const GSHEET_URL_KEY = 'cpf_pig_gsheet_url_v1';
   const CURRENT_KEY = 'cpf_pig_stock_current_v4';
@@ -1161,6 +1207,17 @@
     document.getElementById('fullPenTableWrap').style.display = 'none';
     wrap.innerHTML = '';
 
+    const allBar = document.createElement('div');
+    allBar.className = 'sow-all-mobile-bar';
+    allBar.innerHTML = `
+      <label class="sow-check-label" id="msow_all_lbl" style="padding:6px 10px;">
+        <input type="checkbox" id="msow_all_chk" onchange="toggleAllSows('${currentPenCol}', this.checked)" />
+        ติ๊กเลือกแม่ทั้งหมด แถว ${currentPenCol} (${PEN_COUNT} คอก)
+      </label>
+      <span id="msow_all_count" style="font-size:0.82rem;color:#9d174d;font-weight:700;">0 / ${PEN_COUNT} ตัว</span>
+    `;
+    wrap.appendChild(allBar);
+
     for (let i = 0; i < PEN_COUNT; i++) {
       const val = state.grid[currentPenCol][i];
       const hasSow = !!(state.sows && state.sows[currentPenCol] && state.sows[currentPenCol][i]);
@@ -1181,6 +1238,7 @@
       `;
       wrap.appendChild(div);
     }
+    syncAllSowHeaderState();
   }
 
   function renderFullPenTable() {
@@ -1206,6 +1264,52 @@
       });
       tbody.appendChild(tr);
     }
+  }
+
+  function syncAllSowHeaderState() {
+    ['A','B','C','D'].forEach(c => {
+      let sTotal = 0;
+      for (let i = 0; i < PEN_COUNT; i++) {
+        if (state.sows && state.sows[c] && state.sows[c][i]) sTotal += 1;
+      }
+      const fAll = document.getElementById('fsow_all_' + c);
+      if (fAll) {
+        fAll.checked = sTotal === PEN_COUNT;
+        fAll.indeterminate = sTotal > 0 && sTotal < PEN_COUNT;
+      }
+      if (c === currentPenCol) {
+        const mAll = document.getElementById('msow_all_chk');
+        const mLbl = document.getElementById('msow_all_lbl');
+        const mCnt = document.getElementById('msow_all_count');
+        if (mAll) {
+          mAll.checked = sTotal === PEN_COUNT;
+          mAll.indeterminate = sTotal > 0 && sTotal < PEN_COUNT;
+        }
+        if (mLbl) mLbl.classList.toggle('checked', sTotal === PEN_COUNT);
+        if (mCnt) mCnt.textContent = `${sTotal} / ${PEN_COUNT} ตัว`;
+      }
+    });
+  }
+
+  function toggleAllSows(col, checked) {
+    if (!state.sows) {
+      state.sows = { A: Array(PEN_COUNT).fill(false), B: Array(PEN_COUNT).fill(false), C: Array(PEN_COUNT).fill(false), D: Array(PEN_COUNT).fill(false) };
+    }
+    const val = !!checked;
+    for (let i = 0; i < PEN_COUNT; i++) {
+      state.sows[col][i] = val;
+      const mChk = document.getElementById(`msow_${col}_${i}`);
+      const mLbl = document.getElementById(`msow_lbl_${col}_${i}`);
+      const fChk = document.getElementById(`fsow_${col}_${i}`);
+      const fCell = document.getElementById(`fsow_cell_${col}_${i}`);
+      if (mChk) mChk.checked = val;
+      if (mLbl) mLbl.classList.toggle('checked', val);
+      if (fChk) fChk.checked = val;
+      if (fCell) fCell.classList.toggle('checked', val);
+    }
+    updatePenSums({ sowTouched: true });
+    addLog(`คอกแถว ${col} (แม่ทั้งหมด)`, val ? `ติ๊กทั้งหมด (${PEN_COUNT})` : 'ยกเลิกทั้งหมด (0)');
+    saveState();
   }
 
   function updatePenSums(opts = {}) {
@@ -1255,6 +1359,7 @@
       if (sowInp) { sowInp.value = sowVal; sowInp.dataset.prev = sowVal; }
     }
 
+    syncAllSowHeaderState();
     recalcPigDiffAndSums();
   }
 
